@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항리스트</title>
+</head>
+<body>
+<div class="wrap main">
+    <section>
+        <div class="PageTitle">
+            <p class="font-weight-bold text-center">공지사항</p>
+        </div>
+
+        <div class="container">
+            <div class="notice row">
+                <div class="col-6 my-1  d-flex align-self-center">
+                    <strong>공지제목</strong>
+                </div>
+                <div class="col-6 my-1 d-flex align-self-center justify-content-end">
+                    <strong>공지기간</strong>
+                </div>
+                <div class="col-1 my-1 d-flex justify-content-end">
+                </div>
+            </div>
+            <div class="row row_box d-flex justify-between">
+                <div class="col-6 my-1 d-flex align-self-center" style="cursor:pointer">
+                    📢 &nbsp;&nbsp;2022.7월 두리안 공지사항입니다
+                </div>
+                <div class="col my-1 d-flex align-self-center justify-content-end">
+                    2022-06-27-15:20
+                </div>
+            </div>
+
+            <div class="pagination justify-content-center">
+                <a th:if="${hasPrev}!=null" href="/articles/List?page={{previous}}" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                <a th:unless="${hasPrev}!=null" href="/articles/List?page={{previous}}" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                <a th:if="${hasPrev}!=null" href="/articles/List?page={{next}}" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                <a th:unless="${hasPrev}!=null" href="/articles/List?page={{next}}" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

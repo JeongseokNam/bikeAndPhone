@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/manager.js}"></script>
+</head>
+<body>
+<div class="managerPage container" layout:fragment="content">
+    <div class="d-flex col-12" style=" height:700px;">
+        <!-- 네비게이션 구간 시작 -->
+        <div class="managerNav col-2 bg-light" style="background:pink;">
+            <p class="bg-dark text-white" style=" padding:13px; margin:0">관리자</p>
+            <nav id="sidebarMenu">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/manager/memberList">
+                                <span data-feather="home"></span>
+                                사용자목록
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                               aria-expanded="false">게시물목록</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/manager/postList">바이크</a></li>
+                                <li><a class="dropdown-item" href="#">핸드폰</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/noticeList">
+                                공지사항
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/qnaList">
+                                1:1문의
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                준비중
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 사용자목록 관리 구간 시작 -->
+        <div class="col-10">
+            <div class="managerTop d-flex flex-row bg-dark justify-content-between align-items-center">
+                <p class="bg-dark text-white" style="padding:12px; margin:0"><i class="bi bi-person-circle"></i>사용자목록 관리</p>
+                <div class="btn-group list_search rounded">
+                    <select class="form-select">
+                        <option>아이디</option>
+                        <option>닉네임</option>
+                        <option>핸드폰번호</option>
+                    </select>
+                    <input name="keyword" type="text" id="search" placeholder=" 검색어를 입력해주세요">
+                    <button class="btn btn-dark "><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"><small>아이디</small></th>
+                        <th scope="col"><small>닉네임</small></th>
+                        <th scope="col"><small>이메일</small></th>
+                        <th scope="col"><small>핸드폰번호</small></th>
+                        <th scope="col"><small>메세지수신</small></th>
+                        <th scope="col"><small>이메일수신</small></th>
+                        <th scope="col"><small>사용자권한</small></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="list,index : ${memberList}" id="memberListArea">
+                    <tr>
+                        <td th:text="${list.username}">
+                            <smail>id</smail>
+                        </td>
+                        <td th:text="${list.nickName}">
+                            <smail>닉네임</smail>
+                        </td>
+                        <td th:text="${list.email}">
+                            <smail>이메일</smail>
+                        </td>
+                        <td th:text="${list.phone}">
+                            <smail>헨드폰 번호</smail>
+                        </td>
+                        <td th:text="${list.messageConsent}">
+                            <smail>메세지 수신여부</smail>
+                        </td>
+                        <td th:text="${list.emailConsent}">
+                            <smail>이메일 수신여부</smail>
+                        </td>
+                        <td>
+                            <select class="form-select col" name="memberRole"
+                                    th:id="'memberRole'+${index.index}">
+                                <option th:selected="${list.memberRole}=='ROLE_USER'" value="ROLE_USER">
+                                    ROLE_USER</option>
+                                <option th:selected="${list.memberRole}=='ROLE_MANAGER'" value="ROLE_MANAGER">
+                                    ROLE_MANAGER</option>
+                            </select>
+                        </td>
+                        <input type="hidden" th:id="'memberId'+${index.index}" th:value="${list.memberId}">
+                        <td>
+                            <button type="button" class="btn btn-primary" th:onclick="'submitRoleChange('+${index.index}+')'">권한수정</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

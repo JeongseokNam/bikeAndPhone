@@ -1,0 +1,51 @@
+<!-- 비밀번호변경 -->
+<section>
+    <div class="container col-sm-12 col-md-12 col-lg-5 col-xl-3 d-flex justify-content-center ">
+        <form id="login" action="/login" method="POST" class="input-group d-flex flex-column justify-content-center">
+            <div class="sign d-flex flex-column justify-content-center">
+                <div class="form-floating my-5">
+                    <span>회원님의 아이디는 바이크 입니다.</span><br />
+                    <span>비밀번호를 변경하시려면 비밀번호변경 버튼을 눌러주세요.</span>
+                </div>
+            </div>
+
+            <a class="btn btn-dark btn-sm py-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal4"
+                aria-haspopup="dialog" href="/IdPassword" type="button" role="button">비밀번호변경</a>
+            <a class="btn btn-outline-secondary btn-sm py-2" type="button" data-bs-toggle="modal" type="button"
+                role="button">확인</a>
+        </form>
+
+        <!-- 아이디/비밀번호찾기 Modal -->
+        <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">비밀번호 변경</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class=" d-flex flex-column justify-content-center">
+                                <p class="text-left">신규비밀번호를 입력하여 주세요.</p>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="신규비밀번호"
+                                        aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                </div>
+
+                                <div class="input-group mb-3 ">
+                                    <input type="text" class="form-control" placeholder="신규비밀번호 확인"
+                                        aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-outline-dark ">변경완료
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

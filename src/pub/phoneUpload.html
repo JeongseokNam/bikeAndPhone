@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 썸머노트 -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script th:src="@{/js/phoneAdd.js}"></script>
+
+    <title>핸드폰업로드창</title>
+</head>
+
+
+<body>
+<div class="wrap main" layout:fragment="content">
+    <section class="phoneUploadWrap">
+        <div class="PageTitle container">
+            <p class="font-weight-bold text-center">핸드폰 판매글 작성</p>
+        </div>
+        <!-- 관리자에서 등록시 표기 구간 -->
+        <div class="container">
+            <div
+                    class="bg-light row mb-3 myPageTop border-bottom d-flex justify-content-between align-items-center">
+                <div class="table table table-hover m-0">
+                    <div class="bg-light bg-gradient text-white border-0">
+                        <div class="bg-secondary bg-gradient bg-opacity-50 border-0">
+                            <div class="text-white noticeText mx-2">
+                                <strong> 📢 관리자에서 등록시 표기</strong>
+                            </div>
+                        </div>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <form class="border-0">
+                                        <textarea class="bg-light bg-gradient w-300 h-20 border-0" readonly cols="300"
+                                                  rows="3"></textarea>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 글 작성 시작 -->
+
+        <div class="container">
+            <form action="/phone/phoneUpload" method="post">
+                <div class="row">
+                    <div
+                            class="bg-light row mb-3 myPageTop border-bottom d-flex justify-content-between align-items-center">
+                        <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                            <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                <span class="text-warning fw-bold">* </span>판매지역
+                            </div>
+                            <div class="myPageTopBox text-center p-4">
+                                서울
+                            </div>
+                            <select class="form-select" aria-label="Default select example"
+                                    name="location" id="location">
+                                <option value="" selected>지역을 선택해주세요</option>
+                                <option value="서울">서울</option>
+                                <option value="경기">경기</option>
+                                <option value="충청도">충청도</option>
+                                <option value="강원도">강원도</option>
+                                <option value="전라도">전라도</option>
+                                <option value="경상도">경상도</option>
+                                <option value="제주도">제주도</option>
+                            </select>
+                        </div>
+                        <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                            <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                거래방법
+                            </div>
+                            <div class="myPageTopBox text-center p-4">
+                                대리점내방
+                            </div>
+                            <select class="form-select" aria-label="Default select example"
+                                    name="dealWay" id="dealWay">
+                                <option value="" selected>거래방법을 선택해주세요</option>
+                                <option value="대리점내방">대리점내방</option>
+                                <option value="택배 발송">택배 발송</option>
+                            </select>
+                        </div>
+                        <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                            <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                연락처
+                            </div>
+                            <div class="myPageTopBox text-center p-4">
+                                공개
+                            </div>
+                            <select class="form-select" aria-label="Default select example"
+                                    name="phoneYn" id="phoneYn">
+                                <option value="" selected>연락처 공개여부</option>
+                                <option value="공개">공개</option>
+                                <option value="비공개">비공개</option>
+                            </select>
+                        </div>
+                        <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                            <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                상품가격
+                            </div>
+                            <div class="myPageTopBox text-center p-4">
+                                200,000원
+                            </div>
+
+                            <div class="input-group">
+
+                                <input type="text" class="form-control" placeholder="가격을 입력해주세요" id="price" name="price"
+                                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                <span class="input-group-text">원</span>
+                            </div>
+
+                        </div>
+                        <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                            <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                상품문의
+                            </div>
+                            <div class="myPageTopBox text-center p-4">
+                                o
+                            </div>
+
+                            <select class="form-select" aria-label="Default select example"
+                                    name="inquiry" id="inquiry">
+                                <option value="" selected>상품문의여부</option>
+                                <option value="문의합니다.">o</option>
+                                <option value="문의하지 않습니다.">x</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="myPageTopBox p-3 bg-dark bg-gradient text-white">
+                        <span class="text-warning fw-bold">*</span> 표시는 필수 입력사항입니다.
+                    </div>
+                </div>
+
+
+                <div class="UploadPageWrap ">
+                    <div class="container">
+                        <div class="form-group">
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="row col-lg-12">
+                                        <div class="col-lg-6">
+                                            <div class="row">
+                                                <div class="col-lg-6 uploadImg">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 imgUp">
+                                                                <div class="btn btn-primary imagePreview" id="fileView1">
+                                                                </div>
+                                                                <label class="btn btn-dark col-12">
+                                                                    메인사진<input type="file" class="uploadFile img"
+                                                                               value="Upload Photo"
+                                                                               id="file1"
+                                                                               name="file1"
+                                                                               accept="image/*"
+                                                                               style="width: 0px;height: 0px;visibility: hidden;">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            id="delFileBtn1">삭제
+                                                    </button>
+
+                                                </div>
+                                                <div class="col-lg-6 uploadImg">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 imgUp">
+                                                                <div class="btn btn-primary imagePreview" id="fileView2">
+                                                                </div>
+                                                                <label class="btn btn-dark col-12">
+                                                                    Upload<input type="file" class="uploadFile img"
+                                                                                 value="Upload Photo"
+                                                                                 id="file2"
+                                                                                 name="file2"
+                                                                                 accept="image/*"
+                                                                                 style="width: 0px;height: 0px; visibility: hidden;">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            id="delFileBtn2">삭제
+                                                    </button>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6" style="
+                                            display: flex; flex-direction: column; justify-content: flex-end; ">
+                                            <div class="row">
+                                                <div class="col-lg-6 uploadImg">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 imgUp">
+                                                                <div class="btn btn-primary imagePreview" id="fileView3">
+                                                                </div>
+                                                                <label class="btn btn-dark col-12">
+                                                                    Upload<input type="file" class="uploadFile img"
+                                                                                 value="Upload Photo"
+                                                                                 id="file3"
+                                                                                 name="file3"
+                                                                                 accept="image/*"
+                                                                                 style="width: 0px;height: 0px; visibility: hidden;">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            id="delFileBtn3">삭제
+                                                    </button>
+                                                </div>
+                                                <div class="col-lg-6 uploadImg">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-sm-2 imgUp">
+                                                                <div class="btn btn-primary imagePreview" id="fileView4">
+                                                                </div>
+                                                                <label class="btn btn-dark col-12">Upload<input type="file" class="uploadFile img"
+                                                                                                                value="Upload Photo"
+                                                                                                                id="file4"
+                                                                                                                name="file4"
+                                                                                                                accept="image/*"
+                                                                                                                style="width: 0px;height: 0px;visibility: hidden;">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                            id="delFileBtn4">삭제
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- 제목 -->
+                <div class="row p-3 border-bottom">
+                    <div class="col-12 fw-bold themed-grid-col">
+                        <span class="px-3 col-2">제목</span>
+                        <input type="text" class="col-11" placeholder=" 제목을 입력해주세요" id="title" name="title"
+                               style="line-height: 40px;">
+                    </div>
+                </div>
+                <!-- 상품정보 -->
+                <div class=" p-3 border-bottom">
+                    <div class="col-sm-6 fw-bold themed-grid-col">
+                        <span class="px-3">상품정보</span>
+                    </div>
+                </div>
+                <!-- 상품정보 입력칸 -->
+                <div class=" p-3 border-bottom">
+                    <textarea id="summernote" name="content"></textarea>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-primary" id="btn_submit">+ 상품등록</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+</body>
+
+</html>

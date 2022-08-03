@@ -1,0 +1,29 @@
+.form-floating input.upload_text {
+    /*읽기전용 인풋텍스트*/
+    float: left;
+    width: 379px;
+    /* 버튼 포함 전체 가로 길이*/
+    padding: 0 13px;
+    border: 1px solid #bbb;
+    color: indianred;
+    border-radius: 5px;
+}
+
+.form-floating div.upload-btn_wrap input.input_file {
+    /*파일찾기 폼 투명하게*/
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -ms-filter: "alpha(opacity=0)";
+    -moz-opacity: 0;
+}
+
+.form-floating div.upload-btn_wrap {
+    /*버튼테두리 감싼 div*/
+    overflow: hidden;
+    position: relative;
+    float: left;
+}

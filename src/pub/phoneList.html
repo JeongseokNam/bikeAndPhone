@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>핸드폰 판매리스트</title>
+</head>
+
+
+
+<body>
+  <div class="wrap main" layout:fragment="content">
+    <section class="ItemList" style="position:relative;">
+      <div class="PageTitle container">
+        <p class="font-weight-bold text-center">핸드폰 판매리스트</p>
+      </div>
+
+      <div class="advertisement1">
+        <img src="./image/banner-01.png" alt="banner">
+      </div>
+      <div class="advertisement2"> <img src="./image/banner-01.png" alt="banner"></div>
+
+
+      <div class="container table-responsive text-center" style="word-break: keep-all">
+        <div class="bg-light row mb-3 myPageTop border-bottom d-flex justify-content-between align-items-center">
+          <div class="table table table-hover m-0">
+            <div class="bg-light bg-gradient text-white border-0">
+              <div class="bg-secondary bg-gradient bg-opacity-50 border-0">
+                <div class="text-white noticeText" style="text-align:left">
+                  <strong> 📢 이용가이드 안내입니다.</strong>
+                </div>
+              </div>
+              </thead>
+              <tbody>
+                <tr>
+                  <form class="border-0">
+                    <textarea class="bg-light bg-gradient w-100 h-20 border-0" readonly cols="100" rows="3">      이용가이드 안내입니다
+      이용가이드 안내입니다</textarea>
+                  </form>
+                </tr>
+              </tbody>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="phoneBanner" style="aspect-ratio: 100/10;">
+          <img src=" ./image/main3.PNG" style="margin-top:30px ;aspect-ratio: 160/20; " class="img-fluid" alt="배너자리입니다">
+        </div>
+
+
+
+
+
+
+        <div class="container table-responsive text-center p-0" style="word-break: keep-all">
+          <div class="phonelist_region">
+            <ul class="d-flex">
+              <!-- 선택했을때 변한 모습 -->
+              <li class=" border rounded-top bg-dark px-4 py-1">
+                <a class="text-white" href="">서울</a>
+              </li>
+              <!-- 선택되지않은 모습 -->
+              <li class=" border rounded-top btn btn-light px-4 py-1">
+                <a class="text-dark" href="">경기</a>
+              </li>
+              <li class=" border rounded-top btn btn-light px-4 py-1">
+                <a class="text-dark" href="">충청도</a>
+              </li>
+              <li class=" border rounded-top btn btn-light px-4 py-1">
+                <a class="text-dark" href="">강원도</a>
+              </li>
+              <li class=" border rounded-top btn btn-light px-4 py-1">
+                <a class="text-dark" href="">전라도</a>
+              </li>
+              <li class=" border rounded-top btn btn-light px-4 py-1">
+                <a class="text-dark" href="">경상도</a>
+              </li>
+              <li class=" border rounded-top btn btn-light px-4 py-1">
+                <a class="text-dark" href="">제주도</a>
+              </li>
+
+            </ul>
+          </div>
+          <table class="table table table-hover">
+            <thead class="ListTable table-dark text-white">
+              <tr>
+                <th class="col-2 ">글쓴이</th>
+                <th class="col-4">제목</th>
+                <th class="col-1">가격</th>
+                <th class="col-1">판매완료</th>
+                <th class="col-1">조회수</th>
+                <th class="col-2">등록일</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-danger bg-gradient">
+                <td class="text-white">
+                  관리자
+                </td>
+
+                <td class="text-white noticeText">
+                  <strong> 📢 [필독] 공지사항입니다.</strong>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-white">
+                  22/07/11
+                </td>
+              </tr>
+              <tr class=" pt-3 ">
+                <td class="align-middle Profile " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  김은비
+                </td>
+                <td>
+                  <table>
+                    <tr>
+                      <td class="phonePhoto"><img src="https://www.gstatic.com/webp/gallery/1.sm.jpg" class="gallery"
+                          height='50px' />
+
+                      </td>
+                      <td class="align-middle px-3">
+                        갤럭시 S22
+                      </td>
+                    </tr>
+
+                  </table>
+                </td>
+
+
+                <td class="align-middle">
+                  <strong>600,000</strong>
+                </td>
+                <td class="align-middle">
+                  <strong>판매중</strong>
+                </td>
+                <td class="align-middle">
+                  <strong>100</strong>
+                </td>
+                <td class="align-middle">
+                  22/07/10
+                </td>
+              </tr>
+            </tbody>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title align-middle" id="exampleModalLabel"><i class="bi bi-person-fill pb-2"></i>
+                      회원정보
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="infoModal modal-body d-flex justify-content-center ">
+                    <div class="infoTitle d-flex justify-content-end py-4"
+                      style=" text-align: left; padding-right:20px; ">
+                      <ul class="infoModalLine">
+                        <li>
+                          <ul>
+                            <li>아이디</li>
+
+                          </ul>
+                        </li>
+                        <li>
+                          <ul>
+                            <li style="padding-top:10px;">닉네임</li>
+                          </ul>
+                        </li>
+
+                        <li style="padding-top:10px;">실명확인</li>
+                        <li style="padding-top:54px;">최종접속</li>
+                      </ul>
+                    </div>
+                    <div class="infoo py-4">
+                      <ul>
+                        <li>
+                          <ul class="d-flex align-items-center">
+                            <li class="infooPad" style="padding:0;">rla**</li>
+                            <li class="infooFont">2021년 2월 6일 가입</li>
+                          </ul>
+                        </li>
+                        <li>
+                          <ul class="d-flex align-items-center">
+                            <li class="infooPad" style="padding:0;">닉네임</li>
+                            <li class="infooFont">2021년 3월 6일 변경(원래닉네임)</li>
+                          </ul>
+                        </li>
+
+                        <form>
+                          <div class="d-flex px-2 ">
+                            <input type="text" class="form-control" style="width:140px;">
+                            <button class="btn btn-light" type="button" id="button-addon2">확인</button>
+                            <li class="infooText text-danger pt-2 px-2 ">※ 실명 일치</li>
+                          </div>
+                        </form>
+
+                        <li class="infooText text-danger px-2">※ 실명 가입된 회원입니다</li>
+                        <li class="infooText text-danger px-2">※ 2021-3-10 10:22 휴대폰 본인인증</li>
+
+                        <li>
+                          <ul class="d-flex align-items-center">
+                            <li class="infooPad" style="padding:0;">2022년 6월 20일</li>
+                            <li class="infooFont"></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </table>
+        </div>
+        <form id="searchForm">
+          <input type="hidden" value="0" id="page" name="page">
+          <div class="container py-1 d-flex justify-content-between border-bottom"
+            style="border-bottom:2px solid #ddd;">
+            <div class="row">
+              <div class="d-flex justify-content-start align-items-center ">
+                <select class="form-select py-2 border-warning" aria-label="Default select example">
+                  <option selected>제목</option>
+                  <option>내용</option>
+                  <option>글쓴이</option>
+                </select>
+                <div class="btn-group list_search">
+                  <input class="border border-warning p-2" name="keyword" type="text" id="search"
+                    placeholder="검색어를 입력해주세요" th:value="${param.keyword}">
+                  <button class="btn btn-warning"><i class="bi bi-search"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+              <a href="./phoneUpload.html" class="btn btn-dark btn-lg fs-6" tabindex="-1" role="button"
+                aria-disabled="true">+
+                글쓰기</a>
+            </div>
+          </div>
+        </form>
+        <nav aria-label="Page navigation example ">
+          <ul class="pagination d-flex justify-content-center">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+  </div>
+</body>
+
+</html>

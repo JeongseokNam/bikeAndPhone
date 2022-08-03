@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 부트스트랩 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+    <!-- 폰트어썸 CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+          integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+
+    <!-- js 경로 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="./js/moveScroll.js"></script>
+    <script src="./js/scrollTop.js"></script>
+
+    <!-- css 경로 -->
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/common.css">
+
+
+    <link rel="stylesheet" href="./css/animate.css">
+    <script src="./js/wow.min.js"></script>
+    <script src="https://kit.fontawesome.com/c12b28e0ea.js" crossorigin="anonymous"></script>
+    <script>
+        new WOW().init();
+    </script>
+
+    <title>메인</title>
+
+</head>
+
+
+<body>
+<header class="floating-menu" th:fragment="headerFragment">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bolder fs-3" href="/">두리안</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="headerMenu nav-item">
+                        <a class="nav-link fs-6" href="/board/list">판매바이크</a>
+                    </li>
+                    <li class="headerMenu nav-item">
+                        <a class="nav-link fs-6" href="/board/addPost">바이크등록</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <div class="headerLogin">
+                        <ul class="nav justify-content-end">
+                            <li sec:authorize-expr="!isAuthenticated()" class="nav-item"><a class="nav-link"
+                                                                                            aria-current="page" href="/member/login" role="button">로그인/회원가입</a></li>
+                            <li sec:authorize-expr="isAuthenticated()"><span class="mx-3"
+                                                                             th:text="${#authentication.name}+'님 안녕하세요!'">현서님 안녕하세요!</span></li>
+                            <li sec:authorize-expr="isAuthenticated()" class="nav-item"><a class="nav-link"
+                                                                                           aria-current="page" href="/member/logout" role="button">로그아웃</a>
+                            </li>
+                            <li sec:authorize-expr="isAuthenticated()" class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/member/myPage">마이페이지</a>
+                            </li>
+                            <li sec:authorize="hasRole('ROLE_MANAGER')" class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">사용자 목록</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <script src="./js/headerScroll.js"></script>
+</header>
+<section class="mainBg">
+    <div class="img_wrap position-relative">
+        <img src="./image/bike.jpg" alt="photo">
+        <div class="mainTop position-absolute top-50 start-0 translate-middle-y px-5 ">
+            <div class="row">
+                    <span class="fw-6 text-white py-5 wow bounceInLeft">Motorcycle private
+                        transaction</span>
+                <div class="spacing col text-white align-self-start display-5 fw-normal wow bounceInLeft"
+                     data-wow-duration="1.1s">
+                    <span class="fw-bold mainTitle">너와나의</span>
+                    개인거래
+                    <br />
+                    <span class="fw-bold mainTitle">두리안</span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-warning btn-sm my-3 wow bounceInLeft"
+                    data-wow-duration="1.2s">Let`s Go</button>
+        </div>
+    </div>
+
+
+
+    <div class="container   text-center my-5 ">
+        <div class="row justify-content-between wow bounceInUp" data-wow-duration="1.1s">
+            <div class="col-lg-3 border border-light text-light rounded-3">
+                <div class="mainIcon d-flex justify-content-center align-items-center py-5">
+                    <i class="fa-solid fa-motorcycle"></i>
+                </div>
+                <h2 class="py-3">바이크 판매</h2>
+                <p>나의 바이크를 판매</p>
+            </div>
+            <div class="col-lg-4 border border-warning text-light rounded-3 wow bounceInUp"
+                 data-wow-duration="1.2s">
+                <div class="mainIcon d-flex justify-content-center align-items-center py-5">
+                    <i class="fa-solid fa-motorcycle"></i>
+                </div>
+                <h2 class="py-3">바이크 구매</h2>
+                <p>원하는 바이크를 구매</p>
+            </div>
+            <div class="col-lg-3 border border-light text-light rounded-3 wow bounceInUp" data-wow-duration="1.3s">
+                <div class="mainIcon d-flex justify-content-center align-items-center py-5">
+                    <i class="fa-regular fa-comment"></i>
+                </div>
+                <h2 class="py-3">댓글소통</h2>
+                <p>판매자와 소비자가 댓글로 소통</p>
+            </div>
+        </div><!-- /.row -->
+    </div>
+
+
+
+
+
+
+    <div class="slider">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active position-relative">
+                    <img src="./image/mainTop2.png" class="d-block w-100" alt="photo">
+                </div>
+                <div class="carousel-item">
+                    <img src="./image/mainTop.png" class="d-block w-100" alt="photo">
+                </div>
+                <div class="carousel-item">
+                    <img src="./image/mainTop3.png" class="d-block w-100" alt="photo">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <div class="mainBottom">
+        <div class="d-flex justify-content-center">
+            <div class="bd-highlight"><img src="./image/bike_bottom8.jpg" alt=""></div>
+            <div class="bd-highlight"><img src="./image/bike_bottom2.jpg" alt=""></div>
+            <div class="bd-highlight"><img src="./image/bike_bottom3.jpg" alt=""></div>
+            <div class="bd-highlight"><img src="./image/bike_bottom4.jpg" alt=""></div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="bd-highlight"><img src="./image/bike_bottom5.jpg" alt=""></div>
+            <div class="bd-highlight"><img src="./image/bike_bottom6.jpg" alt=""></div>
+            <div class="bd-highlight"><img src="./image/bike_bottom7.jpg" alt=""></div>
+            <div class="bd-highlight"><img src="./image/bike_bottom8.jpg" alt=""></div>
+        </div>
+    </div>
+
+</section>
+<!-- Footer -->
+<div id="footer" class="footer" th:fragment="footerFragment">
+    <footer class="row row-cols-5 py-5 text-center text-white">
+        <div class="col">
+            <a href="/" class=" ">
+                <p class="text-white">두리안</p>
+            </a>
+            <p class="text-muted">&copy; 2022</p>
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+            <h5>두리안</h5>
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">콩게임즈</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+            </ul>
+        </div>
+    </footer>
+</div>
+</body>
+
+</html>

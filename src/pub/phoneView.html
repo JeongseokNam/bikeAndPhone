@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 부트스트랩 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+    <!-- 폰트어썸 CDN -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+
+    <!-- js 경로 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="static/js/moveScroll.js"></script>
+    <script src="static/js/Address.js"></script>
+
+    <!-- css 경로 -->
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/common.css">
+    <link rel="stylesheet" href="static/css/header.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+    <title>핸드폰 등록글 보기</title>
+</head>
+
+<body>
+    <section>
+        <div class="wrap main" layout:fragment="content">
+            <div class="PageTitle container">
+                <p class="font-weight-bold text-center">전국 최저가! 한번 더 가격내림! 노트 9</p>
+            </div>
+            <div class="container phoneViewWrap">
+                <!-- 공지사항 -->
+                <div
+                    class="bg-light row mb-3 myPageTop border-bottom d-flex justify-content-between align-items-center">
+                    <div class="table table table-hover m-0">
+                        <div class="bg-light bg-gradient text-white border-0">
+                            <div class="bg-secondary bg-gradient bg-opacity-50 border-0">
+                                <div class="text-white noticeText mx-2">
+                                    <strong> 📢 공지 & 주의 사항</strong>
+                                </div>
+                            </div>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <form class="border-0">
+                                        <textarea class="bg-light bg-gradient w-300 h-20 border-0" readonly cols="300"
+                                            rows="3"></textarea>
+                                    </form>
+                                </tr>
+                            </tbody>
+                        </div>
+                    </div>
+                </div>
+                <!-- 사진 & 리스트 -->
+                <div class="phoneViewPhotoWrap d-flex justify-content-center" style="background:red;">
+                    <div class="phoneViewSwiper">
+                        <div class=" swiper-container gallery-top">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide"></div>
+                                <div class="swiper-slide">2</div>
+                                <div class="swiper-slide">3</div>
+                            </div>
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next swiper-button-white"></div>
+                            <div class="swiper-button-prev swiper-button-white"></div>
+                        </div>
+
+                    </div>
+                    <!-- 리스트 -->
+                    <div class="phoneViewList col-6 d-flex flex-column justify-content-start"
+                        style="background:pink; position:relative;">
+                        <div class="myPageTopBox p-3 bg-dark bg-gradient text-white">
+                            판매정보
+                        </div>
+                        <table class="table table table-hover col-12">
+                            <tbody>
+                                <tr class="p-3 ">
+                                    <td class="align-middle col-2 px-3">
+                                        <strong>판매자</strong>
+                                    </td>
+                                    <td class="align-middle">
+                                        판매자
+                                    </td>
+                                </tr>
+                                <tr class="p-3 ">
+                                    <td class="align-middle col-2 px-3">
+                                        <strong>판매지역</strong>
+                                    </td>
+                                    <td class="align-middle">
+                                        판매자
+                                    </td>
+                                </tr>
+                                <tr class="p-3 ">
+                                    <td class="align-middle col-2 px-3">
+                                        <strong>판매방법</strong>
+                                    </td>
+                                    <td class="align-middle">
+                                        판매자
+                                    </td>
+                                </tr>
+                                <tr class="p-3 ">
+                                    <td class="align-middle col-2 px-3">
+                                        <strong>연락처</strong>
+                                    </td>
+                                    <td class="align-middle">
+                                        판매자
+                                    </td>
+                                </tr>
+                                <tr class="p-3 ">
+                                    <td class="align-middle col-2 px-3">
+                                        <strong>상품가격</strong>
+                                    </td>
+                                    <td class="align-middle">
+                                        판매자
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="swiper-container gallery-thumbs"
+                            style="overflow:hidden; position:absolute; bottom:0;">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">1</div>
+                                <div class="swiper-slide">2</div>
+                                <div class="swiper-slide">3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="phoneViewInfo d-flex flex-column">
+                    <div class="row py-3 border-bottom">
+                        <div class="col-12 fw-bold themed-grid-col">
+                            <span class=" col-2">상품정보</span>
+                        </div>
+                    </div>
+                    <textarea name="" id="" cols="30" rows="10" readonly class="p-3">상품정보 내용</textarea>
+                </div>
+                <div class="phoneViewComment">
+                    <!-- 댓글 -->
+                    <div class="row py-3 border-bottom">
+                        <div class="col-12 fw-bold themed-grid-col">
+                            <span class=" col-2">댓글</span>
+                        </div>
+                    </div>
+                    <th:block sec:authorize-expr="isAuthenticated()">
+                        <div class="viewComments d-flex col-12 border-bottom" sec:authorize-expr="isAuthenticated()">
+                            <textarea style="width:100%;" class="px-2 text-start autosize border border-white"
+                                placeholder="타인에게 불쾌감을 주는 욕설 및 비하하는 단어들은 자제 부탁드립니다." id="comment_content"></textarea>
+                            <input type="hidden" th:value="${boardInfo.boardId}" id="boardId">
+                            <input type="hidden" th:if="${tempMember}!=null" th:value="${tempMember.memberId}"
+                                id="memberId">
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-end align-items-center bg-light border-bottom">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="privateYn" value="Y">
+                                <label class="form-check-label mb-1 d-flex"><i class="bi bi-lock"></i>비밀댓글</label>
+                            </div>
+                            <button class="viewBtn btn btn-outline-dark" type="button" id="add_comment_btn">등록
+                            </button>
+                        </div>
+                    </th:block>
+                    <div id="commentArea" class="bd-highlight p-2 border-bottom" style="display:flex; flex-direction: column; justify-content: space-between; border-bottom:1px solid #ddd;
+                    align-items: center;">
+                        <div class="commentbox1">
+                            <p class="detailtextarea text-start fw-bold">작성자:
+                                작성자아이디</p>
+                            <div class="col-12">
+                                <div class="commentText col-12 text-start" th:text="${list.content}">
+                                    ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+                                    ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
+                                </div>
+                                <div class="commentTime col-12 text-start" th:text="${list.formattedModifiedDate}">
+                                    2022-06-20 16:15:18
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="phoneCommentBox col-12 d-flex justify-content-between align-items-center border-top">
+                            <div class="commentbox1" th:unless="${list.privateYn}=='N'">
+                                <th:block th:if="${tempMember}!=null">
+                                    <p class="detailtextarea text-start fw-bold"
+                                        th:if="${tempMember.memberId}==${memberInfo.memberId}or${list.memberEntity.memberId}"
+                                        th:text="${list.memberEntity.nickName}+'('+${list.memberEntity.username}+')'">
+                                        작성자:
+                                        작성자아이디</p>
+                                </th:block>
+                                <div class="commentText col-12 text-start text-danger">
+                                    비밀댓글입니다
+                                </div>
+                                <th:block th:if="${tempMember}!=null">
+                                    <div class="commentText col-12 text-start"
+                                        th:if="${tempMember.memberId}==${memberInfo.memberId}or${list.memberEntity.memberId}"
+                                        th:text="${list.content}">
+                                        댓글내용
+                                    </div>
+                                </th:block>
+                                <div class="col-12">
+                                    <div class="commentTime col-12 text-start" th:text="${list.formattedModifiedDate}">
+                                        2022-06-20 16:15:18
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="commentbox2">
+                                <button class="btn btn-outline-dark" type="button"
+                                    th:if="${tempMember}!=null and ${list.memberEntity.memberId}==${tempMember.memberId}"
+                                    th:onclick="'delComment('+${list.commentId}+')'">삭제
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+                    <a href="./핸드폰수정페이지.html" class="btn btn-dark btn-lg fs-6" tabindex="-1" role="button"
+                        aria-disabled="true">
+                        글 수정</a>
+                    <a href="./phoneList.html" class="btn btn-dark btn-lg fs-6" tabindex="-1" role="button"
+                        aria-disabled="true">
+                        글 삭제</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    var galleryThumbs = new Swiper('.gallery-thumbs', {
+        loop: true,
+        loopedSlides: 10,
+        centeredSlides: true,
+        spaceBetween: 10,
+        slideToClickedSlide: true,
+        slidesPerView: 5,
+        watchSlidesVisibility: true,
+        watchSlidesProgress: true,
+    });
+
+    var galleryTop = new Swiper('.gallery-top', {
+        loop: true,
+        loopedSlides: 10,
+        spaceBetween: 10,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // USING THE THUMBS COMPONENT
+        // thumbs: {
+        //   swiper: galleryThumbs
+        // }
+    });
+
+
+    // ALTERNATIVE SOLUTION to get the active thumb centered, it doesn't work on Safari if sliding backwards
+    galleryTop.controller.control = galleryThumbs;
+    galleryThumbs.controller.control = galleryTop;
+</script>
+
+</html>

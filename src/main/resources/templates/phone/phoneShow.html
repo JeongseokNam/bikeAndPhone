@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 썸머노트 -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    <script th:src="@{/js/phoneAdd.js}"></script>
+    <title>핸드폰판매글 수정</title>
+</head>
+
+<body>
+    <div class="wrap main" layout:fragment="content">
+        <section class="phoneUploadWrap">
+            <div class="PageTitle container">
+                <p class="font-weight-bold text-center">핸드폰 판매글 수정</p>
+            </div>
+            <!-- 관리자에서 등록시 표기 구간 -->
+            <div class="container">
+                <div
+                    class="bg-light row mb-3 myPageTop border-bottom d-flex justify-content-between align-items-center">
+                    <div class="table table table-hover m-0">
+                        <div class="bg-light bg-gradient text-white border-0">
+                            <div class="bg-secondary bg-gradient bg-opacity-50 border-0">
+                                <div class="text-white noticeText mx-2">
+                                    <strong> 📢 관리자에서 등록시 표기</strong>
+                                </div>
+                            </div>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <form class="border-0">
+                                        <textarea class="bg-light bg-gradient w-300 h-20 border-0" readonly cols="300"
+                                            rows="3"></textarea>
+                                    </form>
+                                </tr>
+                            </tbody>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 글 작성 시작 -->
+
+            <div class="container">
+                <form action="/phone/phoneShow" method="post" onsubmit="fileUpdate('phone')" enctype="multipart/form-data">
+                    <input type="hidden" th:value="${phoneInfo.phoneId}" id="phoneId" name="phoneId">
+                    <div class="row">
+                        <div
+                            class="bg-light row mb-3 myPageTop border-bottom d-flex justify-content-between align-items-center">
+                            <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                                <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                    <span class="text-warning fw-bold">* </span>판매지역
+                                </div>
+                                <div class="myPageTopBox text-center p-4">
+                                    ex) 서울
+                                </div>
+                                <select class="form-select" aria-label="Default select example" name="location">
+                                    <option th:selected="${phoneInfo.location}=='서울'" value="서울">서울</option>
+                                    <option th:selected="${phoneInfo.location}=='경기'" value="경기">경기</option>
+                                    <option th:selected="${phoneInfo.location}=='충청도'" value="충청도">충청도</option>
+                                    <option th:selected="${phoneInfo.location}=='강원도'" value="강원도">강원도</option>
+                                    <option th:selected="${phoneInfo.location}=='전라도'" value="전라도">전라도</option>
+                                    <option th:selected="${phoneInfo.location}=='경상도'" value="경상도">경상도</option>
+                                    <option th:selected="${phoneInfo.location}=='제주도'" value="제주도">제주도</option>
+                                </select>
+                            </div>
+                            <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                                <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                    거래방법
+                                </div>
+                                <div class="myPageTopBox text-center p-4">
+                                    대리점내방 & 택배발송
+                                </div>
+                                <select class="form-select" aria-label="Default select example" name="dealWay"
+                                    id="dealWay">
+                                    <option th:selected="${phoneInfo.dealWay}=='대리점내방'" value="대리점내방">대리점내방</option>
+                                    <option th:selected="${phoneInfo.dealWay}=='택배 발송'" value="택배 발송">택배 발송</option>
+                                </select>
+                            </div>
+                            <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                                <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                    연락처
+                                </div>
+                                <div class="myPageTopBox text-center p-4">
+                                    공개 & 비공개
+                                </div>
+                                <select class="form-select" aria-label="Default select example" name="phoneYn">
+                                    <option th:selected="${phoneInfo.phoneYn}=='공개'" value="공개">공개</option>
+                                    <option th:selected="${phoneInfo.phoneYn}=='비공개'" value="비공개">비공개</option>
+                                </select>
+                            </div>
+                            <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                                <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                    상품가격
+                                </div>
+                                <div class="myPageTopBox text-center p-4">
+                                    ex) 200,000원
+                                </div>
+
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control" placeholder="가격을 입력해주세요" id="price"
+                                        name="price" th:value="${phoneInfo.price}"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                    <span class="input-group-text">원</span>
+                                </div>
+
+                            </div>
+                            <div
+                                class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                                <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                                    상품문의
+                                </div>
+                                <div class="myPageTopBox text-center p-4">
+                                    ㅇ
+                                </div>
+
+                                <select class="form-select" aria-label="Default select example" name="inquiry">
+                                    <option th:selected="${phoneInfo.inquiry}=='상품문의 환영합니다.'" value="상품문의 환영합니다.">o</option>
+                                    <option th:selected="${phoneInfo.inquiry}=='상품문의 받지않습니다.'" value="상품문의 받지않습니다.">x</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="myPageTopBox p-3 bg-dark bg-gradient text-white">
+                            <span class="text-warning fw-bold">*</span> 표시는 필수 입력사항입니다.
+                        </div>
+                    </div>
+
+
+                    <div class="UploadPageWrap ">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="row col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp" >
+                                                            <div th:if="${file1}!=null" class="btn btn-primary imagePreview"
+                                                                 id="fileView1"
+                                                                 th:style="'background-image:url(../'+${file1.filePath}+${file1.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file1}!=null"
+                                                                 class="btn btn-primary imagePreviewMain"
+                                                                 id="fileView1"></div>
+                                                            <label class="btn btn-dark col-12">
+                                                                메인사진<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file1"
+                                                                           name="file1"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;visibility: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn1"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${phoneInfo.phoneId}+',\'phone\')'">
+                                                    삭제
+                                                </button>
+
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file2}!=null" class="btn btn-primary imagePreview"
+                                                                 id="fileView2"
+                                                                 th:style="'background-image:url(../'+${file2.filePath}+${file2.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file2}!=null"
+                                                                 class="btn btn-primary imagePreviewMain"
+                                                                 id="fileView2"></div>
+                                                            <label class="btn btn-dark col-12">
+                                                                사진변경<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file2"
+                                                                           name="file2"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px; visibility: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn2"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${phoneInfo.phoneId}+',\'phone\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6" style="
+                                                display: flex; flex-direction: column; justify-content: flex-end; ">
+                                        <div class="row">
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file3}!=null" class="btn btn-primary imagePreview"
+                                                                 id="fileView3"
+                                                                 th:style="'background-image:url(../'+${file3.filePath}+${file3.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file3}!=null"
+                                                                 class="btn btn-primary imagePreviewMain"
+                                                                 id="fileView3"></div>
+                                                            <label class="btn btn-dark col-12">
+                                                                사진변경<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file3"
+                                                                           name="file3"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px; visibility: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn3"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${phoneInfo.phoneId}+',\'phone\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file4}!=null" class="btn btn-primary imagePreview"
+                                                                 id="fileView4"
+                                                                 th:style="'background-image:url(../'+${file4.filePath}+${file4.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file4}!=null"
+                                                                 class="btn btn-primary imagePreviewMain"
+                                                                 id="fileView4"></div>
+                                                            <label class="btn btn-dark col-12">
+                                                                사진변경<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file4"
+                                                                           name="file4"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;visibility: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn4"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${phoneInfo.phoneId}+',\'phone\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+    <div class="container">
+        <!-- 제목 -->
+        <div class="row p-3 border-bottom">
+            <div class="col-12 fw-bold themed-grid-col">
+                <span class="px-3 col-2">제목</span>
+                <input type="text" class="col-11" placeholder=" 갤럭시 팔아요" id="title" name="title"
+                    style="line-height: 40px;" th:value="${phoneInfo.title}">
+            </div>
+        </div>
+        <!-- 상품정보 -->
+        <div class=" p-3 border-bottom">
+            <div class="col-sm-6 fw-bold themed-grid-col">
+                <span class="px-3">상품정보</span>
+            </div>
+        </div>
+        <!-- 상품정보 입력칸 -->
+        <div class=" p-3 border-bottom">
+            <textarea id="summernote" name="content" th:text="${phoneInfo.content}"></textarea>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-dark" style="padding: 10px;" type="submit">수정완료</button>
+            <a th:href="@{/phone/phoneView(phoneId=${phoneInfo.phoneId})}" class="btn btn-dark btn-lg fs-6"
+               tabindex="-1" role="button" aria-disabled="true">수정취소</a>
+        </div>
+    </div>
+    </form>
+
+    </div>
+    </section>
+    </div>
+</body>
+
+</html>

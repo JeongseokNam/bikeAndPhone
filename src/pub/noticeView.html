@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항상세페이지</title>
+</head>
+<body>
+<div class="wrap main">
+    <section>
+        <div class="PageTitle">
+            <p class="font-weight-bold text-center">공지사항 제목구간</p>
+        </div>
+
+        <div class="container my-0">
+            <div class="col-sm d-flex justify-content-end">
+                <a href="#" class="btn btn-dark">목록보기</a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="notice row">
+                <div class="col-6 my-1  d-flex align-self-center">
+                    <strong>공지제목</strong>
+                </div>
+                <div class="col-6 my-1 d-flex align-self-center justify-content-end">
+                    <strong>공지기간</strong>
+                </div>
+                <div class="col-1 my-1 d-flex justify-content-end">
+                </div>
+            </div>
+            <div class="row row_box d-flex justify-between">
+                <div class="col-6 my-1 d-flex align-self-center" style="cursor:pointer">
+                    📢 &nbsp;&nbsp;2022.7월 두리안 공지사항입니다
+                </div>
+                <div class="col my-1 d-flex align-self-center justify-content-end">
+                    2022-06-27-15:20
+                </div>
+            </div>
+
+            <div class="noticeText">
+                    <textarea class="autosize form-control mb-2 pt-2" onkeydown="resize(this)" onkeyup="resize(this)"
+                              readonly>공지사항 내용구간입니다.
+                        </textarea>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

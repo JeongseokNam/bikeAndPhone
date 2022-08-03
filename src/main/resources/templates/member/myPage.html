@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/myPage.js}"></script>
+    <script th:src="@{/js/pagination.js}"></script>
+    <script src="/js/iamPort.js"></script>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+</head>
+<body>
+<div class="wrap main" layout:fragment="content">
+
+    <!-- 마이페이지 -->
+    <section>
+            <div class="container">
+                <div class="PageTitle d-flex justify-content-center flex-column align-items-center">
+                    <p class="font-weight-bold m-2">마이페이지</p>
+                    <p style="border-bottom:3px solid #333; width:150px; height:1px;"></p>
+                </div>
+
+                <div class="bg-light row mb-3 myPageTop border-bottom d-flex justify-content-between align-items-center">
+                <!--  아이디 -->
+                    <div class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                        <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                            아이디
+                        </div>
+
+                        <div class="myPageTopBox text-center p-4" th:text="${memberInfo.username}"></div>
+                        <button type="button" class="mb-3 btn btn-outline-dark" disabled>변경불가</button>
+                    </div>
+                    <!-- 닉네임 -->
+                    <div class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                        <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                            닉네임
+                        </div>
+                        <div class="myPageTopBox text-center p-4" th:text="${memberInfo.nickName}"></div>
+                        <button type="button" class="mb-3 btn btn-outline-dark" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal5" aria-haspopup="dialog">변경</button>
+                    </div>
+                    <!--닉네임 변경 모달-->
+                    <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">닉네임변경</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <form>
+                                            <input type="hidden" id="NickId" value="${memberInfo.memberId}" />
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <p class="text-left">변경하실 닉네임을 입력해주세요.</p>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" maxlength="20" required="required" autofocus="autofocus" placeholder="New NickName" autocomplete="off" id="nickName" name="nickName">
+                                                    <div class="input-group-append">
+                                                        <button type="button" class="btn btn-outline-secondary" value="중복체크" onclick="nickCheck()">중복체크</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <button type="button" class="btn btn-outline-dark" onclick="submitNickChange()">수정완료</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- 이메일-->
+                    <div class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                        <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                            이메일
+                        </div>
+                        <div class="myPageTopBox text-center p-4" th:text="${memberInfo.email}">
+                        </div>
+                        <button type="button" class="mb-3 btn btn-outline-dark" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal7" aria-haspopup="dialog">변경</button>
+                    </div>
+                    <!--이메일 변경 모달-->
+                    <div class="modal fade" id="exampleModal7" tabindex="-1" aria-labelledby="ModalLabel7" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ModalLabel7">이메일 수정</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <form>
+                                            <input type="hidden" id="EmailCk" value="${memberInfo.memberId}" />
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <p class="text-left">수정하실 이메일을 입력해주세요.</p>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" maxlength="20" required="required" autofocus="autofocus" placeholder="New email" autocomplete="off" id="email" name="email">
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <button type="button" class="btn btn-outline-dark" onclick="submitEmailChange()">수정완료</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- 핸드폰번호-->
+                    <div class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                        <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                            핸드폰번호
+                        </div>
+                        <div class="myPageTopBox text-center p-4" th:text="${memberInfo.phone}">
+                        </div>
+                        <button type="button" class="mb-3 btn btn-outline-dark" onclick="changePhone()">본인인증</button>
+                    </div>
+                    <!-- 비밀번호-->
+                    <div class="myPageTopList d-flex flex-column justify-content-between align-items-center col-sm themed-grid-col">
+                        <div class="myPageTopBox text-center p-4 bg-dark bg-gradient text-white">
+                            비밀번호
+                        </div>
+                        <div class="myPageTopBox text-center p-4">
+                            ********
+                        </div>
+                        <button type="button" class="mb-3 btn btn-outline-dark" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal6" aria-haspopup="dialog">변경</button>
+                    </div>
+                    <!--비밀번호 변경 모달-->
+                    <div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="ModalLabel">이메일 수정</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <form action="/member/passwordChange" onsubmit="submitPwdChange(this); return false;" method="post">
+                                            <input type="hidden" id="pwId" value="${memberInfo.memberId}" />
+                                            <div class="d-flex flex-column justify-content-center">
+                                                <p class="text-left">변경하실 패스워드를 입력해주세요.</p>
+                                                <div class="input-group mb-3">
+                                                    <div class="join-box con col-12">
+                                                        <div class="form-floating d-flex flex-row my-3">
+                                                            <input type="password" class="form-control" maxlength="20" required="required" autofocus="autofocus"
+                                                            placeholder="password" autocomplete="off" id="password" name="password">
+                                                            <label>비밀번호를 입력해주세요.</label>
+                                                        </div>
+                                                        <div class="form-floating d-flex flex-row my-3">
+                                                            <input type="password" class="form-control" maxlength="20" required="required" autofocus="autofocus"
+                                                                   placeholder="password" onkeyup="fn_compare_pwd()" id="chkPW" name="chkPW">
+                                                            <label id="s_result">비밀번호를 확인해주세요.</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <button type="submit" class="btn btn-outline-dark" >변경완료</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <a class="btn btn-outline-danger" type="button" th:href="@{/member/remove}">회원탈퇴</a>
+                </div>
+            </div>
+
+    <!--바이크와 핸드폰 등록글 구분 아코디언-->
+        <div class="myPageaco accordion container" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        바이크
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                            <div class="form-group">
+                                <div class="text-left myPageList ">
+                                    <h5><strong>내가 등록한글</strong></h5>
+                                </div>
+                                <div class="myPageUp row row_box">
+                                    <div class="myPageUp col my-1 ">
+                                        <strong>사진</strong>
+                                    </div>
+                                    <div class="myPageUp col my-1 ma">
+                                        <strong>제목</strong>
+                                    </div>
+                                    <div class="myPageUp col my-1">
+                                        <strong>연식</strong>
+                                    </div>
+                                    <div class="myPageUp col my-1">
+                                        <strong>주행거리</strong>
+                                    </div>
+                                    <div class="myPageUp col my-1">
+                                        <strong>판매가</strong>
+                                    </div>
+                                    <div class="myPageUp col my-1">
+                                        <strong>등록일</strong>
+                                    </div>
+                                    <div class="myPageUp col my-1">
+                                        <strong>작성자</strong>
+                                    </div>
+                                    <div class="myPageUp col my-1 ">
+                                        <strong>조회수</strong>
+                                    </div>
+                                </div>
+
+                                <div class="myPageHo row row_box" th:each="list,index : ${totalList}">
+                                    <th:block th:if="${index.index}<3">
+                                        <div class="col my-1 text-center">
+                                            <div class="listImg"
+                                                 th:style="'background-image:url('+${list.filePath}+${list.saveFileNm}+');'">
+                                                <!--                      이미지영역-->
+                                            </div>
+                                        </div>
+                                        <div class="col text-center my-1 col align-self-center ma">
+                                            <a class="myPageA" th:text="${list.title}" th:href="@{/board/view/(boardId=${list.boardId})}">제목</a>
+                                        </div>
+                                        <div class="text-center col my-1 col align-self-center" th:text="${list.bikeYear+'연식'}">
+                                            연식
+                                        </div>
+                                        <div class="text-center col my-1 col align-self-center" th:text="${list.driveKm+'km'}">
+                                            주행거리
+                                        </div>
+                                        <div class="text-center col my-1 col align-self-center" th:text="${list.price+'원'}">
+                                            판매가
+                                        </div>
+                                        <div class="text-center col my-1 col align-self-center" th:text="${list.formattedModifiedDate}">
+                                            등록일
+                                        </div>
+                                        <div class="text-center col my-1 col align-self-center" th:text="${list.nickName+'님'}">
+                                            작성자
+                                        </div>
+                                        <div class="text-center col my-1 col align-self-center" th:text="${list.viewCount}">
+                                            조회수
+                                        </div>
+                                    </th:block>
+                                </div>
+<br />
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="/member/myPage/boardList" type="button" class="btn btn-outline-secondary p-2">더 보기</a>
+                                </div>
+
+
+                                <div class="text-left myPageList ">
+                                    <h5><strong>찜❤</strong></h5>
+                                </div>
+                                <div class="row row_box">
+                                    <div class="col my-1 ">
+                                        <strong>사진</strong>
+                                    </div>
+                                    <div class="col my-1 ma">
+                                        <strong>제목</strong>
+                                    </div>
+                                    <div class="col my-1">
+                                        <strong>연식</strong>
+                                    </div>
+                                    <div class="col my-1">
+                                        <strong>주행거리</strong>
+                                    </div>
+                                    <div class="col my-1">
+                                        <strong>판매가</strong>
+                                    </div>
+                                    <div class="col my-1">
+                                        <strong>등록일</strong>
+                                    </div>
+                                    <div class="col my-1">
+                                        <strong>작성자</strong>
+                                    </div>
+                                    <div class="col my-1 ">
+                                        <strong>조회수</strong>
+                                    </div>
+                                </div>
+
+
+                                <div class="myPageHo row row_box" th:each="list,index : ${likeList}">
+                                    <th:block th:if="${index.index}<3">
+                                        <div class="col my-1">
+                                            <div class="listImg"
+                                                 th:style="'background-image:url('+${list.filePath}+${list.saveFileNm}+');'">
+                                                <!--이미지영역-->
+                                            </div>
+                                        </div>
+                                        <div class="col my-1 col align-self-center ma">
+                                            <a th:text="${list.title}" th:href="@{/board/view/(boardId=${list.boardId})}">제목</a>
+                                        </div>
+                                        <div class="col my-1 col align-self-center" th:text="${list.bikeYear+'연식'}">
+                                            연식
+                                        </div>
+                                        <div class="col my-1 col align-self-center" th:text="${list.driveKm+'km'}">
+                                            주행거리
+                                        </div>
+                                        <div class="col my-1 col align-self-center" th:text="${list.price+'원'}">
+                                            판매가
+                                        </div>
+                                        <div class="col my-1 col align-self-center" th:text="${list.formattedModifiedDate}">
+                                            등록일
+                                        </div>
+                                        <div class="col my-1 col align-self-center" th:text="${list.getNickName()+'님'}">
+                                            작성자
+                                        </div>
+                                        <div class="col my-1 col align-self-center" th:text="${list.viewCount}">
+                                            조회수
+                                        </div>
+                                    </th:block>
+                                </div>
+
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end  border-top">
+
+                                    <a href="/member/myPage/likeList" type="button" class="btn btn-outline-secondary p-2 mt-2">더 보기</a>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 여기부터 핸드폰 등록한글과 찜 영역입니다-->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        핸드폰
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="form-group">
+                            <div class="text-left myPageList ">
+                                <h5><strong>내가 등록한글</strong></h5>
+                            </div>
+                            <div class="myPageUp row row_box">
+                                <div class="myPageUp col my-1 ">
+                                    <strong>사진</strong>
+                                </div>
+                                <div class="myPageUp col my-1 ma">
+                                    <strong>제목</strong>
+                                </div>
+                                <div class="myPageUp col my-1">
+                                    <strong>판매가</strong>
+                                </div>
+                                <div class="myPageUp col my-1">
+                                    <strong>판매여부</strong>
+                                </div>
+                                <div class="myPageUp col my-1">
+                                    <strong>조회수</strong>
+                                </div>
+                                <div class="myPageUp col my-1">
+                                    <strong>등록일</strong>
+                                </div>
+                            </div>
+
+                            <div class="myPageHo row row_box" th:each="list,index : ${PhoneTotalList}">
+                                <th:block th:if="${index.index}<3">
+
+                                    <div class="col my-1 text-center">
+                                        <div class="listImg">사진</div>
+                                    </div>
+                                    <div class="col text-center my-1 col align-self-center ma">
+                                        <a class="myPageA" th:text="${list.title}"
+                                           th:href="@{/phone/phoneView/(phoneId=${list.phoneId})}">제목</a>
+                                    </div>
+                                    <div class="text-center col my-1 col align-self-center" th:text="${list.price+ '원'}">
+                                        판매가
+                                    </div>
+                                    <div class="text-center col my-1 col align-self-center" th:text="(${list.sellYn}=='Y')?'판매완료':'판매중'">
+                                        판매여부
+                                    </div>
+                                    <div class="text-center col my-1 col align-self-center" th:text="${list.viewCount}">
+                                        조회수
+                                    </div>
+                                    <div class="text-center col my-1 col align-self-center" th:text="${list.formattedModifiedDate}">
+                                        등록일
+                                    </div>
+                                </th:block>
+                            </div>
+                            <br />
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="/member/myPage/phoneBoardList" type="button" class="btn btn-outline-secondary p-2">더 보기</a>
+                            </div>
+
+
+                            <div class="text-left myPageList ">
+                                <h5><strong>찜❤</strong></h5>
+                            </div>
+                            <div class="row row_box">
+                                <div class="col my-1 ">
+                                    <strong>작성자</strong>
+                                </div>
+                                <div class="col my-1 ">
+                                    <strong>사진</strong>
+                                </div>
+                                <div class="col my-1 ma">
+                                    <strong>제목</strong>
+                                </div>
+                                <div class="col my-1">
+                                    <strong>판매가</strong>
+                                </div>
+                                <div class="col my-1">
+                                    <strong>판매여부</strong>
+                                </div>
+                                <div class="col my-1">
+                                    <strong>지역</strong>
+                                </div>
+                                <div class="col my-1">
+                                    <strong>조회수</strong>
+                                </div>
+                                <div class="col my-1">
+                                    <strong>등록일</strong>
+                                </div>
+                            </div>
+                            <div class="myPageHo row row_box" th:each="list,index : ${phoneLikeList}">
+                                <th:block th:if="${index.index}<3">
+                                <div class="col my-1 col align-self-center" th:text="${list.memberEntity.getNickName()}">
+                                    작성자
+                                </div>
+                                    <div class="col my-1">
+                                        <div class="listImg">사진</div>
+                                    </div>
+
+                                    <div class="col text-center my-1 col align-self-center ma">
+                                        <a class="myPageA" th:text="${list.title}"
+                                           th:href="@{/phone/phoneView/(phoneId=${list.phoneId})}">제목</a>
+                                    </div>
+                                    <div class="col my-1 col align-self-center" th:text="${list.price+ '원'}">
+                                        판매가
+                                    </div>
+                                    <div class="col my-1 col align-self-center" th:text="(${list.sellYn}=='Y')?'판매완료':'판매중'">
+                                        판매여부
+                                    </div>
+                                    <div class="col my-1 col align-self-center" th:text="${list.location}">
+                                        지역
+                                    </div>
+                                    <div class="col my-1 col align-self-center" th:text="${list.viewCount}">
+                                        조회수
+                                    </div>
+                                    <div class="col my-1 col align-self-center" th:text="${list.formattedModifiedDate}">
+                                        등록일
+                                    </div>
+                                </th:block>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end  border-top">
+                                <a href="/member/myPage/phoneLikeList" type="button" class="btn btn-outline-secondary mt-2 p-2">더 보기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--홈으로 돌아가기 -->
+        <div class="container">
+                <div class="d-grid gap-2">
+                    <a href="/" type="button" class="btn btn-dark">홈으로 돌아가기</a>
+                </div>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

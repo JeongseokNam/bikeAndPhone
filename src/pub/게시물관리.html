@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<body>
+<head>
+    <script th:src="@{/js/manager.js}"></script>
+</head>
+<div class="managerPage container" layout:fragment="content">
+    <div class="d-flex col-12" style=" height:700px;">
+        <!-- 네비게이션 구간 시작 -->
+        <div class="managerNav col-2 bg-light" style="background:pink;">
+            <p class="bg-dark text-white" style=" padding:13px; margin:0">관리자</p>
+            <nav id="sidebarMenu">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">
+                                <span data-feather="home"></span>
+                                사용자목록
+                            </a>
+                        </li>
+                        <li class="managerdrop nav-item dropdown btn-group dropend">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                               aria-expanded="false">게시물목록</a>
+                            <ul class="managerdropMenu dropdown-menu">
+                                <li><a class="dropdown-item" href="/manager/postList">바이크</a></li>
+                                <li><a class="dropdown-item" href="#">핸드폰</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/noticeList">
+                                공지사항
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/qnaList">
+                                1:1문의
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                준비중
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 게시물목록 관리 구간 시작 / 바이크게시물& 핸드폰게시물 이름 체인지해야함 -->
+        <div class="col-10">
+            <div class="managerTop d-flex flex-row bg-dark justify-content-between align-items-center">
+                <p class="bg-dark text-white" style="padding:12px; margin:0"><i class="bi bi-person-circle"></i>
+                    바이크게시물</p>
+                <div class="btn-group list_search rounded">
+                    <select class="form-select">
+                        <option>제목</option>
+                        <option>닉네임</option>
+                    </select>
+                    <input name="keyword" type="text" id="search" placeholder=" 검색어를 입력해주세요">
+                    <button class="btn btn-dark "><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"><small>제목</small></th>
+                        <th scope="col"><small>닉네임</small></th>
+                        <th scope="col"><small>판매가</small></th>
+                        <th scope="col"><small>등록일</small></th>
+                        <th scope="col"><small>조회수</small></th>
+
+                    </tr>
+                    </thead>
+                    <tbody th:each="list,index : ${totalList}">
+                    <tr>
+                        <td>
+                            <a th:text="${list.title}" th:href="@{/board/view/(boardId=${list.boardId})}">제목</a>
+                        </td>
+                        <td th:text="${list.nickName}">닉네임</td>
+                        <td th:text="${list.price}">판매가</td>
+                        <td th:text="${list.formattedModifiedDate}">등록일</td>
+                        <td th:text="${list.viewCount}">조회수</td>
+                        <td>
+                            <button class="btn btn-primary" type="button"
+                                    th:onclick="'deleteBoard('+${list.boardId}+')'" )>삭제
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header class="floating-menu" th:fragment="headerFragment">
+
+    <div id="header_wrap">
+        <div class="header_login">
+            <ul class="header_top_width">
+                <li>
+                </li>
+                <ul>
+                    <li sec:authorize-expr="!isAuthenticated()"><a aria-current="page"
+                                                                   href="/member/login">로그인/회원가입</a></li>
+                    <li sec:authorize-expr="isAuthenticated()"><a aria-current="page" href="/member/logout">로그아웃</a>
+                    </li>
+                    <li sec:authorize-expr="isAuthenticated()"><a aria-current="page"
+                                                                  href="/member/myPage">마이페이지</a></li>
+                    <li sec:authorize="hasRole('ROLE_MANAGER')"><a aria-current="page"
+                                                                   href="/manager/memberList">관리자페이지</a></li>
+
+                </ul>
+            </ul>
+        </div>
+        <div class="header_menuWrap">
+            <div id="header_menu" style="background:cyan">
+                <ul>
+                    <li id="header_menu1" class="port_back pb-4"><a href="/"><img style="width:100px"
+                                                                                  src="../image/durian/logo.png" alt=""></a>
+                    </li>
+                    <ul>
+                        <li id="menu2"><a href="/board/list">바이크</a></li>
+                        <li id="menu3"><a href="/phone/phoneList?location=">핸드폰</a></li>
+                        <li id="menu4"><a href="/member/memberNotice">공지사항</a></li>
+                    </ul>
+
+                </ul>
+                <div class="header_subwrap">
+                    <div class="header_subdisplay">
+                        <div class="header_sub_wrap">
+                            <div class="h_sub">
+                                <div class="sub11"><br /><br /><br />
+                                </div>
+                                <div class="h_sub1">
+                                    <a href="/board/list">바이크구매</a><br />
+                                    <a a href="/board/addPost">바이크판매</a>
+                                </div>
+                                <div class="h_sub2">
+                                    <a href="/phone/phoneList?location=서울">서울</a><br />
+                                    <a href="/phone/phoneList?location=경기">경기도</a><br />
+                                    <a href="/phone/phoneList?location=충청도">충청도</a><br />
+                                    <a href="/phone/phoneList?location=강원도">강원도</a><br />
+                                    <a href="/phone/phoneList?location=경상도">경상도</a><br />
+                                    <a href="/phone/phoneList?location=전라도">전라도</a><br />
+                                    <a href="/phone/phoneList?location=제주도">제주도</a><br />
+                                </div>
+                                <div class="h_sub3">
+                                    <a href="/member/memberNotice">공지사항</a><br />
+                                    <a href="/qna/main">1:1문의</a><br />
+                                    <a href="">제휴문의</a><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header_top_mo">
+        <div class="header_logo_mo text-white">
+            <a href="/"><img style="width:100px" src="../image/durian/logo.png" alt=""></a>
+        </div>
+        <button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight"><i class="bi bi-arrow-left-square text-dark"></i></button>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
+             aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasRightLabel"></h5>
+                <button type="button" class="text-black text-reset " data-bs-dismiss="offcanvas"
+                        aria-label="Close"><i class="bi bi-x-square text-white"></i></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                                    aria-controls="flush-collapseOne">
+                                바이크
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <ul>
+                                <li><a href="/board/list">바이크구매<i class="bi bi-caret-right"></i></a></li>
+                                <li><a href="/board/addPost">바이크판매<i class="bi bi-caret-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                    aria-controls="flush-collapseTwo">
+                                휴대폰
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <ul>
+                                <li><a href="">서울<i class="bi bi-caret-right"></i></a></li>
+                                <li><a href="">경기도<i class="bi bi-caret-right"></i></a></li>
+                                <li><a href="">충청도<i class="bi bi-caret-right"></i></a></li>
+                                <li><a href="">강원도<i class="bi bi-caret-right"></i></a></li>
+                                <li><a href="">전라도<i class="bi bi-caret-right"></i></a></li>
+                                <li><a href="">경상도<i class="bi bi-caret-right"></i></a></li>
+                                <li><a href="">제주도<i class="bi bi-caret-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                    aria-controls="flush-collapseThree">
+                                고객센터
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                            <ul>
+                                <li><a href="/qna/main">1:1문의<i class="bi bi-caret-right"></i></a></li>
+                                <li><a href="">제휴문의<i class="bi bi-caret-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingfo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapsefo" aria-expanded="false"
+                                    aria-controls="flush-collapsefo">
+                                로그인
+                            </button>
+                        </h2>
+                        <div id="flush-collapsefo" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingfo" data-bs-parent="#accordionFlushExample">
+                            <ul>
+                                <li><a href="/member/login">로그인<i class="bi bi-caret-right"></i></a></li>
+                                <li><a href="/member/logout">로그아웃<i class="bi bi-caret-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingfomypage">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapsefomypage" aria-expanded="false"
+                                    aria-controls="flush-collapsefomypage">
+                                마이페이지
+                            </button>
+                        </h2>
+                        <div id="flush-collapsefomypage" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingfomypage" data-bs-parent="#accordionFlushExample">
+                            <ul>
+                                <li><a href="/manager/memberList">마이페이지<i class="bi bi-caret-right"></i></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingfomem">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapsefomem" aria-expanded="false"
+                                    aria-controls="flush-collapsefomem">
+                                관리자
+                            </button>
+                        </h2>
+                        <div id="flush-collapsefomem" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingfomem" data-bs-parent="#accordionFlushExample">
+                            <ul>
+                                <li><a href="/manager/memberList">관리자페이지<i class="bi bi-caret-right"></i></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/headerSlideDown.js}"></script>
+
+
+</header>
+
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/manager.js}"></script>
+    <script th:src="@{/js/pagination.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var qnaCnt = [[${newQnaCount}]];
+        if (qnaCnt != 0 && qnaCnt != null) {
+            alert("새 문의 글이" + qnaCnt + " 개 있습니다.");
+        }
+        /*]]>*/
+
+    </script>
+</head>
+<body>
+<div class="managerPage container" layout:fragment="content">
+    <div class="managerPageTop" style=" height:700px;">
+        <!-- 네비게이션 구간 시작 -->
+        <div class="managerNav col-lg-2 col-sm-12  bg-light" style="background:pink;">
+            <p class="bg-dark text-white" style=" padding:13px; margin:0">관리자</p>
+            <nav id="sidebarMenu">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/manager/memberList">
+                                <span data-feather="home"></span>
+                                사용자목록
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown btn-group dropend">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                               aria-expanded="false">게시물목록</a>
+                            <ul class="managerdropMenu dropdown-menu">
+                                <li><a class="dropdown-item" href="/manager/postList">바이크</a></li>
+                                <li><a class="dropdown-item" href="/manager/phoneList">핸드폰</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/noticeList">
+                                공지사항
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/qnaList">
+                                1:1문의
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/businessMemberList">
+                                사업자관리
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- 사용자목록 관리 구간 시작 -->
+        <div style="width:100%">
+            <div class="managerTop d-flex flex-row bg-dark justify-content-between align-items-center">
+                <p class="bg-dark text-white" style="padding:12px; margin:0"><i class="bi bi-person-circle"></i>사용자목록
+                </p>
+                <form id="searchForm">
+                    <input type="hidden" value="0" id="page" name="page">
+                <div class="btn-group list_search rounded">
+                    <select class="form-select" name="searchType">
+                        <option th:selected="${#strings.equals(param.searchType,'아이디')}" value="아이디">아이디</option>
+                        <option th:selected="${#strings.equals(param.searchType,'닉네임')}" value="닉네임">닉네임</option>
+                        <option th:selected="${#strings.equals(param.searchType,'핸드폰번호')}" value="핸드폰번호">핸드폰번호</option>
+                    </select>
+                    <input name="keyword" type="text" id="search" placeholder=" 검색어를 입력해주세요" th:value="${param.keyword}">
+                    <button class="btn btn-dark "><i class="bi bi-search"></i></button>
+                </div>
+                </form>
+            </div>
+
+            <div class="table-responsive text-center" style="word-break: keep-all">
+
+                <table class="memberListTab table table table-hover">
+                    <thead class="ListTable">
+                    <tr >
+                        <th class="col-2 ">아이디</th>
+                        <th class="col-1" >닉네임</th>
+                        <th class="col-2">이메일</th>
+                        <th class="col-2">핸드폰</th>
+                        <th class="col-1" >메세지수신</th>
+                        <th class="col-1">이메일수신</th>
+                        <th class="col-2">사용자권한</th>
+                    </tr>
+                    </thead>
+
+                        <tbody>
+                        <tr th:each="list,index : ${memberList}" id="memberListArea">
+                            <td th:text="${list.username}"></td>
+                            <td th:text="${list.nickName}"></td>
+                            <td th:text="${list.email}"></td>
+                            <td th:text="${list.phone}"></td>
+                            <td th:text="${list.messageConsent}"></td>
+                            <td th:text="${list.emailConsent}"></td>
+                            <td>
+                                <select class="form-select col" name="memberRole"
+                                        th:id="'memberRole'+${index.index}" th:if="${list.memberRole}!='ROLE_BUSINESS'">
+                                    <option th:selected="${list.memberRole}=='ROLE_USER'" value="ROLE_USER">
+                                        ROLE_USER
+                                    </option>
+                                    <option th:selected="${list.memberRole}=='ROLE_MANAGER'" value="ROLE_MANAGER">
+                                        ROLE_MANAGER
+                                    </option>
+                                </select>
+                                <th:block th:if="${list.memberRole}=='ROLE_BUSINESS'" th:text="사업자회원"></th:block>
+                            </td>
+                            <input type="hidden" th:id="'memberId'+${index.index}" th:value="${list.memberId}">
+                            <td>
+                                <button type="button" class="btn btn-primary"
+                                        th:onclick="'submitRoleChange('+${index.index}+')'" th:if="${list.memberRole}!='ROLE_BUSINESS'">권한수정
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                </table>
+            </div>
+            <!--페이지네이션-->
+            <div class="pagination justify-content-center"
+                 th:with="start=${T(java.lang.Math).floor(qnaPagingList.number/10)}*10+1,end=((${qnaPagingList.totalPages} == 0)?1 : ((${qnaPagingList.totalPages} > ${start}+9) ? ${start}+9 : ${qnaPagingList.totalPages}))">
+                <!--이전-->
+                <a th:if="${hasPrev}" th:onclick="'pagination('+${previous}+')'" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                <a th:unless="${hasPrev}" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                <!--페이지 숫자-->
+                <li th:each="pageNum : ${#numbers.sequence(start, end)}"
+                    th:class="(${pageNum} == (${qnaPagingList?.number}+1)) ? 'pagination_button page-item active' : 'pagination_button page-item'">
+                    <a th:onclick="'pagination('+(${pageNum}-1)+')'" th:text="${pageNum}"
+                       class="page-link" role="button"><span class="sr-only"></span></a>
+                </li>
+                <!--이후-->
+                <a th:if="${hasNext}" th:onclick="'pagination('+${next}+')'" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                <a th:unless="${hasNext}" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

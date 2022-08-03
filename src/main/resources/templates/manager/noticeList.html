@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/manager.js}"></script>
+    <script th:src="@{/js/delNotice.js}"></script>
+    <script th:src="@{/js/noticePagination.js}"></script>
+</head>
+<body>
+<div class="managerPage container" layout:fragment="content">
+    <div class="managerPageTop" style=" height:700px;">
+        <!-- 네비게이션 구간 시작 -->
+        <div class="managerNav col-lg-2 col-md-2 bg-light" style="background:pink;">
+            <p class="bg-dark text-white" style=" padding:13px; margin:0">관리자</p>
+            <nav id="sidebarMenu">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/manager/memberList">
+                                <span data-feather="home"></span>
+                                사용자목록
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown btn-group dropend">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                               aria-expanded="false">게시물목록</a>
+                            <ul class="managerdropMenu dropdown-menu">
+                                <li><a class="dropdown-item" href="/manager/postList">바이크</a></li>
+                                <li><a class="dropdown-item" href="#">핸드폰</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/noticeList">
+                                공지사항
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/qnaList">
+                                1:1문의
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/businessMemberList">
+                                사업자관리
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 공지사항 관리 구간 시작 -->
+        <div class="col-lg-10" >
+            <div class="managerTop d-flex flex-row bg-dark justify-content-between align-items-center">
+                <p class="bg-dark text-white" style="padding:12px; margin:0"><i class="bi bi-bell"></i>공지사항</p>
+            </div>
+
+            <div class="table-responsive" id="BtnArea">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"><small>제목</small></th>
+                        <th scope="col" class="NoticeTime"><small>작성일시</small></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="" th:each="list : ${noticeList}">
+                        <td >
+                            <a th:text="${list.title}" th:href="@{/manager/noticeShow/(noticeId=${list.noticeId})}">제목</a>
+                        </td>
+                        <td class="NoticeTime" style="width:170px;" th:text="${list.formattedCreateDate}">작성일시</td>
+                        <td class=" col-1 justify-content-end" >
+                            <button type="button" class="btn btn-primary" th:onclick="'deleteNotice('+${list.noticeId}+')'">삭제</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- 페이징 JS -->
+                <form id="Paging">
+                    <input type="hidden" value="0" id="page" name="page">
+                </form>
+
+                <!--페이지네이션-->
+                <div class="pagination justify-content-center"
+                     th:with="start=${T(java.lang.Math).floor(noticePagingList.number/10)}*10+1,end=((${noticePagingList.totalPages} == 0)?1 : ((${noticePagingList.totalPages} > ${start}+9) ? ${start}+9 : ${noticePagingList.totalPages}))">
+                    <!--이전-->
+                    <a th:if="${hasPrev}" th:onclick="'pagination('+${previous}+')'" role="button"
+                       class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                    <a th:unless="${hasPrev}" role="button"
+                       class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                    <!--페이지 숫자-->
+                    <li th:each="pageNum : ${#numbers.sequence(start, end)}"
+                        th:class="(${pageNum} == (${noticePagingList?.number}+1)) ? 'pagination_button page-item active' : 'pagination_button page-item'">
+                        <a th:onclick="'pagination('+(${pageNum}-1)+')'" th:text="${pageNum}"
+                           class="page-link" role="button"><span class="sr-only"></span></a>
+                    </li>
+                    <!--이후-->
+                    <a th:if="${hasNext}" th:onclick="'pagination('+${next}+')'" role="button"
+                       class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                    <a th:unless="${hasNext}" role="button"
+                       class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a  href="/manager/notice" class="btn btn-dark mt-2" role="button">등록</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+<!--<!doctype html>-->
+<!--<html lang="ko"-->
+<!--      xmlns="http://www.w3.org/1999/xhtml"-->
+<!--      xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layout/layout}">-->
+<!--<head>-->
+<!--    <script th:src="@{/js/manager.js}"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="wrap main" layout:fragment="content">-->
+
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <nav id="sidebarMenu" class="col-2 d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"-->
+<!--                 style="height:500px;">-->
+<!--                <div class="position-sticky">-->
+<!--                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">-->
+<!--                        <span class="fs-5">두리안관리</span>-->
+<!--                    </a>-->
+<!--                    <hr>-->
+<!--                    <ul class="nav nav-pills flex-column mb-auto">-->
+
+<!--                        <li class="nav-item">-->
+<!--                            <a class="member nav-link text-white nav-link" href="/manager/memberList">-->
+<!--                                <span data-feather="file"></span>-->
+<!--                                사용자목록 관리-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li class="nav-item">-->
+<!--                            <a class="member nav-link text-white" href="/manager/postList">-->
+<!--                                <span data-feather="shopping-cart"></span>-->
+<!--                                게시물목록 관리-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <a class="member nav-link text-white" href="/manager/noticeList">-->
+<!--                            <span data-feather="shopping-cart"></span>-->
+<!--                            공지사항 관리-->
+<!--                        </a>-->
+<!--                        <li>-->
+<!--                            <a class="member nav-link text-white" href="/manager/qnaList">-->
+<!--                                <span data-feather="shopping-cart"></span>-->
+<!--                                1:1문의 관리-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </nav>-->
+<!--            <div class=" my-3" style="width:80%;">-->
+<!--                <div class="d-flex">-->
+<!--                    <h4 class="ms-3"> 📢공지사항 </h4>-->
+<!--                </div>-->
+<!--                <table class="table table-hover" >-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                        <th>공지제목</th>-->
+<!--                        <th>공지기간</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody th:each="list : ${noticeList}">-->
+<!--                    <tr>-->
+<!--                        <td>-->
+<!--                            <a th:text="${list.title}" th:href="@{/manager/noticeShow/(noticeId=${list.noticeId})}">제목</a>-->
+<!--                        </td>-->
+<!--                        <td th:text="${list.formattedCreateDate}">작성일시</td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+
+<!--                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">-->
+<!--                        <a  href="/manager/notice" class="btn btn-dark mt-2" role="button">등록</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

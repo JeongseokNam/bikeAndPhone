@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/manager.js}"></script>
+</head>
+<body>
+<div class="managerPage container" layout:fragment="content">
+    <div class="d-flex col-12" style=" height:700px;">
+        <!-- 네비게이션 구간 시작 -->
+        <div class="managerNav col-2 bg-light" style="background:pink;">
+            <p class="bg-dark text-white" style=" padding:13px; margin:0">관리자</p>
+            <nav id="sidebarMenu">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/manager/memberList">
+                                <span data-feather="home"></span>
+                                사용자목록
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/manager/postList"
+                               role="button" aria-expanded="false">게시물목록</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/manager/postList">바이크</a></li>
+                                <li><a class="dropdown-item" href="#">핸드폰</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/noticeList">
+                                공지사항
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/qnaList">
+                                1:1문의
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                준비중
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 공지사항 관리 구간 시작 -->
+        <div class="col-10" style="background:tamato">
+            <div class="managerTop d-flex flex-row bg-dark justify-content-between align-items-center">
+                <p class="bg-dark text-white" style="padding:12px; margin:0"><i class="bi bi-bell"></i>공지사항</p>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"><small>제목</small></th>
+                        <th scope="col"><small>작성일시</small></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="list : ${noticeList}">
+                    <tr>
+                        <td>
+                            <a th:text="${list.title}" th:href="@{/manager/noticeShow/(noticeId=${list.noticeId})}">제목</a>
+                        </td>
+                        <td th:text="${list.formattedCreateDate}">작성일시</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a  href="/manager/notice" class="btn btn-dark mt-2" role="button">등록</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

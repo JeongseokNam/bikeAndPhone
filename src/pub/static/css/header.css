@@ -1,0 +1,369 @@
+/* 가로모드 모바일 디바이스 (가로 해상도가 576px보다 크고 768px 보다 작은 화면에 적용)  */
+@media (min-width: 499px) and (max-width: 767px) {
+    .header_top_pc {
+        display: none;
+        position: relative;
+    }
+
+
+
+    .header_top_mo {
+        background: #333;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .header_top_mo button {
+        background: none;
+        border: none;
+    }
+
+    .header_top_mo button i {
+        font-size: 40px;
+    }
+
+    .header_top_mo .offcanvas-header {
+        background-color: #333;
+        height: 60px;
+    }
+
+    .accordion-collapse ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .accordion-collapse li a {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+        color: #000;
+    }
+
+    .accordion-button {
+        font-size: 20px;
+    }
+
+    .accordion-button:not(.collapsed) {
+        color: #000;
+        background-color: transparent;
+        box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+        font-weight: bold;
+    }
+
+    .accordion-collapse li a:hover {
+        background: #eee;
+    }
+}
+
+/*태블릿 디바이스 (가로 해상도가 768px보다 크고 991px 보다 작은 화면에 적용)  */
+@media (min-width: 768px) and (max-width: 991px) {
+    .header_top_pc {
+        display: none;
+    }
+
+    .header_top_mo {
+        background: #333;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .header_top_mo button {
+        background: none;
+        border: none;
+    }
+
+    .header_top_mo button i {
+        font-size: 40px;
+    }
+
+    .header_top_mo .offcanvas-header {
+        background-color: #333;
+        height: 60px;
+    }
+
+    .accordion-collapse ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .accordion-collapse li a {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+        color: #000;
+    }
+
+    .accordion-button {
+        font-size: 20px;
+    }
+
+    .accordion-button:not(.collapsed) {
+        color: #000;
+        background-color: transparent;
+        box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+        font-weight: bold;
+    }
+
+    .accordion-collapse li a:hover {
+        background: #eee;
+    }
+}
+
+/* 데스크탑 (가로 해상도가 992px보다 크고 1199px 보다 작은 화면에 적용)  */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .header_top_pc {
+        display: none;
+    }
+
+    .header_top_mo {
+        background: #333;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .header_top_mo button {
+        background: none;
+        border: none;
+    }
+
+    .header_top_mo button i {
+        font-size: 40px;
+    }
+
+    .header_top_mo .offcanvas-header {
+        background-color: #333;
+        height: 60px;
+    }
+
+    .accordion-collapse ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .accordion-collapse li a {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+        color: #000;
+    }
+
+    .accordion-button {
+        font-size: 20px;
+    }
+
+    .accordion-button:not(.collapsed) {
+        color: #000;
+        background-color: transparent;
+        box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+        font-weight: bold;
+    }
+
+    .accordion-collapse li a:hover {
+        background: #eee;
+    }
+}
+
+/* 큰화면 데스크탑 (가로 해상도가 1200px 보다 큰 화면에 적용)  */
+@media (min-width: 1200px) {
+
+    a {
+        list-style: none;
+        text-decoration: none;
+    }
+
+    ul,
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .header_menu li a {
+        white-space: nowrap
+    }
+
+    .headermanager {
+        position: absolute;
+        top: 30%;
+        right: 3%;
+        font-size: 15px;
+    }
+
+    .headermanager a i {
+        font-size: 25px;
+    }
+
+    .header_top_pc {
+        display: flex;
+        justify-content: center;
+        height: 95px;
+        display: block;
+        background: rgb(154, 154, 154);
+
+
+    }
+
+    .header_main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        text-align: center;
+    }
+
+
+
+    .header_menu .header_menu_list {
+        display: flex;
+        flex-direction: row;
+
+    }
+
+    .header_menu .header_menu_list li {
+        padding: 0 80px;
+    }
+
+    .header_menu .header_menu_list li a:hover {
+        color: gold
+    }
+
+    .header_menu .header_menu_list .header_menu_list_title_pd a {
+        color: #fff;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+
+    .header_menu .header_menu_list .header_menu_list_title {
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .header_menu .header_menu_list .header_menu_list_title a {
+        color: #fff;
+    }
+
+
+    .header_sub {
+        border-bottom: 1px solid #000;
+        position: absolute;
+        bottom: -250px;
+        right: -392px;
+        background: #fff;
+        flex-direction: row;
+        align-items: center;
+        width: 1918px;
+        height: 250px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.15s ease-in;
+    }
+
+    .headerIconList a:hover {
+        color: gold;
+    }
+
+    .headermanager a:hover {
+        color: gold;
+    }
+
+    .headerIconList a {
+        color: #fff;
+    }
+
+    .headermanager a {
+        color: #fff;
+    }
+
+
+    .header_main:hover .header_sub {
+        opacity: 1;
+        visibility: visible;
+    }
+
+
+
+    .header_sub .header_sub_list {
+        display: flex;
+        font-size: 18px;
+        position: absolute;
+        right: 403px;
+    }
+
+
+    .header_sub .header_sub_list li a:hover {
+        font-weight: bold;
+    }
+
+    .header_sub_list_w {
+        padding-bottom: 10px;
+    }
+
+    .header_sub_list_w ul li {
+        padding-bottom: 5px;
+        padding: 0 80px;
+    }
+
+    .header_sub_list_w ul li a {
+        color: #000;
+        font-size: 16px;
+    }
+
+    .header_logo {
+        white-space: nowrap;
+        color: #fff;
+        padding-right: 200px;
+        display: flex;
+        align-items: center;
+    }
+
+    .header_logo a {
+        color: #fff;
+
+    }
+
+    .header_logo img {
+        width: 100%;
+    }
+
+    .header_login {
+        font-weight: 600;
+        color: #888
+    }
+
+    .header_login span {
+        color: gold;
+    }
+
+    .header_top_mo {
+        display: none;
+    }
+
+    .header_top_box {
+        height: 100%;
+
+    }
+
+    .headerLogoMainB {
+        width: 1500px;
+
+    }
+
+    .headerIconList li a i {
+        font-size: 25px;
+        padding: 20px;
+    }
+}
