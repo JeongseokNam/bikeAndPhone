@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/loginScript.js}"></script>
+    <script th:src="@{/js/iamPort.js}"></script>
+    <script th:src="@{/js/findUserNameAndPassword.js}"></script>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+</head>
+<body layout:fragment="content">
+<div class="wrap main" >
+    <section class="SubscriptionType">
+        <div
+                class="PageListBox2 bg-secondary p-2 text-dark bg-opacity-10 d-flex justify-content-center align-items-center">
+            <div class=" PageTitle container">
+                <p class="font-weight-bold text-center d-inline">회원가입</p>
+                <div class="phoneRegionCircle">
+                    <span></span>
+                </div>
+                <span class="phoneRegion fs-6 border-bottom"> <span></span> 회원가입 유형에 따라 가입절차는 다르게 진행됩니다.
+                    </span>
+            </div>
+        </div>
+        <div class="subscriptionBt container">
+            <h2 class="mt-4">회원가입 유형 선택</h2>
+            <p>회원가입 유형을 선택하여 가입을 진행해 주세요.</p>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-4 themed-grid-col">
+                    <a onclick="phoneChk('joinNormal')"> <!--href="/member/joinNormal"-->
+                        <div class="normal d-flex flex-column justify-content-center align-items-center bg-warning">
+                            <p class="fs-3 fw-bold text-dark">일반가입</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4 themed-grid-col">
+                    <div
+                            class="buisnessman  d-flex flex-column justify-content-center align-items-center p-5 bg-dark">
+                        <p class="fs-3 fw-bold  text-white">사업자가입</p>
+                        <div class="d-grid gap-2 d-md-block">
+                            <a onclick="phoneChk('soleProprietorJoin')"><button class="btn btn-outline-light"
+                                                                    type="button" >개인사업자</button></a>
+                            <a onclick="phoneChk('corporateJoin')"><button class="btn btn-outline-light"
+                                                                 type="button">법인사업자</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+
+</html>

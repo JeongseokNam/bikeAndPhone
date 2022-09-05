@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+
 
 @Controller
 public class CommentController {
@@ -25,6 +27,7 @@ public class CommentController {
          * 작성일  : 2022-06-21
         **/
         commentService.addComment(relatId,memberId,content,privateYn,relatDiv);
+        HashMap<String,Integer> repo = new HashMap<>();
     }
     @ResponseBody
     @PostMapping("/comment/addReComment")

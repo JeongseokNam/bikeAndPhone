@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항상세페이지</title>
+</head>
+<body>
+<div class="wrap main" layout:fragment="content">
+    <section>
+        <div class="PageTitle">
+            <p class="font-weight-bold text-center">공지사항 제목구간</p>
+        </div>
+
+        <div class="container my-0">
+            <div class="col-sm d-flex justify-content-end">
+                <a href="/member/memberNotice" class="btn btn-dark">목록보기</a>
+            </div>
+        </div>
+        <div class="container" th:each="target : ${target}">
+            <input type="hidden" name="noticeId" th:value="${target.noticeId}">
+            <div class="notice row">
+                <div class="col-6 my-1  d-flex align-self-center">
+                    <strong th:text="${target.title}">공지제목</strong>
+                </div>
+                <div class="col-6 my-1 d-flex align-self-center justify-content-end">
+                    <strong th:text="${target.formattedModifyDate}">작성일시</strong>
+                </div>
+                <div class="col-1 my-1 d-flex justify-content-end">
+                </div>
+            </div>
+
+            <div class="noticeText">
+                    <div class="autosize form-control mb-2 pt-2" onkeydown="resize(this)"
+                              name="content" th:utext="${target.content}"
+                              onkeyup="resize(this)" readonly>공지사항 내용구간입니다.</div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

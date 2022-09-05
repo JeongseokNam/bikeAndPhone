@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script src="/js/pagination.js"></script>
+</head>
+<body>
+<div class="wrap main" layout:fragment="content">
+    <form method="get" id="searchForm">
+        <input type="hidden" name="page" id="page">
+    </form>
+    <section class="ItemList">
+        <!-- Item Card -->
+        <div class="PageTitle">
+            <p class="font-weight-bold text-center">찜 목록 더보기</p>
+        </div>
+        <div class="container">
+
+            <div class="row row_box">
+                <div class="col my-1 ">
+                    <strong>사진</strong>
+                </div>
+                <div class="col my-1 ma">
+                    <strong>제목</strong>
+                </div>
+                <div class="col my-1">
+                    <strong>연식</strong>
+                </div>
+                <div class="col my-1">
+                    <strong>주행거리</strong>
+                </div>
+                <div class="col my-1">
+                    <strong>판매가</strong>
+                </div>
+                <div class="col my-1">
+                    <strong>등록일</strong>
+                </div>
+                <div class="col my-1">
+                    <strong>작성자</strong>
+                </div>
+                <div class="col my-1 ">
+                    <strong>조회수</strong>
+                </div>
+            </div>
+            <div class="row row_box" th:each="list : ${likeList}">
+                <div class="col my-1">
+                    <div class="listImg" th:style="'background-image:url('+${list.filePath}+${list.saveFileNm}+');'">
+                        <!--                      이미지영역-->
+                    </div>
+                </div>
+                <div class="col my-1 col align-self-center ma">
+                    <a th:text="${list.title}" th:href="@{/board/view/(boardId=${list.boardId})}">제목</a>
+                </div>
+                <div class="col my-1 col align-self-center" th:text="${list.bikeYear+'연식'}">
+                    연식
+                </div>
+                <div class="col my-1 col align-self-center" th:text="${list.driveKm+'km'}">
+                    주행거리
+                </div>
+                <div class="col my-1 col align-self-center" th:text="${list.price+'원'}">
+                    판매가
+                </div>
+                <div class="col my-1 col align-self-center" th:text="${list.formattedModifiedDate}">
+                    등록일
+                </div>
+                <div class="col my-1 col align-self-center" th:text="${list.getNickName()+'님'}">
+                    작성자
+                </div>
+                <div class="col my-1 col align-self-center" th:text="${list.viewCount}">
+                    조회수
+                </div>
+            </div>
+
+            <!--페이지네이션-->
+            <div class="pagination justify-content-center"
+                 th:with="start=${T(java.lang.Math).floor(boardLikeListPage.number/10)}*10+1,end=((${boardLikeListPage.totalPages} == 0)?1 : ((${boardLikeListPage.totalPages} > ${start}+9) ? ${start}+9 : ${boardLikeListPage.totalPages}))">
+                <!--이전-->
+                <a th:if="${hasPrev}" th:onclick="'pagination('+${previous}+')'" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                <a th:unless="${hasPrev}" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                <!--페이지 숫자-->
+                <li th:each="pageNum : ${#numbers.sequence(start, end)}"
+                    th:class="(${pageNum} == (${boardLikeListPage?.number}+1)) ? 'pagination_button page-item active' : 'pagination_button page-item'">
+                    <a th:onclick="'pagination('+(${pageNum}-1)+')'" th:text="${pageNum}"
+                       class="page-link" role="button"><span class="sr-only"></span></a>
+                </li>
+                <!--이후-->
+                <a th:if="${hasNext}" th:onclick="'pagination('+${next}+')'" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                <a th:unless="${hasNext}" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

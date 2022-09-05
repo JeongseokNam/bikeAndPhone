@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/findUserNameAndPassword.js}"></script>
+</head>
+<body>
+<div class="wrap main" layout:fragment="content">
+    <section>
+        <div class="container col-sm-12 col-md-12 col-lg-5 col-xl-3 d-flex justify-content-center ">
+            <form id="login" action="/login" method="POST" class="input-group d-flex flex-column justify-content-center">
+                <div class="sign d-flex flex-column justify-content-center">
+                    <div class="form-floating my-5">
+                        <span th:if="${memberInfo} != null" th:text="'회원님의 아이이디는[ '+${memberInfo.username}+' ]입니다.'"></span><br />
+                        <span th:unless="${memberInfo} != null" >해당 휴대폰 번호로 가입된 아이디가 없습니다.</span><br />
+                        <span th:if="${memberInfo} != null">비밀번호를 변경하시려면 비밀번호변경 버튼을 눌러주세요.</span>
+                        <span th:unless="${memberInfo} != null">회원가입 하시려면 회원가입 버튼을 눌러주세요.</span>
+                    </div>
+                </div>
+
+                <a th:if="${memberInfo} != null" class="btn btn-dark btn-sm py-2" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal4"
+                   aria-haspopup="dialog" href="/IdPassword" role="button">비밀번호변경</a>
+                <a th:unless="${memberInfo} != null" class="btn btn-dark btn-sm py-2" href="/member/join" type="button" role="button">회원가입</a>
+                <a class="btn btn-outline-secondary btn-sm py-2" href="/member/login" type="button" role="button" >확인</a>
+            </form>
+
+            <!-- 아이디/비밀번호찾기 Modal -->
+            <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">비밀번호 변경</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class=" d-flex flex-column justify-content-center">
+                                    <p class="text-left">신규비밀번호를 입력하여 주세요.</p>
+                                    <div class="input-group mb-3">
+                                        <input type="password" class="form-control" placeholder="신규비밀번호" autocomplete="off"
+                                               aria-label="Recipient's username" aria-describedby="basic-addon2" id="password">
+                                    </div>
+
+                                    <div class="input-group mb-3 ">
+                                        <input type="password" class="form-control" placeholder="신규비밀번호 확인" autocomplete="off"
+                                               aria-label="Recipient's username" aria-describedby="basic-addon2" id="re_password">
+                                        <input type="hidden" th:value="${memberInfo.memberId}" id="memberId">
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <button type="button" class="btn btn-outline-dark " id="change_pwd_btn">변경완료</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

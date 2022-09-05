@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <script th:src="@{/js/wow.js}"></script>
+    <script th:src="@{/js/wowInit.js}"></script>
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+
+    <script>
+        $(document).ready(function (){
+            const slide = document.querySelectorAll(".swiper-slide");
+            for (const i of slide) {
+                const random = (number) => Math.floor(Math.random() * (number + 1));
+                const rndCol = `rgb(${random(70)},${random(70)},${random(70)})`;
+                i.style.backgroundColor = rndCol;
+            }
+            const swiperOptions = {
+                loop: "infinite",
+                effect: "fade",
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev"
+                },
+                // custom pagination
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                    renderBullet: function (i, className) {
+                        return `<button class="${className}"><svg class="progress" width="41" height="41"><circle class="circle-origin" r="20" cx="20.5" cy="20.5"></circle></svg><span>${i + 1}</span></button>`;
+                    }
+                }
+            };
+            const swiper = new Swiper(".swiper", swiperOptions);
+        })
+    </script>
+</head>
+
+
+<body>
+<div class="durianMain" layout:fragment="content">
+    <!-- Slider main container -->
+    <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide bg-white">
+                <div class="mainSlide1" style="background:tomato; display: flex; justify-content: space-between;">
+                    <div class="maintyping">
+                        <div class="row">
+                            <div class="col-md-9 text-center ">
+                                <h3 class="animate-charcter text-start">너와나의 개인거래 두리안</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_minicircle"></div>
+                <div class="maincircle"></div>
+                <div class="maincircle2"></div>
+            </div>
+            <div class="swiper-slide bg-white">
+                <div class="maincircle3"></div>
+                <div class="maincircle4"></div>
+                <div class="mainSlide2" style="background:tomato; display: flex; justify-content: space-between;">
+                    <div class="maintyping">
+                        <div class="row">
+                            <div class="col-md-12 text-center ">
+                                <h3 class="animate-charcter text-start">바이크거래도 두리안 <br> 핸드폰거래도 두리안</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
+
+        <!-- If we need navigation buttons -->
+        <i class="swiper-button-prev bi bi-arrow-left-circle" aria-label="Previous slide"
+           aria-controls="swiper-wrapper-2f43932444cc31dc"></i>
+        <i class="swiper-button-next bi bi-arrow-right-circle" aria-label="Next slide"
+           aria-controls="swiper-wrapper-2f43932444cc31dc"></i>
+    </div>
+</div>
+
+<!--<div class="mainBg"  style="margin-top:-52px" layout:fragment="content">-->
+
+<!--    <div class="slider">-->
+<!--        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">-->
+<!--            <div class="carousel-indicators">-->
+<!--                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"-->
+<!--                        class="active" aria-current="true" aria-label="Slide 1"></button>-->
+<!--                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"-->
+<!--                        aria-label="Slide 2"></button>-->
+<!--                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"-->
+<!--                        aria-label="Slide 3"></button>-->
+<!--            </div>-->
+<!--            <div class="carousel-inner">-->
+<!--                <div class="carousel-item active position-relative">-->
+<!--                    <img th:src="@{/image/upload/mainTop.png}" class="d-block w-100" alt="photo">-->
+<!--                </div>-->
+<!--                <div class="carousel-item">-->
+<!--                    <img th:src="@{/image/upload/mainTop.png}" class="d-block w-100" alt="photo">-->
+<!--                </div>-->
+<!--                <div class="carousel-item">-->
+<!--                    <img th:src="@{/image/upload/mainTop.png}" class="d-block w-100" alt="photo">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"-->
+<!--                    data-bs-slide="prev">-->
+<!--                <span class="carousel-control-prev-icon" aria-hidden="true"></span>-->
+<!--                <span class="visually-hidden">Previous</span>-->
+<!--            </button>-->
+<!--            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"-->
+<!--                    data-bs-slide="next">-->
+<!--                <span class="carousel-control-next-icon" aria-hidden="true"></span>-->
+<!--                <span class="visually-hidden">Next</span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+</body>
+</html>

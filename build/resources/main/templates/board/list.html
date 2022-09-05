@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <script th:src="@{/js/pagination.js}"></script>
+    <script th:src="@{/js/searchSelectBox.js}"></script>
+    <script th:src="@{/js/bikeRealNameCheck.js}"></script>
+</head>
+
+<body>
+    <div class="wrap main" layout:fragment="content">
+        <section class="ItemList">
+
+            <div class="PageTitle container">
+                <p class="font-weight-bold text-center">두리안 판매리스트</p>
+            </div>
+
+
+            <form id="searchForm">
+                <input type="hidden" value="0" id="page" name="page">
+                <div class="container border-top px-0 py-1">
+                    <div class="row g-3 border-bottom d-flex align-items-center">
+                        <div class="col-sm mx-1">
+                            <select name="bikeBrand" class="form-select border border-light border-0  text-secondary"
+                                aria-label="Default select example" id="bikeBrand">
+                                <option value="">제조사</option>
+                                <th:block th:each="list:${brandList}">
+                                    <option th:value="${list.bikeBrand}" th:text="${list.bikeBrand}"
+                                        th:selected="${#strings.equals(param.bikeBrand,list.bikeBrand)}">야마하</option>
+                                </th:block>
+                            </select>
+                        </div>
+
+                        <div class="col-sm mx-1">
+                            <select name="location" class="form-select border border-light border-0  text-secondary"
+                                aria-label="Default select example">
+                                <option value="">지역</option>
+                                <th:block th:each="list:${locationList}">
+                                    <option th:value="${list.locationName}" th:text="${list.locationName}"
+                                        th:selected="${#strings.equals(param.location,list.locationName)}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="col-sm mx-1">
+                            <select name="bikeYear" class="form-select border border-light border-0  text-secondary"
+                                aria-label="Default select example">
+                                <option value="">년식</option>
+                                <option value="1995">1995</option>
+                                <option value="1996">1996</option>
+                                <option value="1997">1997</option>
+                                <option value="1998">1998</option>
+                                <option value="1999">1999</option>
+                                <option value="2000">2000</option>
+                                <option value="2001">2001</option>
+                                <option value="2002">2002</option>
+                                <option value="2003">2003</option>
+                                <option value="2004">2004</option>
+                            </select>
+                        </div>
+                        <div class="col-sm mx-1">
+                            <select name="driveKm" class="form-select border border-light border-0  text-secondary"
+                                aria-label="Default select example">
+                                <option value="">주행거리</option>
+                                <option value="1">0 ~ 10,000Km</option>
+                                <option value="2">10,000 ~ 20,000Km</option>
+                                <option value="3">20,000 ~ 30,000Km</option>
+                                <option value="4">30,000 ~ 40,000Km</option>
+                                <option value="5">40,000 ~ 50,000Km</option>
+                                <option value="6">50,000 ~ 60,000Km</option>
+                                <option value="7">60,000 ~ 70,000Km</option>
+                            </select>
+                        </div>
+                        <div class="col-sm mx-1">
+                            <select name="bikeModel" class="form-select border border-light border-0  text-secondary"
+                                aria-label="Default select example" id="bikeModel">
+                                <option value="">모델</option>
+                            </select>
+                        </div>
+                        <div class="col-sm mx-1">
+                            <div class="btn-group list_search pb-1">
+                                <input class="border-0 p-2" name="keyword" type="text" id="search"
+                                    placeholder="검색어를 입력해주세요" th:value="${param.keyword}">
+                                <button class="btn h-100"><i class="bi bi-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <style>
+                .ListBtmTitle {
+                    padding: 10px 0;
+                }
+            </style>
+
+            <div class="container table-responsive text-center" style="word-break: keep-all">
+
+                <table class="ListTable table table-hover ">
+                    <thead class="ListTableThead" style="border-radius: 20px;">
+                        <tr>
+                            <th class="col-2 ">사진</th>
+                            <th class="col-3">제목</th>
+                            <th class="col-1">연식</th>
+                            <th class="col-2" style="">주행거리</th>
+                            <th class="col-2">판매가</th>
+                            <th class="col-3">등록일</th>
+                            <th class="col-1">작성자</th>
+                            <th class="col-1">조회수</th>
+                            <th class="col-1">판매상태</th>
+                        </tr>
+                    </thead>
+                    <th:block th:each="list, index : ${totalList}">
+                        <tbody>
+                            <tr class="align-middle">
+                                <td>
+                                    <div class="ListCursor"
+                                        th:class="(${list.sellYn}=='Y')?'row row_box bg-gradient opacity-50':'row row_box'"
+                                        th:style="(${list.sellYn}=='Y')?'background:#eee;':''">
+                                        <div class="listImg"
+                                            th:style="'background-image:url('+${list.filePath}+${list.saveFileNm}+');'">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><a style="text-decoration: none; color:#000;" th:text="${list.title}"
+                                        th:href="@{/board/view/(boardId=${list.boardId})}">제목</a></td>
+                                <td th:text="${list.bikeYear+'연식'}">@mdo</td>
+                                <td th:text="${list.driveKm+'km'}">@mdo</td>
+                                <td th:text="${list.price+'원'}">@mdo</td>
+                                <td th:text="${list.formattedModifiedDate}">@mdo</td>
+                                <td style="cursor:pointer" th:text="${list.nickName+'님'}" data-bs-toggle="modal" th:attrappend="data-bs-target=' #exampleModal'+${index.index}">@mdo</td>
+                                <td th:text="${list.viewCount}"></td>
+                                <td th:text="(${list.sellYn}=='Y')?'판매완료':'판매중'">@mdo</td>
+                            </tr>
+                            <!--회원정보 모달-->
+                            <div class="modal fade" th:id="exampleModal+${index.index}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title align-middle" id="exampleModalLabel"><i
+                                                    class="bi bi-person-fill pb-2"></i>
+                                                회원정보
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="infoModal modal-body d-flex justify-content-center ">
+                                            <div class="infoTitle">
+                                                <ul class="infoModalLine" style="padding-left: 0px;">
+                                                    <li>
+                                                        아이디
+                                                    </li>
+                                                    <li>
+                                                        닉네임
+                                                    </li>
+                                                    <li>
+                                                        실명확인
+                                                    </li>
+                                                    <li style="padding-top:48px;">최종접속</li>
+                                                </ul>
+                                            </div>
+                                            <div class="infoo" >
+                                                <ul >
+                                                    <li >
+                                                        <ul class="infooday d-flex justify-content-start align-items-center">
+                                                            <li class="infooPad" th:text="${list.memberEntity.username}">rla**</li>
+                                                            <br />
+                                                            <li class="infooFont" th:text="${list.memberEntity.formattedCreateDate}">가입시기</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="infooPad2" style="padding-bottom: 5px;">
+                                                        <ul class="infooday d-flex justify-content-start align-items-center">
+                                                            <li class="infooPad" th:text="${list.nickName}">닉네임</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="infooName ">
+                                                        <ul class="d-flex align-items-center" style="padding-left:0;">
+                                                            <input type="text" style="width:150px; height:38px;" th:id="checkName+${index.index}">
+                                                            <button class="btn btn-outline-dark" type="button" th:onclick="'realName('+${list.memberId}+',\''+${index.index}+'\')'">확인</button>
+                                                        </ul>
+                                                    </li>
+                                                    <th:div  th:id="notEqualName" style="display:none">
+                                                        <li class="infooFont2">*실명 불일치</li>
+                                                    </th:div>
+                                                    <th:div th:id="equalName" style="display:none">
+                                                        <li class="infooFont2">※ 실명 가입된 회원입니다</li>
+                                                        <li class="infooFont2">※ 휴대폰 본인인증 가입된 회원입니다.</li>
+                                                    </th:div>
+
+
+                                                    <li>
+                                                        <ul class="d-flex align-items-center" style="padding-left:0;">
+                                                            <li class="infooPad" th:text="${list.memberEntity.formattedRecentAccessDate}">최종접속</li>
+                                                            <li class="infooFont"></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 회원정보 모달 끝-->
+                        </tbody>
+                    </th:block>
+                </table>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <span class="nav-item">
+            <a href="/board/addPost" class="btn btn-dark btn-lg fs-6" tabindex="-1" role="button"
+               aria-disabled="true">+ 글쓰기</a></span>
+                </div>
+
+
+                <!--페이지 네이션 구간-->
+                <div class="pagination justify-content-center"
+                     th:with="start=${T(java.lang.Math).floor(boardList.number/10)}*10+1,end=((${boardList.totalPages} == 0)?1 : ((${boardList.totalPages} > ${start}+9) ? ${start}+9 : ${boardList.totalPages}))">
+                    <!--이전-->
+                    <a th:if="${hasPrev}" th:onclick="'pagination('+${previous}+')'" role="button"
+                       class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                    <a th:unless="${hasPrev}" role="button"
+                       class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                    <!--페이지 숫자-->
+                    <li th:each="pageNum : ${#numbers.sequence(start, end)}"
+                        th:class="(${pageNum} == (${boardList.number}+1)) ? 'pagination_button page-item active' : 'pagination_button page-item'">
+                        <a th:onclick="'pagination('+(${pageNum}-1)+')'" th:text="${pageNum}"
+                           class="page-link" role="button"><span class="sr-only"></span></a>
+                    </li>
+                    <!--이후-->
+                    <a th:if="${hasNext}" th:onclick="'pagination('+${next}+')'" role="button"
+                       class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                    <a th:unless="${hasNext}" role="button"
+                       class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>

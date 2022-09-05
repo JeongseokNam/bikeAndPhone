@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항리스트</title>
+    <script th:src="@{/js/pagination.js}"></script>
+</head>
+<body>
+<div class="wrap main" layout:fragment="content">
+    <section class="d-flex justify-content-center">
+        <div class="NoticeWrap col-lg-6 col-sm-12">
+            <div class="PageTitle d-flex justify-content-center flex-column align-items-center">
+                <p class="font-weight-bold m-2">공지사항</p>
+                <p style="border-bottom:3px solid #333; width:150px; height:1px;"></p>
+            </div>
+
+            <div class="">
+                <div class="notice d-flex flex-row justify-content-between py-3 border-top border-bottom px-2" style="background:#f8f8f8">
+                    <div class="">
+                        <strong>공지제목</strong>
+                    </div>
+                    <div class="" >
+                        <strong>공지기간</strong>
+                    </div>
+                </div>
+                <div class="NoticeCursor d-flex flex-row justify-content-between py-2 border-bottom px-2"  th:each="list : ${noticeList}">
+                    <div class="" >
+                        <a style="text-decoration: none; color:#000;"  th:text="${list.title}"
+                           th:href="@{/member/memberNoticeView/(noticeId=${list.noticeId})}">제목</a>
+                    </div>
+                    <div class="">
+                        <span th:text="${list.formattedCreateDate}"></span>
+                    </div>
+                </div>
+            </div>
+            <!--페이지네이션-->
+            <div class="pagination justify-content-center">
+                <a th:if="${hasPrev}" th:href="@{/member/memberNotice/(page=${previous})}" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                <a th:unless="${hasPrev}" th:href="@{/member/memberNotice/(page=${previous})}" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                <a th:if="${hasNext}" th:href="@{/member/memberNotice/(page=${next})}" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                <a th:unless="${hasNext}" th:href="@{/member/memberNotice/(page=${next})}" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

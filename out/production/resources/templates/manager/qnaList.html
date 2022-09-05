@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/pagination.js}"></script>
+    <script th:src="@{/js/qnaAdd.js}"></script>
+</head>
+
+<body>
+<div class="managerPage container" layout:fragment="content">
+    <div class="managerPageTop" style=" height:700px;">
+        <!-- 네비게이션 구간 시작 -->
+        <div class="managerNav col-lg-2 col-md-2 bg-light" style="background:pink;">
+            <p class="bg-dark text-white" style=" padding:13px; margin:0">관리자</p>
+            <nav id="sidebarMenu">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/manager/memberList">
+                                <span data-feather="home"></span>
+                                사용자목록
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown btn-group dropend">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                               aria-expanded="false">게시물목록</a>
+                            <ul class="managerdropMenu dropdown-menu">
+                                <li><a class="dropdown-item" href="/manager/postList">바이크</a></li>
+                                <li><a class="dropdown-item" href="#">핸드폰</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/noticeList">
+                                공지사항
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/qnaList">
+                                1:1문의
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/businessMemberList">
+                                사업자관리
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- 1:1문의 관리 구간 시작 -->
+        <div class="col-lg-10">
+            <div class="managerTop d-flex flex-row bg-dark justify-content-between align-items-center">
+                <p class="bg-dark text-white" style="padding:12px; margin:0"><i class="bi bi-chat-right-text"></i>
+                    1:1문의</p>
+                <form id="searchForm">
+                    <input type="hidden" value="0" id="page" name="page">
+                    <div class="btn-group list_search rounded">
+                        <select class="form-selec" name="searchType">
+                            <option th:selected="${#strings.equals(param.searchType,'제목')}" value="제목">제목</option>
+                            <option th:selected="${#strings.equals(param.searchType,'작성자')}" value="작성자">작성자(닉네임)
+                            </option>
+                        </select>
+                        <input name="keyword" type="text" id="search" placeholder=" 검색어를 입력해주세요" th:value="${param.keyword}">
+                        <button class="btn btn-dark "><i class="bi bi-search"></i></button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"><small>제목</small></th>
+                        <th scope="col"><small>작성자</small></th>
+                        <th scope="col"><small>등록시간</small></th>
+                        <th scope="col"><small>답변여부</small></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="list,index:${qnaList}">
+                        <td data-bs-toggle="modal" th:attrappend="data-bs-target=' #exampleModal_qna_view'+${index.index}"
+                            aria-haspopup="dialog" aria-label="1:1문의 상세" style="cursor: pointer;"
+                            th:text="${list.qnaTitle}">
+                            <smail>제목</smail>
+                        </td>
+                        <!-- 1:1문의상세 content -->
+                        <div class="modal fade" th:id="exampleModal_qna_view+${index.index}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">1:1문의</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label">문의제목</label>
+                                                <textarea class="qnaText autosize form-control pt-2"
+                                                          onkeydown="resize(this)" onkeyup="resize(this)"
+                                                          th:text="${list.qnaTitle}" readonly>문의 합니다
+                                                        </textarea>
+                                                <p class="ps-1 text-secondary"
+                                                   th:text="${list.formattedQuestionTime}+'에 작성되었습니다.'">
+                                                    2022-06-27-15:30에 작성되었습니다.</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">문의내용</label>
+                                                <div class="form-floating">
+                                                            <textarea class="viewtext autosize form-control mb-2 pt-2"
+                                                                      onkeydown="resize(this)" onkeyup="resize(this)"
+                                                                      th:text="${list.questionContent}"
+                                                                      readonly>문의내용입니다
+                                                        </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <form class="row" action="/qna/addAnswer" method="post">
+                                            <input type="hidden" th:value="${list.qnaId}" name="qnaId">
+                                            <label class="form-label">답변내용</label>
+                                            <textarea style="width:100%; min-height:100px; background:#e9ecef;"
+                                                      class="p-2 text-start autosize" name="answerContent"
+                                                      onkeydown="resize(this)"
+                                                      onkeyup="resize(this)" th:text="${list.answerContent}">답변내용작성구간</textarea>
+                                            <p class="ps-1 text-secondary"
+                                               th:text="${list.formattedAnswerTime}!=''?${list.formattedAnswerTime}+'에 작성되었습니다.':''">
+                                                2022-06-27-15:30에 작성되었습니다.</p>
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-dark" onclick="btn_modifyAndAdd()"
+                                                        th:text="${list.answerContent}?'답변수정':'답변등록'">답변등록</button>
+                                                <button class="btn btn-dark">취소</button>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <td>
+                            <smail th:text="${list.questionMemberEntity.nickName}">작성자임</smail>
+                        </td>
+                        <td>
+                            <smail th:text="${list.formattedQuestionTime}">2022-1-2-34</smail>
+                        </td>
+                        <td>
+                            <smail th:text="${list.answerYn}=='Y'?'답변완료':'대기중'">x</smail>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--페이지네이션-->
+                <div class="pagination justify-content-center"
+                     th:with="start=${T(java.lang.Math).floor(qnaPagingList.number/10)}*10+1,end=((${qnaPagingList.totalPages} == 0)?1 : ((${qnaPagingList.totalPages} > ${start}+9) ? ${start}+9 : ${qnaPagingList.totalPages}))">
+                    <!--이전-->
+                    <a th:if="${hasPrev}" th:onclick="'pagination('+${previous}+')'" role="button"
+                       class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                    <a th:unless="${hasPrev}" role="button"
+                       class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                    <!--페이지 숫자-->
+                    <li th:each="pageNum : ${#numbers.sequence(start, end)}"
+                        th:class="(${pageNum} == (${qnaPagingList?.number}+1)) ? 'pagination_button page-item active' : 'pagination_button page-item'">
+                        <a th:onclick="'pagination('+(${pageNum}-1)+')'" th:text="${pageNum}"
+                           class="page-link" role="button"><span class="sr-only"></span></a>
+                    </li>
+                    <!--이후-->
+                    <a th:if="${hasNext}" th:onclick="'pagination('+${next}+')'" role="button"
+                       class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                    <a th:unless="${hasNext}" role="button"
+                       class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

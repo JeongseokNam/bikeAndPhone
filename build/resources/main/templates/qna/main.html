@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/qnaMain.js}"></script>
+</head>
+<body>
+<div class="wrap main" layout:fragment="content">
+    <section class="d-flex justify-content-center">
+        <div class="NoticeWrap col-lg-6 col-sm-12">
+
+            <div class="PageTitle d-flex justify-content-center flex-column align-items-center">
+                <p class="font-weight-bold m-2">1:1문의</p>
+                <p style="border-bottom:3px solid #333; width:150px; height:1px;"></p>
+            </div>
+
+            <div class="m-2 px-2 col-12">
+                <div class="col-sm d-flex justify-content-end">
+                    <button class="btn btn-dark ms-3" data-bs-toggle="modal" data-bs-target="#exampleModal_qna"
+                            aria-haspopup="dialog" aria-label="1:1문의하기 열기">문의하기
+                    </button>
+                </div>
+            </div>
+            <!-- 1:1문의하기 Modal -->
+            <div class="modal fade" id="exampleModal_qna" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">1:1문의</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <form class="row g-3" action="/qna/addQuestion" method="post">
+                            <div class="modal-body">
+                                <div class="col-md-6">
+                                    <label class="form-label">문의제목</label>
+                                    <input type="text" class="form-control" name="qnaTitle">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label mt-2">문의내용</label>
+                                    <div class="form-floating">
+                                            <textarea class="form-control" style="height: 300px; resize: none;"
+                                                      name="questionContent"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-dark me-md-2" type="submit">등록</button>
+                                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">취소</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="">
+                <div class="notice d-flex flex-row justify-content-between py-3 border-top border-bottom px-2"
+                     style="background:#f8f8f8">
+                    <div class="">
+                        <strong>제목</strong>
+                    </div>
+                    <div class="">
+                        <strong>등록시간</strong>
+                    </div>
+                    <div class="">
+                        <strong>답변여부</strong>
+                    </div>
+
+                    <div class="">
+                        <strong></strong>
+                    </div>
+                </div>
+
+
+                <div class="d-flex justify-content-between flex-row" th:each="list,index:${qnaList}">
+                    <div class="notice my-1 d-flex align-self-center" data-bs-toggle="modal"
+                         th:attrappend="data-bs-target='#exampleModal_qna_view'+${index.index}"
+                         aria-haspopup="dialog" aria-label="1:1문의 상세" style="cursor: pointer; width:229px;"
+                         th:text="${list.qnaTitle}">
+                        문의 합니다
+                    </div>
+                    <div class=" my-1 d-flex align-self-center" style="width:330px;">
+                        2022-06-27-15:20
+                    </div>
+                    <div class=" my-1 d-flex  align-self-center" style="width:200px;">
+                        x
+                    </div>
+                    <div class=" my-1 d-flex justify-content-end">
+                        <button class="btn btn-outline-dark" th:onclick="'qnaDelete('+${list.qnaId}+')'">삭제</button>
+                    </div>
+
+                    <!-- 1:1문의하기 상세 Modal -->
+                    <div class="modal fade" th:id="'exampleModal_qna_view'+${index.index}" tabindex="-1"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">1:1문의</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-md-6">
+                                        <label class="form-label">문의제목</label>
+                                        <textarea class="qnaText autosize form-control pt-2"
+                                                  onkeydown="resize(this)" onkeyup="resize(this)"
+                                                  th:text="${list.qnaTitle}" readonly>문의 합니다
+                                                </textarea>
+                                        <p class="ps-1 text-secondary"
+                                           th:text="${list.formattedQuestionTime}+'에 작성되었습니다.'">2022-06-27-15:30에
+                                            작성되었습니다.</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">문의내용</label>
+                                        <div class="form-floating">
+                                                <textarea class="viewtext autosize form-control mb-2 pt-2"
+                                                          onkeydown="resize(this)" onkeyup="resize(this)" readonly
+                                                          th:text="${list.questionContent}">문의내용입니다
+                                                </textarea>
+                                        </div>
+                                    </div>
+                                    <div th:if="${list.answerContent}">
+                                        <label class="form-label">답변내용</label>
+                                        <textarea style="width:100%; min-height:100px;"
+                                                  class="p-2 text-start autosize" name="content" onkeydown="resize(this)"
+                                                  onkeyup="resize(this)" th:text="${list.answerContent}"
+                                                  readonly>답변내용작성구간</textarea>
+                                        <p class="ps-1 text-secondary"
+                                           th:text="${list.formattedAnswerTime}+'에 작성되었습니다.'">2022-06-27-15:30에
+                                            작성되었습니다.</p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-dark"
+                                                data-bs-dismiss="modal">확인</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination justify-content-center">
+                    <a th:if="${hasPrev}" th:href="@{/qna/main/(page=${previous})}" role="button"
+                       class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                    <a th:unless="${hasPrev}" th:href="@{/qna/main/(page=${previous})}" role="button"
+                       class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                    <a th:if="${hasNext}" th:href="@{/qna/main/(page=${next})}" role="button"
+                       class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                    <a th:unless="${hasNext}" th:href="@{/qna/main/(page=${next})}" role="button"
+                       class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

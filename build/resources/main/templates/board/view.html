@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/soldOutOrDelPost.js}"></script>
+    <script th:src="@{/js/comment.js}"></script>
+    <script th:src="@{/js/boardLike.js}"></script>
+
+</head>
+<body>
+<section>
+    <div class="wrap main" layout:fragment="content">
+        <div class="container">
+            <div class="row d-flex justify-content-around">
+                <div class="col-6">
+                    <input type="hidden" id="countOfBike" name="countOfBike" value="{{countOfBike}}"/>
+                    <input type="hidden" id="countOfComment" name="countOfComment" value="{{countOfComment}}"/>
+                    <p class="h2"><strong th:text="${boardInfo.title}"></strong></p>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item" th:text="${boardInfo.bikeYear}+'년식'">{{year}}</li>
+                            <li class="breadcrumb-item" th:text="${boardInfo.driveKm}+'KM'">{{run}}</li>
+                            <li class="breadcrumb-item" th:text="${boardInfo.location}">{{zone1}}</li>
+                        </ol>
+                    </nav>
+                </div>
+
+
+                <!-- 수정 삭제 판매완료-->
+                <div class="col-6 d-flex justify-content-between align-items-center">
+                    <p class="h2 text-success" style="margin-right:70px;"><strong th:text="${boardInfo.price}+'원'">{{prices}}</strong>
+                    </p>
+                    <div class="row" id="statusBtnArea">
+                        <th:block th:if="${tempMember}!=null">
+                            <div th:if="${memberInfo.memberId}==${tempMember.memberId}" class="btn3 d-flex">
+                                <a th:if="${boardInfo.sellYn != 'Y'}">
+                                    <button type="button" class="btn btn-outline-dark btn-sm py-3"
+                                            th:onclick="'soldOut('+${boardInfo.boardId}+')'">판매완료
+                                    </button>
+                                </a>
+                                <a th:unless="${boardInfo.sellYn != 'Y'}">
+                                    <button type="button" class="btn btn-outline-dark btn-sm py-3"
+                                            th:onclick="'soldOutCancel('+${boardInfo.boardId}+')'">판매완료취소
+                                    </button>
+                                </a>
+                                <a th:href="@{/board/modify/(boardId=${boardInfo.boardId})}">
+                                    <button type="button" class="btn btn-outline-dark btn-sm py-3">수정</button>
+                                </a>
+                                <button type="button" class="btn btn-danger btn-sm py-3"
+                                        th:onclick="'deleteBoard('+${boardInfo.boardId}+')'">삭제
+                                </button>
+                            </div>
+                            <!-- 좋아요♥-->
+                            <div th:unless="${memberInfo.memberId}==${tempMember.memberId}" class="btn2 mr-5">
+                                <button th:if="${like}==null" type="button" class="btn btn-dark"
+                                        th:onclick="'addLike('+ ${tempMember.memberId}+','+${boardInfo.boardId}+',\'board\')'">
+                                    찜♡
+                                </button>
+                                <button th:unless="${like}==null" type="button" class="btn btn-dark"
+                                        th:onclick="'delLike('+${like.likeId}+')'">찜❤
+                                </button>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+            <!-- Swiper -->
+<!--            <div class="col-12">-->
+<!--                <div class="swiper mySwiper2 imagePreview addimg" style="background:#888; ">-->
+<!--                    <div class="swiper-wrapper" style="aspect-ratio: 100/60;">-->
+<!--                        <div class="swiper-slide" style="background:no-repeat center / 70% 100%;"-->
+<!--                             th:each="list : ${fileList}">-->
+<!--                            <img th:src="'../'+${list.filePath}+${list.saveFileNm}"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="swiper-button-next text-white"></div>-->
+<!--                    <div class="swiper-button-prev text-white"></div>-->
+<!--                </div>-->
+<!--                <div thumbsSlider="" class="swiper mySwiper">-->
+<!--                    <div class="swiper-wrapper">-->
+<!--                        <div class="swiper-slide" th:each="list : ${fileList}">-->
+<!--                            <img th:src="'../'+${list.filePath}+${list.saveFileNm}"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="bikeViewSwiper border">
+                <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                     class="swiper mySwiper2 addimg">
+                    <div class="swiper-wrapper" th:each="list : ${fileList}" style="aspect-ratio: 100/60;">
+                        <div class="swiper-slide" style="background:no-repeat center / 70% 100%;">
+                            <img src="https://swiperjs.com/demos/images/nature-1.jpg"
+                                 th:src="'../'+${list.filePath}+${list.saveFileNm}" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                        </div>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+                <div thumbsSlider="" class="swiper mySwiper border">
+                    <div class="swiper-wrapper" th:each="list : ${fileList}">
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-1.jpg"
+                                 th:src="'../'+${list.filePath}+${list.saveFileNm}" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                var swiper = new Swiper(".mySwiper", { // 아래 작은 슬라이드
+                    spaceBetween: 10, // 슬라이드 사이 여백
+                    slidesPerView: 4, // 한 슬라이드에 보여줄 갯수
+                    freeMode: true,
+                    watchSlidesProgress: true,
+                });
+                var swiper2 = new Swiper(".mySwiper2", { // 메인 슬라이드
+                    spaceBetween: 10, // 슬라이드 사이 여백
+                    navigation: { // 페이지 양쪽 버튼
+                        nextEl: ".swiper-button-next",
+                        prevEl: ".swiper-button-prev",
+                    },
+                    thumbs: {
+                        swiper: swiper,
+                    },
+                    autoplay: { // 자동슬라이드
+                        delay: 5000, // 시간 설정
+                        disableOnInteraction: false, //스와이프 후 자동 재생 설정
+                    },
+                    loop: true, // 슬라이드 반복 여부
+                    loopAdditionalSlides: 1, // 반복 시 마지막 슬라이드에서 다음 슬라이드가 안보이는 현상 수정
+                });
+            </script>
+
+            <!-- 업로드페이지 -->
+            <div class="UploadPageWrap ">
+                <div class="form-wrap col-lg-7 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="row" style="text-align: left;">
+                            <!-- 판매자정보 -->
+                            <div class="col-lg-12">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">🏍️판매자정보</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="table-active">닉네임</td>
+                                        <td th:text="${memberInfo.nickName}">{{name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">판매지역</td>
+                                        <td th:text="${boardInfo.location}+' '+${boardInfo.locationDetail}">
+                                            {{zone1}}
+                                            {{zone2}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 매물정보 -->
+                            <div class="col-lg-6">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">🏍️매물정보</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="table-active">제조회사</td>
+                                        <td th:text="${boardInfo.bikeBrand}">{{company}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">모델</td>
+                                        <td th:text="${boardInfo.bikeModel}">{{type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">제조년도</td>
+                                        <td th:text="${boardInfo.bikeYear}+'년식'">{{year}}년식</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">주행거리</td>
+                                        <td th:text="${boardInfo.driveKm}+'KM'">{{run}}Km</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">색상</td>
+                                        <td th:text="${boardInfo.bikeColor}">{{color}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">기어방식</td>
+                                        <td th:text="${boardInfo.bikeGear}">{{Gear}}</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- 매물정보2 -->
+                            <div class="col-lg-6">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">매물정보</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="table-active">배기량</td>
+                                        <td th:text="${boardInfo.bikeCc}">{{cc}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">대차/교환</td>
+                                        <td th:text="${boardInfo.changeAgree}=='Y'?'가능':'불가능'">{{exchange}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">가격절충</td>
+                                        <td th:text="${boardInfo.negoAgree}=='Y'?'가능':'불가능'">{{sale}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="table-active">튜닝유무</td>
+                                        <td th:text="${boardInfo.tuningYn}=='Y'?'유':'무'">{{tuning}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">사고유무</td>
+                                        <td th:text="${boardInfo.accidentYn}=='Y'?'유':'무'">{{accident}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">A/S</td>
+                                        <td th:text="${boardInfo.afterServiceYn}=='Y'?'가능':'불가능'">{{ase}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="text-align: left;">
+                            <!-- 옵션정보 -->
+                            <div class="col-lg-12">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">옵션정보</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="table-active">편의옵션</td>
+                                        <td>
+                                            <div th:text="${boardInfo.tuningOptions1}">
+                                                {{option1}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">성능옵션</td>
+                                        <td>
+                                            <div th:text="${boardInfo.tuningOptions2}">
+                                                {{option2}}
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-active">외관옵션</td>
+                                        <td>
+                                            <div th:text="${boardInfo.tuningOptions3}">
+                                                {{option3}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="text-align: left;">
+                            <!-- 바이크 서류 -->
+                            <div class="col-lg-12">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">서류</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="table-active">서류</td>
+                                        <td>
+                                            <div th:text="${boardInfo.documents}">
+                                                {{document}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 설명 및 추가정보 -->
+                    <p class="detailtextarea text-start fw-bold mt-3">설명 및 추가정보</p>
+                    <div class="form-floating">
+                                        <textarea class="viewtext autosize form-control mb-4" onkeydown="resize(this)"
+                                                  onkeyup="resize(this)" placeholder="추가 바람"
+                                                  th:text="${boardInfo.content}"
+                                                  readonly>{{content}}
+                                        </textarea>
+                    </div>
+                    <!-- 댓글 -->
+                    <div class="durianPhoneComment">
+                        <div class="commentwrap">
+                            <span class="fw-bold d-flex justify-content-start align-items-start">댓글</span>
+                            <!-- 댓글 입력 창 -->
+                            <div class="comments bg-light" th:if="${tempMember}">
+                                <form>
+                                    <input type="hidden" th:value="${boardInfo.boardId}" id="relatId">
+                                    <input type="hidden" th:if="${tempMember}!=null" th:value="${tempMember.memberId}"
+                                           id="memberId">
+                                    <input type="hidden" id="relatDiv" value="phone">
+                                    <textarea id="comment_content"
+                                              placeholder="타인에게 불쾌감을 주는 욕설 및 비하하는 단어들은 자제 부탁드립니다."></textarea>
+                                    <div class=" d-flex justify-content-end align-items-center pb-2 bg-light">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="privateYn" value="Y">
+                                            <label class="form-check-label mb-1 d-flex fs-6"><i
+                                                    class="bi bi-lock"></i><span>비밀댓글</span></label>
+                                        </div>
+                                        <button class="viewBtn btn btn-outline-dark btn-sm" type="button"
+                                                id="add_comment_btn">
+                                            등록
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--댓글목록-->
+                        <!--댓글목록-->
+                        <th:block th:each="list,index:${commentList}">
+                            <div class="commentbox d-flex justify-content-between align-items-center border-bottom py-3">
+                                <div class="commentbox-text col-12 d-flex justify-content-between align-items-center">
+                                    <div class="commentbox1">
+                                        <span class="commentname fw-bold" th:text="${list.memberEntity.nickName}"> 주인</span>
+                                        <th:block th:if="${boardInfo.memberEntity.memberId}==${list.memberEntity.memberId}">
+                                            <span class="commentname1 fw-bold text-white">작성자</span>
+                                        </th:block>
+                                        <div class="commentText fs-6 py-2" th:if="${list.privateYn}!='Y'"
+                                             th:text="${list.content}">
+                                            댓글내용입니다
+                                        </div>
+                                        <th:block th:if="${list.privateYn}=='Y'">
+                                            <th:block th:unless="${tempMember}">
+                                                <div class="commentText fs-6 text-danger py-2 px-2">
+                                                    비밀댓글입니다
+                                                </div>
+                                            </th:block>
+                                            <th:block th:if="${tempMember}">
+                                                <th:block
+                                                        th:if="${list.memberEntity.memberId}!=${tempMember.memberId}and${memberInfo.memberId}!=${tempMember.memberId}">
+                                                    <div class="commentText fs-6 text-danger py-2 px-2">
+                                                        비밀댓글입니다
+                                                    </div>
+                                                </th:block>
+                                                <th:block
+                                                        th:if="${list.memberEntity.memberId}==${tempMember.memberId}or${memberInfo.memberId}==${tempMember.memberId}">
+                                                    <div class="commentText fs-6 text-danger py-2 px-2">
+                                                        비밀댓글입니다
+                                                    </div>
+                                                    <div class="commentText fs-6 py-2" th:text="${list.content}">
+                                                        댓글내용입니다
+                                                    </div>
+                                                </th:block>
+                                            </th:block>
+                                        </th:block>
+                                        <div class="commetTime" th:text="${list.formattedModifiedDate}">
+                                            2022-06-20 16:15:18
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" d-flex justify-content-end align-items-center pb-1 bg-dark bg-opacity-10 pt-1 border-bottom">
+                                <th:block th:if="${tempMember}">
+                                    <button class="viewBtn btn btn-outline-dark mx-1 btn-sm" type="button"
+                                            th:onclick="'commentToggle('+${index.index}+')'">답글쓰기
+                                    </button>
+                                    <button th:if="${tempMember.memberId}==${list.memberEntity.memberId}"
+                                            th:onclick="'delComment('+${list.getCommentId()}+')'"
+                                            class="viewBtn btn btn-outline-danger mx-1 btn-sm" type="button">삭제
+                                    </button>
+                                </th:block>
+                            </div>
+                            <!-- 일반댓글의 대댓글 입력창 시작구간 -->
+                            <div class="commentaginbox_again" th:id="'commentaginbox_again'+${index.index}">
+                                <div class="d-flex col-12 ">
+                                    <i class="bi bi-arrow-return-right"></i>
+                                    <div
+                                            class="col-12 commentbox d-flex justify-content-between align-items-center px-3 py-1 flex-column">
+                                        <div class="commentbox-text col-12 d-flex justify-content-between align-items-center">
+                                            <div class="commentbox d-flex col-12">
+
+                                                <div class="commentbox2 d-flex">
+                                        <textarea placeholder="대댓글입력칸"
+                                                  th:id="reCommentContent+${index.index}"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                                class="commentagin col-12 d-flex justify-content-end align-items-center pb-1 bg-dark bg-opacity-10 pt-1 ">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox"
+                                                       th:id="reCommentPrivateYn+${index.index}">
+                                                <label class="form-check-label mb-1 d-flex fs-6"><i
+                                                        class="bi bi-lock"></i><span>비밀댓글</span></label>
+                                            </div>
+                                            <input type="hidden" th:id="reCommentTargetNickName+${index.index}"
+                                                   th:value="${list.memberEntity.nickName}">
+                                            <button class="viewBtn btn btn-outline-dark mx-1 btn-sm" type="button"
+                                                    th:onclick="'addReComment_1('+${list.getCommentId()}+','+${index.index}+')'">등록
+                                            </button>
+                                            <button class="viewBtn btn btn-outline-danger mx-1 btn-sm" type="button"
+                                                    th:onclick="'commentToggle('+${index.index}+')'">취소
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 일반댓글의 대댓글 입력창 끝 -->
+                            <!--대댓글-->
+                            <th:block th:each="reCommnetList,index_2:${list.reCommentEntityList}">
+                                <div class="commentaginbox d-flex col-12">
+                                    <i class="bi bi-arrow-return-right"></i>
+                                    <div class="col-12 commentbox d-flex justify-content-between align-items-center px-3 py-1 flex-column">
+                                        <div class="commentbox-text2 col-12 d-flex justify-content-between align-items-center">
+                                            <div class="commentbox d-flex col-12">
+
+                                                <div class="commentbox3 d-flex flex-column">
+                                        <span class="commentname fw-bold px-2"
+                                              th:text="${reCommnetList.memberEntity.nickName}"> 111</span>
+                                                    <th:block th:if="${boardInfo.memberEntity.memberId}==${list.memberEntity.memberId}">
+                                                        <span class="commentname1 fw-bold text-white">작성자</span>
+                                                    </th:block>
+                                                    <div>
+                                                        <th:block th:if="${reCommnetList.privateYn}!='Y'">
+                                                <span class="commentname fw-bold px-2"
+                                                      th:text="${reCommnetList.targetNickname}"> 222</span>
+                                                            <span class="commentText fs-6 py-2 px-2"
+                                                                  th:text="${reCommnetList.content}">재댓글입니다</span>
+                                                        </th:block>
+                                                        <th:block th:if="${reCommnetList.privateYn}=='Y'">
+                                                            <th:block th:unless="${tempMember}">
+                                                    <span class="commentname fw-bold px-2"
+                                                          th:text="${reCommnetList.targetNickname}"> 222</span>
+                                                                <span class="commentText fs-6 text-danger py-2 px-2">
+                                                        비밀댓글입니다
+                                                    </span>
+                                                            </th:block>
+                                                            <th:block th:if="${tempMember}">
+                                                                <th:block
+                                                                        th:if="${reCommnetList.memberEntity.memberId}!=${tempMember.memberId}and${memberInfo.memberId}!=${tempMember.memberId}">
+                                                        <span class="commentname fw-bold px-2"
+                                                              th:text="${reCommnetList.targetNickname}"> 222</span>
+                                                                    <span class="commentText fs-6 text-danger py-2 px-2">
+                                                        비밀댓글입니다
+                                                    </span>
+                                                                </th:block>
+                                                                <th:block
+                                                                        th:if="${reCommnetList.memberEntity.memberId}==${tempMember.memberId}or${memberInfo.memberId}==${tempMember.memberId}">
+                                                                    <div class="commentText fs-6 text-danger py-2 px-2">
+                                                                        비밀댓글입니다
+                                                                    </div>
+                                                                    <span class="commentname fw-bold px-2"
+                                                                          th:text="${reCommnetList.targetNickname}"> 222</span>
+                                                                    <span class="commentText fs-6 py-2"
+                                                                          th:text="${reCommnetList.content}">
+                                                        댓글내용입니다
+                                                    </span>
+                                                                </th:block>
+                                                            </th:block>
+                                                        </th:block>
+                                                    </div>
+                                                    <div class="commetTime px-2"
+                                                         th:text="${reCommnetList.modifiedDate}?${reCommnetList.formattedModifiedDate}:${reCommnetList.formattedCreatedDate}">
+                                                        2022-06-20 16:15:18
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" d-flex justify-content-end align-items-center pb-1 bg-dark bg-opacity-10 pt-1 border-bottom">
+                                    <th:block th:if="${tempMember}">
+                                        <button class="viewBtn btn btn-outline-dark mx-1 btn-sm" type="button"
+                                                th:onclick="'commentToggle(\''+${index.index}+'_'+${index_2.index}+'\')'">답글쓰기
+                                        </button>
+                                        <button th:if="${tempMember.memberId}==${reCommnetList.memberEntity.memberId}"
+                                                th:onclick="'delReComment('+${reCommnetList.getCommentId()}+')'"
+                                                class="viewBtn btn btn-outline-danger mx-1 btn-sm" type="button">삭제
+                                        </button>
+                                    </th:block>
+                                </div>
+                                <!-- 재댓글의 대댓글 입력창 시작구간 -->
+                                <div class="commentaginbox_again2" th:id="'commentaginbox_again'+${index.index}+'_'+${index_2.index}">
+                                    <div class="d-flex col-12 ">
+                                        <i class="bi bi-arrow-return-right"></i>
+                                        <div
+                                                class="col-12 commentbox d-flex justify-content-between align-items-center px-3 py-1 flex-column">
+                                            <div class="commentbox-text col-12 d-flex justify-content-between align-items-center">
+                                                <div class="commentbox d-flex col-12">
+
+                                                    <div class="commentbox2 d-flex">
+                                            <textarea placeholder="대댓글입력칸"
+                                                      th:id="reCommentContent+${index.index}+'_'+${index_2.index}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                    class="commentagin col-12 d-flex justify-content-end align-items-center pb-1 bg-dark bg-opacity-10 pt-1 ">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           th:id="reCommentPrivateYn+${index.index}+'_'+${index_2.index}">
+                                                    <label class="form-check-label mb-1 d-flex fs-6"><i
+                                                            class="bi bi-lock"></i><span>비밀댓글</span></label>
+                                                </div>
+                                                <input type="hidden" th:id="reCommentTargetNickName+${index.index}+'_'+${index_2.index}"
+                                                       th:value="${reCommnetList.memberEntity.nickName}">
+                                                <button class="viewBtn btn btn-outline-dark mx-1 btn-sm" type="button"
+                                                        th:onclick="'addReComment('+${list.getCommentId()}+',\''+${index.index}+'_'+${index_2.index}+'\')'">
+                                                    등록
+                                                </button>
+                                                <button class="viewBtn btn btn-outline-danger mx-1 btn-sm" type="button"
+                                                        th:onclick="'commentToggle(\''+${index.index}+'_'+${index_2.index}+'\')'">취소
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 재댓글의 대댓글 입력창 끝 -->
+                            </th:block>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

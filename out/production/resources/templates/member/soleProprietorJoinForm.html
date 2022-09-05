@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script src="/js/joinScript.js"></script>
+</head>
+
+<body layout:fragment="content">
+<section>
+    <!-- 회원가입 상단 설명 부분 -->
+    <div
+            class="PageListBox2 bg-secondary p-2 text-dark bg-opacity-10 d-flex justify-content-center align-items-center">
+        <div class=" PageTitle container">
+            <p class="font-weight-bold text-center d-inline">개인사업자 회원가입</p>
+            <div class="phoneRegionCircle">
+                <span></span>
+            </div>
+            <span class="phoneRegion fs-6 border-bottom"> <span></span> 회원가입을 진행해 주세요.
+                </span>
+        </div>
+    </div>
+    <div class="container d-flex justify-content-center">
+        <div class="join-box con">
+            <form name="test" class="scrollbar" method="POST" enctype="multipart/form-data"
+                  onsubmit="submitSoleProprietorJoinForm(this); return false;">
+                <input type="hidden" name="realName" th:value="${param.name}">
+                <div class="form-floating d-flex flex-row my-3">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-building text-danger"></i></div>
+                    <input type="text" class="form-control"  name="businessName">
+                    <label class="joinText">상호명을 입력해주세요</label>
+                </div>
+                <div class="form-floating d-flex flex-row my-3">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-person text-danger"></i></div>
+                    <input type="text" class="form-control"  name="ceoName">
+                    <label class="joinText">대표자 성명을 입력해주세요</label>
+                </div>
+                <div class="form-floating d-flex flex-row my-3">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-building text-danger"></i></div>
+                    <input type="text" class="form-control"  name="businessNum">
+                    <label class="joinText">사업자등록번호를 입력해주세요</label>
+                </div>
+                <div class="form-floating d-flex flex-row my-3">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-building text-danger"></i></div>
+                    <input type="text" class="form-control"  name="businessLocation">
+                    <label class="joinText">사업장소재지를 입력해주세요</label>
+                </div>
+                <div class="form-floating d-flex flex-row my-3">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-building text-danger"></i></div>
+                    <input type="text" class="form-control"  name="businessCondition">
+                    <label class="joinText">사업의종류:업태를 입력해주세요</label>
+                </div>
+                <div class="form-floating d-flex flex-row my-3">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-building text-danger"></i></div>
+                    <input type="text" class="form-control"  name="businessItem">
+                    <label class="joinText">사업의종류:종목을 입력해주세요</label>
+                </div>
+
+
+                <div class="form-floating d-flex flex-row my-3">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-person"></i></div>
+                    <input type="text" class="form-control" id="username" name="username">
+                    <label class="joinText">아이디를 입력해주세요</label>
+                    <div class="d-md-flex justify-content-md-end">
+                        <button type="button" class="joinBtn input-group-text btn btn-outline-secondary"
+                                onclick="idCheck()">중복체크
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-floating d-flex flex-row ">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-person"></i></div>
+                    <input type="text" class="form-control" id="nickName" name="nickName">
+                    <label class="joinText">닉네임을 입력해주세요.</label>
+                    <div class="d-md-flex justify-content-md-end">
+                        <button type="button" class="joinBtn input-group-text btn btn-outline-secondary"
+                                onclick="nickCheck()">중복체크
+                        </button>
+                    </div>
+                </div>
+
+
+                <div class="form-floating my-3 d-flex flex-row">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-envelope"></i></div>
+                    <input type="email" class="form-control" name="email" id="email">
+                    <label class="joinText">이메일을 입력해주세요.</label>
+                </div>
+
+
+                <div class="form-floating d-flex flex-row my-3">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-key"></i></div>
+                    <input type="password" class="form-control" id="password" name="password">
+                    <label class="joinText">비밀번호를 입력해주세요.</label>
+                </div>
+                <div class="form-floating d-flex flex-row">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-key"></i></div>
+                    <input type="password" class="form-control" onkeyup="fn_compare_pwd()" id="chkPW" name="chkPW">
+                    <label class="joinText" id="s_result">비밀번호 확인해주세요.</label>
+                </div>
+                <div class="form-floating d-flex flex-row my-3">
+                    <div class="joinIcon col-1 fs-2"><i class="bi bi-clipboard-minus text-danger"></i></div>
+                    <input type="text" class="upload_text" readonly="readonly">
+                    <div class="upload-btn_wrap d-md-flex justify-content-md-end">
+                        <button type="button" class="joinBtn input-group-text btn btn-outline-secondary"
+                                title="파일찾기">
+                            <span>파일찾기</span>
+                        </button>
+                        <input type="file" class="input_file" title="파일찾기" name="file">
+                    </div>
+                </div>
+
+
+
+                <div class="g-terms-checkbox">
+                    <div class="title text-danger">두리안의 서비스약관에 동의해주세요.</div>
+                    <div class="checkall">
+                        <div id="c-checkbox-item_checkall" class="c-checkbox-item">
+                            <div class="wrapper">
+                                <input type="checkbox" id="chk_checkall" aria-hidden="true">
+                                <label for="chk_checkall" role="checkbox" aria-label="모두 동의합니다."
+                                       aria-checked="false">
+                                    <span aria-hidden="true">모두 동의합니다.</span>
+                                </label>
+                            </div>
+                            <span class="message">
+                                    동의에는 필수 및 선택 목적(광고성 정보 수신 포함)에 대한 동의가 포함되어 있으며,
+                                    선택 목적의 동의를 거부하시는 경우에도 서비스 이용이 가능합니다.
+                                </span>
+                        </div>
+
+
+                        <div class="error-tip">
+                            <i class="icon icon-error-tip"></i>
+                            <span class="text-danger">필수 항목에 모두 동의해주세요.</span>
+                        </div>
+
+
+                        <ul class="terms">
+                            <div id="c-checkbox-item_join-terms-fourteen" class="c-checkbox-item">
+                                <div class="wrapper">
+                                    <input type="checkbox" class="chk" id="chk_join-terms-fourteen"
+                                           aria-hidden="true" parent-id>
+                                    <label for="chk_join-terms-fourteen" role="checkbox" aria-label="만 19세 이상입니다."
+                                           aria-checked="false">
+
+                                        <span class="sub" aria-hidden="true">[필수] 만 15세 이상입니다.</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="accordion accordion-flush" id="accordionFlushExample1">
+                                <div class="accordion-item">
+                                    <div class="accordion-header d-flex" id="flush-headingOneitem">
+                                        <input type="checkbox" class="chk" id="chk_join-terms-service"
+                                               aria-hidden="true" parent-id="">
+                                        <button style="padding:3px 0px 3px 0" class="accordion-button collapsed"
+                                                type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#flush-collapseOneitem" aria-expanded="false"
+                                                aria-controls="flush-collapseOneitem">
+                                            [필수] 이용약관 동의
+                                        </button>
+                                    </div>
+                                    <div id="flush-collapseOneitem" style=" height:300px; "
+                                         class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                                         data-bs-parent="#accordionFlushExample">
+                                        <div class="joinModal modal-body" style="height:300px; overflow: scroll; ">
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제1조 (목적 등) </span></p>
+                                            <p class="HStyle0"><span style="position: relative;">1. 이 서비스 약관은 회원이
+                                                        ㈜콩게임즈(이하 ""회사"")에서 제공하는 인터넷 사이트 두리안(www.durianshop.co.kr) 서비스(이하
+                                                        ""서비스"")를 이용함에 있어 회사와 회원 간의 권리, 의무 및 책임사항 등을 규정함을 목적으로
+                                                        합니다.</span></p>
+                                            <p class="HStyle0"><span style="position: relative;">2. 회원이 되고자 하는 이용자가
+                                                        회사가 정한 소정의 절차를 거쳐서 ""동의"" 버튼을 누르면 본 약관에 동의하는 것으로 간주합니다. 본 약관에
+                                                        정하는 이외의 회사와 회원의 권리, 의무 및 책임사항에 관해서는 전기통신사업법 기타 대한민국의 관련 법령과 상관습에
+                                                        의합니다.</span></p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제2조 (회원의 정의)</span></p>
+                                            <p>회원이란 회사가 제공하는 서비스에 접속하여 본 약관에 따라 동의하에 가입하여 서비스를 제공받는 자를 말합니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제3조 (서비스 이용 계약) </span></p>
+                                            <p class="HStyle0"><span style="position: relative;">1. 회원 가입을 희망하는 이용자는
+                                                        회사가 정한 가입 양식에 따라 회원정보를 기입하고 ""동의"" 버튼을 누르는 방법으로 회원 가입을
+                                                        신청합니다.</span></p>
+                                            <p class="HStyle0"><span style="position: relative;">2. 회사는 제1항과 같이 회원으로
+                                                        가입을 신청한 자가 다음 각 호에 해당하지 않는 한 신청한 자를 회원으로 등록합니다.</span></p>
+                                            <p class="HStyle0"><span style="position: relative;">- 등록 내용에 허위, 기재누락,
+                                                        오기가 있는 경우</span></p>
+                                            <p class="HStyle0"><span style="position: relative;">- 제6조 제2항에 해당하는 회원
+                                                        자격 제한 및 정지, 상실을<br>&nbsp 한 경험이 있었던 경우</span></p>
+                                            <p class="HStyle0"><span style="position: relative;">- 기타 회원으로 등록하는 것이
+                                                        회사의 서비스 운영 및 <br>&nbsp 기술상 현저히 지장이 있다고 판단되는 경우</span></p>
+                                            <p class="HStyle0"><span style="position: relative;">3. 회원가입계약의 성립시기는
+                                                        회사의 승낙이 가입신청자에게 도달한 시점으로 합니다.</span></p>
+                                            <p class="HStyle0"><span style="position: relative;">4. 회원은 제1항의 회원정보 기재
+                                                        내용에 변경이 발생한 경우, 즉시 변경사항을 정정하여 기재하여야 합니다.</span></p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제4조 (서비스의 제공 및 변경)</span></p>
+                                            <p>1. 회사는 회원에게 아래와 같은 서비스를 제공합니다.<br />- 두리안(www.durianshop.co.kr)
+                                                서비스<br />- 회사가 자체 개발하거나 다른 회사와의 협력계약 등을 통해 회원들에게 제공할일체의 서비스<br />2.
+                                                ""서비스제공자""는 그 변경될 서비스의 내용 및 제공일자를 제7조 제2항에서 정한 방법으로 이용자에게 통지하고, 제1항에
+                                                정한 서비스를 변경하여 제공할 수 있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제5조 (서비스의 중단)</span></p>
+                                            <p>1. 회사는 컴퓨터 등 정보통신설비의 보수점검/교체 및 고장, 통신의 두절 등의 사유가 발생한 경우에는 서비스의 제공을
+                                                일시적으로 중단할 수 있고, 새로운 서비스로의 교체 기타 ""서비스제공자""가 적절하다고 판단하는 사유에 기하여 현재
+                                                제공되는 서비스를 완전히 중단할 수 있습니다.<br />2. 제1항에 의한 서비스 중단의 경우에는 ""서비스제공자""는
+                                                제7조 제2항에서 정한 방법으로 ""회원""에게 통지합니다. 다만, 회사가 통제할 수 없는 사유로 인한 서비스의
+                                                중단(시스템 관리자의 고의. 중과실이 없는 시스템 장애 또는 다운 등)으로<br />인하여 사전 통지가 불가능한 경우에는
+                                                그러하지 아니합니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제6조 (회원 탈퇴 및 자격 상실 등)</span></p>
+                                            <p>1. 회원은 회사에 언제든지 자신의 회원등록 정보를 말소해 줄 것(회원 탈퇴)을 요청할 수 있으며 회사는 위 요청을 받은
+                                                즉시 7일간의 유예기간을 거친후 해당 회원<br />의 정보 말소를 시행합니다.<br />2. 회원이 다음 각 호의 사유에
+                                                해당하는 경우, 회사는 회원의 자격을 적절한 방법<br />으로 제한 및 정지, 상실시킬 수 있습니다.<br />- 허위
+                                                내용을 등록한 경우<br />- 다른 사람의 서비스 이용을 방해하거나 그 정보를 도용하는 등
+                                                전자거래질서를<br />위협하는 경우<br />- 서비스를 이용하여 법령과 본 약관이 금지하거나 공서양속에 반하는 행위를
+                                                하<br />는 경우<br />3. 회사가 회원의 회원자격을 상실시키기로 결정한 경우에는 회원등록 정보를
+                                                말<br />소합니다.<br />4. 이용자가 서비스 이용 도중 12개월 이상 로그인 기록이 없는 경우, 회사는
+                                                해당<br />회원의 자격을 상실시킬 수 있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제7조 (회원에 대한 통지)</span></p>
+                                            <p>1. 회사가 특정 회원에게 서비스에 관한 통지를 하는 경우 회원정보에 등록된 메일주소를 사용할 수 있습니다.<br />2.
+                                                회사가 불특정다수 회원에 대한 통지를 하는 경우 7일 이상 공지사항 게시판 혹은 관련 서비스 게시판에 게시함으로써 개별
+                                                통지에 갈음할 수 있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제8조 (회원의 개인정보)</span></p>
+                                            <p>1. 회사는 ""정보통신망 이용촉진 및 정보보호 등에 관한 법률 (2016.7.25)""에 의거하여 회원으로 가입 시
+                                                아이디, 비밀번호, 닉네임, 이메일, 가입인증정보를 필수적인 개인정보로 입력 받습니다.<br />2. 회사는 회원의 이름,
+                                                생년월일의 개인정보 수집에 대해 실명인증 서비스를 제공하는 "" ""에 일임하며, 개인정보 수집 및 보관에 대해서는
+                                                &ldquo;정보통신망 이용촉진 및 정보보호 등에 관한 법률&rdquo;에 고지된 바를 따릅니다.<br />3. 회사는
+                                                "" ""와의 협의에 따라 회원이 가입 시 등록한 개인정보의 확인 및 열람을 요청할 수 있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제9조 (회사의 의무)</span></p>
+                                            <p>1. 회사는 법령과 본 약관이 금지하거나 공서양속에 반하는 행위를 하지 않으며 본약관이 정하는 바에 따라 지속적이고,
+                                                안정적으로 서비스를 제공하기 위해서 노력합니다.<br />2. 회사는 회원이 안전하고 편리하게 서비스를 이용할 수 있도록
+                                                시스템을 구축합니다.<br />3. 회사는 회원이 원하지 않는 영리목적의 광고성 전자우편을 발송하지
+                                                않습니다.<br />4. 회사는 회원이 서비스를 이용함에 있어 회원에게 법률적인 증명이 가능한 고의 또는 중대한 과실을
+                                                입힐 경우 이로 인한 손해를 배상할 책임이 있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제10조 (회원의 ID 및 비밀번호에 대한 의무)</span>
+                                            </p>
+                                            <p>1. 회사가 관계법령, 『개인정보 보호법』에 의해서 그 책임을 지는 경우를 제외하고, 자신의 ID와 비밀번호에 관한
+                                                관리책임은 각 회원에게 있습니다.<br />2. 회원은 자신의 ID 및 비밀번호를 제3자에게 이용하게 해서는 안됩니다.
+                                            </p>
+                                            <p>3. 회원은 자신의 ID 및 비밀번호를 도난 당하거나 제3자가 사용하고 있음을 인지한 경우에는 바로 회사에 통보하고 회사의
+                                                안내가 있는 경우에는 그에 따라야 합니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제11조 (회원의 의무)</span></p>
+                                            <p>1. 회원은 다음 각 호의 행위를 하여서는 안됩니다.<br />- 회원가입신청 또는 변경 시 허위내용을 등록하는
+                                                행위<br />- 회사 및 제3자의 지적재산권을 침해하거나 회사의 권리와 업무 또는 제3자의 권리와 활동을 방해하는
+                                                행위<br />- 다른 회원의 ID를 도용하는 행위<br />- 관련 법령에 의하여 전송 또는 게시가 금지되는 정보(컴퓨터
+                                                프로그램 등)의 게시 또는 전송하는 행위<br />- 회사의 직원 또는 서비스의 관리자를 가장하거나 타인의 명의를 도용하여
+                                                정보를 게시, 전송하는 행위<br />- 컴퓨터 소프트웨어, 하드웨어, 전기통신 장비의 정상적인 가동을 방해, 파괴할
+                                                목적으로 고안된 소프트웨어 바이러스, 기타 다른 컴퓨터 코드, 파일, 프로그램을 포함하고 있는 자료를 게시하거나 전송하는
+                                                행위<br />- 스토킹(stalking) 등 다른 회원을 괴롭히는 행위<br />- 다른 회원에 대한 개인정보를 그 동의
+                                                없이 수집, 저장, 공개하는 행위<br />- 불특정 다수의 자를 대상으로 하여 광고 또는 선전을 게시하거나 음란물을
+                                                게시하는 행위<br />- 회사가 제공하는 서비스에 게시된 공지사항 규정을 위반하는 행위<br />2. 제1항에 해당하는
+                                                행위를 한 회원이 있을 경우 회사는 본 약관 제6조 제2, 3항에서 정한 바에 따라 회원의 회원자격을 적절한 방법으로 제한
+                                                및 정지, 상실시킬 수 있습니다.<br />3. 회원은 그 귀책사유로 인하여 회사나 다른 회원이 입은 손해를 배상할 책임이
+                                                있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제12조 (공개게시물의 삭제)</span></p>
+                                            <p>1. 회원의 공개게시물의 내용이 다음 각 호에 해당하는 경우 회사는 회원에게 사전 통지 없이 해당 공개게시물을 삭제할 수
+                                                있고, 해당 회원의 회원 자격을 제한, 정지 또는 상실시킬 수 있습니다.<br />- 다른 회원 또는 제3자를 비방하거나
+                                                중상 모략으로 명예를 손상시키는 내용<br />- 공서양속에 위반되는 내용의 정보, 문장, 도형 등을 유포하는
+                                                내용<br />- 허위매물로 다른 회원을 기만하는 행위 및 범죄행위 등와 관련이 있다고 판단되는 내용<br />- 다른
+                                                회원 또는 제3자의 저작권 등 기타 권리를 침해하는 내용<br />- 기타 관계 법령에 위배된다고 판단되는 내용</p>
+                                            <p>- 종교적, 정치적 분쟁을 야기하는 내용으로서, 이러한 분쟁으로 인하여 회사의 업무가 방해되거나 방해되리라고 판단되는 경우
+                                            </p>
+                                            <p>2. 회원의 공개게시물로 인한 법률상 이익 침해를 근거로, 다른 회원 또는 제3자가 회원 또는 회사를 대상으로 하여
+                                                민형사상의 법적 조치(예: 고소, 가처분신청, 손해배상청구소송)를 취하는 동시에 법적 조치와 관련된 게시물의 삭제를
+                                                요청해오는 경우, 회사는 동 법적 조치의 결과(예: 검찰의 기소, 법원의 가처분결정, 손해배상판결)가 있을 때까지 관련
+                                                게시물에 대한 접근을 잠정적으로 제한할 수 있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제13조 (저작권의 귀속 및 게시물의 이용)</span></p>
+                                            <p>1. 회사가 작성한 저작물에 대한 저작권, 기타 지적재산권은 회사에 귀속합니다.<br />2. 회원은 서비스를 이용함으로써
+                                                얻은 정보를 회사의 사전승낙 없이 복제, 전송, 출판, 배포, 방송, 기타 방법에 의하여 영리목적으로 이용하거나 제3자에게
+                                                이용하게 하여서는 안됩니다.<br />3. 회원이 서비스 내에 게시한 게시물의 저작권은 게시한 회원에게
+                                                귀속됩니다.<br />단, 회사는 서비스의 운영, 전시, 전송, 배포, 홍보의 목적으로 회원의 별도의 허락없이 무상으로
+                                                저작권법에 규정하는 공정한 관행에 합치되게 합리적인 범위 내에서 다음과 같이 회원이 등록한 게시물을 사용할 수
+                                                있습니다.<br />- 서비스 내에서 회원 게시물의 복제, 수정, 개조, 전시, 전송, 배포 및 저작물성을 해치지 않는
+                                                범위 내에서의 편집 저작물 작성<br />- 미디어, 통신사 등 서비스 제휴 파트너에게 회원의 게시물 내용을 제공, 전시
+                                                혹은 홍보하게 하는 것. 단, 이 경우 회사는 별도의 동의 없이 회원의 이용자ID 외에 회원의 개인정보를 제공하지
+                                                않습니다.<br />- 회사는 전항 이외의 방법으로 회원의 게시물을 이용하고자 하는 경우, 전화, 팩스, 전자우편 등의
+                                                방법을 통해 사전에 회원의 동의를 얻어야 합니다.<br />- 회원이 이용계약 해지를 한 경우 회원 본인 ID에 기록된
+                                                보관자료(스크랩, 쪽지등)는 삭제됩니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제14조 (광고게재 및 광고주와의 거래)</span></p>
+                                            <p>1. 회사가 회원에게 서비스를 제공할 수 있는 서비스 투자기반의 일부는 광고게재를 통한 수익으로부터 나옵니다. 회원은 회원이
+                                                등록한 게시물의 내용을 활용한 광고개재 및 기타 서비스상에 노출되는 광고게재에 대해 동의합니다.<br />2. 회사는
+                                                서비스상에 게재되어 있거나 서비스를 통한 광고주의 판촉활동에 회원이 참여하거나 교신 또는 거래를 함으로써 발생하는 손실과
+                                                손해에 대해 책임을 지지 않습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제15조 (약관의 개정)</span></p>
+                                            <p>1. 회사는 『약관의 규제 등에 관한 법률』, 『전자거래기본법』, 『전자서명법』, 『정보통신망이용촉진 및 정보보호 등에 관한
+                                                법률』 등 관련법을 위배하지 않는 범위에서 본 약관을 개정할 수 있습니다.<br />2. 다만, 개정 내용이 회원에게
+                                                불리할 경우에는 적용일자 30일 이전부터 적용일자전일까지 공지합니다.<br />3. 회원은 변경된 약관에 대해 거부할
+                                                권리가 있습니다. 회원은 변경된 약관이 공지된 후 15일 이내에 거부의사를 표명할 수 있습니다. 회원이 거부하는 경우
+                                                회사는 당해 회원과의 계약을 해지할 수 있습니다. 만약 회원이 변경된 약관이 공지된 후 15일 이내에 거부의사를 표시하지
+                                                않는 경우에는 동의하는 것으로 간주합니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">제16조 (재판관할)</span></p>
+                                            <p>회사와 회원간에 발생한 서비스 이용에 관한 분쟁에 대하여는 대한민국 법을 적용하며, 본 분쟁으로 인한 소는 민사소송법상의
+                                                관할을 가지는 대한민국의 법원에 제기합니다.</p>
+                                            <p>&lt;부칙&gt;<br />이 약관은 2022년 월 일부터 적용하고 이전의 모든 약관의 내용에 우선하여 적용됩니다.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion accordion-flush" id="accordionFlushExample2">
+                                <div class="accordion-item">
+                                    <div class="accordion-header d-flex" id="flush-headingTwoitem">
+                                        <input type="checkbox" class="chk" id="chk_join-terms-privacy-collect-use"
+                                               aria-hidden="true" parent-id="">
+                                        <button style="padding:3px 0px 4px 0" class="accordion-button collapsed"
+                                                type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#flush-collapseTwoitem" aria-expanded="false"
+                                                aria-controls="flush-collapseTwoitem">
+                                            [필수] 개인정보 수집 및 이용 동의
+                                        </button>
+                                    </div>
+                                    <div id="flush-collapseTwoitem" style=" height:300px; "
+                                         class="accordion-collapse collapse" aria-labelledby="flush-headingTwoitem"
+                                         data-bs-parent="#accordionFlushExample">
+                                        <div class="joinModal modal-body" style="height:300px; overflow:scroll">
+                                            <p>(주)콩게임즈가 서비스하는 두리안(이하 '두리안'라 함)은 정보통신망 이용촉진 및 정보보호 등에 관한 법률(이하
+                                                '정보통신망법'), '개인정보보호법' 등 개인정보와 관련된 법령을 준수하고 있습니다.</p>
+                                            <p>두리안은 개인정보 보호법 제30조(개인정보 처리방침의 수립 및 공개)에 따라 이용자의 개인정보를 보호하고 이와 관련한 고충을
+                                                신속하고 원활하게 처리할 수 있도록 하기 위하여 개인정보 처리방침을 수립하여 공개합니다.</p>
+                                            <p>개인정보처리방침은 법률 변경과 두리안의 내부 정책에 따라 변경될 수 있으며 이를 개정하는 경우에는 웹사이트
+                                                &lsquo;공지사항(또는 개별공지)&rsquo;을 통하여 고지할 것입니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span style="position: relative;">본
+                                                        방침은 2022년 월 일부터 시행됩니다.</span></p>
+
+                                            <p>■ 본 개인정보처리방침은 두리안에서 제공하는 서비스에 적용되며 다음과 같은 내용을 담고 있습니다.<br />1. 개인정보
+                                                수집&middot;이용 목적, 수집하는 개인정보의 항목 및 수집방법<br />2. 개인정보의 제3자 제공<br />3.
+                                                개인정보의 보유 및 이용 기간, 개인정보의 파기절차 및 방법<br />4. 개인정보 처리 위탁을 하는 업무의 내용 및
+                                                수탁자<br />5. 이용자 및 법정대리인의 권리와 그 행사방법<br />6. 개인정보를 자동으로 수집하는 장치의 설치운영
+                                                및 그 거부에 관한 사항<br />7. 개인정보 관리책임자 및 담당자 안내<br />8. 개인정보관련 기술적, 관리적
+                                                대책<br />9. 고지의 의무</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">1. 개인정보 수집, 이용 목적, 수집하는 개인정보의
+                                                        <br />항목 및 수집방법</span></p>
+                                            <p>1-1. 개인정보 수집, 이용 목적 두리안은 회원관리, 서비스 제공 등 다음의 목적을 위하여 개인정보를
+                                                처리합니다.<br />처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는
+                                                정보통신망법 제22조(개인정보의 수집ᆞ이용 동의등)에 따라 별도의 동의를 받는 등 필요한 조치를 이행할
+                                                것입니다.<br />- 회원 가입 의사의 확인, 이용자 식별, 회원탈퇴 의사의 확인 등 회원관리를 위하여 개인정보를
+                                                이용합니다.<br />- 콘텐츠 등 기존 서비스 제공(광고 포함)에 더하여, 인구통계학적 분석, 서비스 방문 및 이용기록의
+                                                분석, 신규 서비스 요소의 발굴 및 기존 서비스 개선 등을 위하여 개인정보를 이용합니다.<br />- 법령 및 두리안
+                                                이용약관을 위반하는 회원에 대한 이용 제한 조치, 부정 이용 행위를 포함하여 서비스의 원활한 운영에 지장을 주는 행위에
+                                                대한 방지 및 제재, 계정도용 및 부정거래 방지, 약관 개정 등의 고지사항 전달, 분쟁조정을 위한 기록 보존, 민원처리 등
+                                                이용자 보호 및 서비스 운영을 위하여 개인정보를 이용합니다.<br />- 유료 서비스 제공 시 이에 따르는 본인인증, 구매
+                                                및 요금 결제, 상품 및 서비스의<br />배송을 위하여 개인정보를 이용합니다.<br />- 이벤트 정보 및 참여기회
+                                                제공, 광고성 정보 제공 등 마케팅 및 프로모션 목적으로 개인정보를 이용합니다.<br />- 서비스 이용기록과 접속 빈도
+                                                분석, 서비스 이용에 대한 통계, 서비스 분석 및 통계에 따른 맞춤 서비스 제공 및 광고 게재 등에 개인정보를
+                                                이용합니다.<br />- 보안, 프라이버시, 안전 측면에서 이용자가 안심하고 이용할 수 있는 서비스 이용환경 구축을 위해
+                                                개인정보를 이용합니다.</p>
+                                            <p>1-2. 수집하는 개인정보의 항목</p>
+                                            <p>회원제 서비스를 이용하기 위해 회원가입을 할 경우, 두리안는 서비스 이용을 위해<br />필요한 최소한의 개인정보를
+                                                수집합니다.<br />회원가입 시 두리안이 이용자로부터 수집하는 개인정보는 아래와 같습니다.<br />- [필수항목] :
+                                                아이디, 비밀번호, 닉네임, 이메일, 본인확인정보(이름, 생년월일, 성별, 내국인 여부, 중복가입확인정보(DI)),</p>
+                                            <p>서비스 이용 과정에서 이용자로부터 수집하는 개인정보는 아래와 같습니다.</p>
+                                            <p>두리안 내의 개별 서비스 이용, 이벤트 응모 및 경품 신청 과정에서 해당 서비스의<br />이용자에 한해 추가 개인정보수집이
+                                                발생할 수 있습니다. 추가로 개인정보를 수집<br />할 경우에는 해당 개인정보 수집 시점에서 이용자에게
+                                                &lsquo;개인정보의 수집 및 이용목적, 수집하는 개인정보 항목,<br />개인정보의 보유 및 이용 기간에 대해 안내
+                                                드리고 동의를 받습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">2. 개인정보의 제3자 제공 및 위탁 두리안는 이용자의 사전 동의
+                                                        없이 개인정보를 외부에 제공하지 않습니다.</span></p>
+                                            <p>단, 이용자가 외부 제휴사의 서비스를 이용하기 위하여 개인정보 제공에 직접 동의를 한 경우, 그리고 관련 법령에 의거해
+                                                뽐뿌에 개인정보 제출 의무가 발생한 경우, <br />이용자의 생명이나 안전에 급박한위험이 확인되어 이를 해소하기 위한
+                                                경우에 한하여 다음의 경우에는 주의를 기울여 개인정보를 이용&middot;제공 할 수 있습니다.ᄀ<br /> 고객님의
+                                                동의를 사전에 얻은 경우<br />※ 향후 판매서비스 제공시 고객님께서 구매한 상품의 배송을 원할 때에는<br />
+                                                고객님의 동의를 얻어 배송에 필요한 최소한의 정보(성명, 주소, 연락처)를 판매자 또는 배송업체에 제공합니다.<br />※
+                                                향후 관련 업무의 발생시, 고객님에게 별도로 알리고 동의 받는 절차가 진행됩니다.<br />ᄂ. 법령에 정해진 의무 또는
+                                                수사목적으로 법령에서 정해진 절차와 방법에 따라<br />수사기관의 정당한 요청이 있는 경우<br />ᄃ. 회사는
+                                                통계작성, 학술연구 또는 시장조사를 위하여 필요하다면 이용자가 제공<br />한 개인정보를 식별할 수 없는 형태로 가공하여
+                                                제3자에게 제공할 수 있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">3. 개인정보 보유 및 이용기간, 개인정보의 파기절차 및
+                                                        방법</span></p>
+
+                                            <p>회사는 원칙적으로 이용자의 개인정보를 회원 탈퇴 시 분리 보관 후 30일 이후 파기하고 있습니다.<br />단,
+                                                전자상거래법, 통신비밀보호법 등에 근거한 법령 또는 중복가입 방지를 위하여<br />아이디는 영구보관 하고 있으며 법령에서
+                                                일정 기간 정보보관 의무를 부과하는 경우에는 해당 기간 동안 개인정보를 안전하게 보관합니다.</p>
+                                            <p>단, 관계 법령 위반에 따른 수사, 조사 등이 진행 중인 경우에는 해당 수사/조사가<br />진행 완료 시에 개인정보를 지체
+                                                없이 파기합니다.<br />또한 두리안 내부 방침에 의한 다음의 정보를 보존합니다.<br />- 부정이용자의 경우 6개월간
+                                                재가입을 제한하기 위해 기간 동안 보존합니다.<br />- 부정이용 및 악의적 이용으로 타 회원에 피해를 준 이용자는
+                                                재가입을 최대 5년간 제한하며,<br /> 이를 위해 중복가입확인정보(DI)를 최대 5년간 보존합니다.<br />-
+                                                정보통신망법 제29조(개인정보의 파기)에 따라 1년 동안 서비스를 이용하지 않은<br /> 이용자의 개인정보를 별도로 분리
+                                                보관하여 관리하고 있습니다.</p>
+                                            <p>회사는 개인정보의 수집 및 이용목적이 달성된 개인정보는<br /> 재생이 불가능한 방법으로 파기하고 있습니다.<br />-
+                                                파기절차: 이용자가 회원가입 등을 위해 입력한 정보는 목적이 달성된 후 별도의 DB로<br />옮겨져(종이의 경우 별도의
+                                                서류함) 내부 방침 및</p>
+                                            <p>기타 관련 법령에 의한 정보보호 사유에 따라(보유 및 이용기간 참조)<br /> 일정기간 저장된 후 파기됩니다.
+                                                <br />별도 DB로 옮겨진 개인정보는 법률에 의한 경우가 아니고서는 다른 목적으로 이용되지 않습니다.<br />-
+                                                파기방법: 전자적 파일형태로 저장된 개인정보는 재생할 수 없는 기술적 방법을<br />사용하여 삭제하고 종이에 출력된
+                                                개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다.
+                                            </p>
+                                            <p>전자상거래 등에서의 소비자 보호에 관한 법률, 전자금융거래법, 통신비밀보호법등<br /> 법령에서 일정기간 정보의 보관을
+                                                규정하는 경우는 아래와 같습니다.<br /> 이 기간 동안 법령의 규정에 따라 개인정보를 보관하며, <br />본 정보를
+                                                다른 목적으로는 절대이용하지 않습니다.<br />전자상거래 등에서 소비자 보호에 관한 법률계약 또는 청약철회 등에 관한
+                                                기록:<br /> 5년 보관대금결제 및 재화 등의 공급에 관한 기록: 5년 보관 소비자의 불만 또는 분쟁처리에 관한 기록:
+                                                3년 보관<br />전자금융거래법 전자금융에 관한 기록: 5년 보관 부가가치세법<br />세금계산서, 현금영수증 등의
+                                                부가가치세의 과세표준과 세액의 신고자료 : 5년 통신비밀보호법</p>
+                                            <p>로그인 기록: 3개월</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">4. 개인정보 처리 위탁을 하는 업무의 내용 및
+                                                        수탁자<br />두리안삭은 편리하고 더 나은 서비스를 제공하기 위해 업무 중 일부를 외부에 위탁하고
+                                                        있습니다.</span></p>
+                                            <p>ᄀ. 두리안은 정보통신서비스의 제공에 관한 계약을 이행하고 이용자 편의 증진 등을<br /> 위하여 필요한 경우
+                                                개인정보처리방침에 따라 각항 각 호의 사항을 공개함으로써 <br />고지절차와 동의절차를 거치지 아니하고 개인정보 처리를
+                                                타인에게 위탁할 수 있습니다.<br />ᄂ. 두리안은 향후 더 나은 서비스 제공을 위하여 필요시 업무 중 일부를 외부업체에
+                                                위탁할 수 있으며,<br /> 위탁 계약 체결 시 개인정보 보호법 제25조에 따라 위탁업무 수행목적 외 개인정보(민감정보와
+                                                고유식별정보) 처리금지, 재 위탁 제한, 수탁자에<br /> 대한 관리.감독, 책임에 관한 사항을 문서에 명시하고,
+                                                수탁자가 개인정보를 안전하게<br /> 처리하도록 필요한 사항을 규정하고 관리, 감독합니다.<br />ᄃ. 수탁업체는
+                                                이용자들의 개인정보를 개인정보의 수집목적 및 이용목적에서<br /> 고지한 범위 내에서 사용하며, 이용자의 사전 동의
+                                                없이는 범위를 초과하여 이용하거나<br /> 원칙적으로 이용자의 개인정보를 제 3자 또는 외부에 공개하지
+                                                않습니다.<br />ᄅ. 위탁처리하는 정보는 원활한 서비스를 제공하기 위하여 필요한 최소한의 정보에
+                                                국한됩니다.<br />수탁업체 위탁업무 내용 개인정보의 보유 및 이용기간</p>
+                                            <p>본인확인</p>
+                                            <p>해당 업체에서 이미 보유하고 있는 개인정보이기 때문에 별도로 저장하지 않음</p>
+                                            <p>(주)콩게임즈</p>
+                                            <p>서비스 이용 관련 문의 응대, 정보시스템 운영 및 관리</p>
+                                            <p>회원 탈퇴 또는 위탁계약 종료시까지</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">5. 이용자 및 법정대리인의 권리와 행사 방법</span></p>
+                                            <p>- 이용자는 언제든지 &lsquo;두리안 마이페이지 &gt; 회원정보&rsquo;에서 자신의 개인정보를 조회하거나 수정할 수
+                                                있습니다.<br />- 이용자는 언제든지 &lsquo;회원탈퇴&rsquo; 등을 통해 개인정보의 수집 및 이용 동의를
+                                                철회할 수 있습니다.<br />- 만 14세 미만 아동은 가입 불가이므로 어떠한 개인정보도 요구하거나 저장하지 않습니다.
+                                            </p>
+                                            <p>- 이용자가 개인정보의 오류에 대한 정정을 요청한 경우, 정정을 완료하기 전까지<br />해당 개인정보를 이용 또는 제공하지
+                                                않습니다.<br />또한 잘못된 개인정보를 제3자에게 이미 제공한 경우에는 정정 처리결과를<br /> 제3자에게 지체 없이
+                                                통지하여 정정이 이루어지도록 하겠습니다.<br />- 이용자는 자신의 개인정보를 최신의 상태로 유지해야 하며, 고객의
+                                                부정확한 정보 입력으로 발생하는 문제의 책임은 고객 자신에게 있습니다.<br />- 이용자는 안전한 패스워드 관리를 위해
+                                                주기적으로 패스워드를 변경하여 패스워드의 노출위협을 최소화 하여야 한다.<br />- 이용자는 패스워드를 제3자에게
+                                                노출되지 않도록 해야하며, 자신의 패스워드와<br />관련된 정보 및 힌트를 제공하지 않아야 한다.<br /> 패스워드
+                                                설정규칙 및 길이를 적용하여 3개월 또는 6개월 정도로 주기적으로 변경하여야 한다.<br />- 이용자는 아이디, 비밀번호
+                                                등에 대해 보안을 유지할 책임이 있으며 제3자에게 이를 양도하거나 대여할 수 없습니다.<br />- 이용자의 개인정보를
+                                                도용한 회원가입 또는 로그인 정보로 결제처리 시 고객자격 상실과 함께 관계법령에 의거하여 처벌될 수 있습니다.<br />-
+                                                이용자는 회사의 개인정보보호정책에 따라 보안을 위한 주기적인 활동에 협조할 의무가 있습니다.<br />- 이용자는 자신의
+                                                개인정보를 보호할 의무가 있으며, 회사의 귀책사유가 없이<br /> ID, 비밀번호, 이메일 주소, 접근매체 등의
+                                                양도&middot;대여&middot;분실이나 로그인 상태에서 자리를<br /> 떠남 등 이용자의 부주의나 관계법령에 의한
+                                                보안조치로 차단할 수 없는 방법이나 기술을 사용한 해킹 등 회사가 상당한 주의에도<br /> 불구하고 통제할 수 없는
+                                                인터넷상의 문제 등으로 개인정보가 유출되어 발생한 문제에 대해 회사는 책임을 지지않습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">6. 개인정보를 자동으로 수집하는 장치의 설치운영 및 그 거부에
+                                                        관한 사항</span></p>
+                                            <p>두리안은 이용자의 편의와 시스템 운영을 위하여 &lsquo;쿠키(cookie)&rsquo;를 사용합니다.<br /> 쿠키는
+                                                웹사이트가 이용자의 컴퓨터 웹 브라우저로 전송하는 소량의 정보로, <br />이용자는 쿠키에 대한 선택권이 있습니다.
+                                                웹브라우저 상단의 도구 &gt; 인터넷옵션 탭(option tab)에서 모든 쿠키를 다 받아들이거나,<br /> 쿠키가
+                                                설치될 때 통지를 보내도록 하거나, 아니면 모든 쿠키를 거부할 수 있는 선택권을 가질 수 있습니다.<br /> 단,
+                                                이용자가 쿠키 설치를 거부하였을 경우 서비스 제공에 어려움이 있을 수 있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">7. 개인정보 보호책임자 및 개인정보에 관한
+                                                        민원서비스</span></p>
+                                            <p>두리안은 이용자의 개인정보 관련 문의사항 및 불만 처리 등을 위하여 아래와 같이<br />개인정보 관리 책임자를 지정하고
+                                                있습니다.</p>
+                                            <p>개인정보 관리책임자</p>
+                                            <p>이 름 :<br />직 위 : 대표이사<br />전 화 : 031-212-5013<br />메 일 :
+                                                help@durianshop.com</p>
+                                            <p>개인정보 관리담당자</p>
+                                            <p>이 름 :<br />직 위 : 팀장<br />전 화 : 031-212-5013<br />메 일 :
+                                                help@durianshop.com</p>
+                                            <p>개인정보 침해에 대한 신고, 상담이 필요하신 경우에는 한국인터넷진흥원(KISA)<br />개인정보 침해신고센터로 문의하시기
+                                                바랍니다.<br />- 개인정보침해신고센터: (국번없이)118
+                                                (http://privacy.kisa.or.kr)<br />- 개인정보 분쟁조정위원회: 1833-6972
+                                                (http://kopico.go.kr)<br />- 대검찰청 사이버수사과: (국번없이)1301, cid@spo.go.kr
+                                                (http://spo.go.kr)<br />- 경찰청 사이버안전국: (국번없이)182
+                                                (http://cyberbureau.police.go.kr)</p>
+                                            <p>회원님이 개인정보침해를 통한 금전적, 정신적 피해를 입으신 경우에는 개인정보<br />분쟁조정위원회에 피해구제를 신청하실 수
+                                                있습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">8. 개인정보 관련 기술적, 관리적 대책</span></p>
+                                            <p>두리안은 이용자의 개인정보를 안전하게 관리하기 위하여 최선을 다하고 있으며,<br />정보통신망법 및 개인정보보호법에 따라
+                                                개인정보를 안전하게 보호하고 있습니다.<br />법령에서 암호화를 요구하고 있는 비밀번호, <br />계좌번호 등에 대해
+                                                암호화하여 안전하게 보관하고 있습니다<br />이용자께서 제공하신 모든 정보는 방화벽 등 정보보호시스템에 의해 안전하게
+                                                보호되고 있습니다.<br /> 또한 개인정보를 처리하는 인원을 최소한으로 제한하고 정기적인 교육과 비밀번호 변경을
+                                                통해<br /> 개인정보가 유출되지 않도록 안전하게 관리하고 있습니다.</p>
+                                            <p>다만, 이용자 본인의 부주의로 아이디, 비밀번호 등의 개인정보가 유출되어 발생한<br />문제에 대해 두리안은 책임을 지지
+                                                않습니다.</p>
+                                            <p class="HStyle0 text-bold fw-bold"><span
+                                                    style="position: relative;">9. 고지의 의무</span></p>
+                                            <p>개인정보처리방침내용의 추가, 삭제 및 수정이 있을 경우에는 <br />시행하기 최소 7일전에 홈페이지 등에 공지하도록
+                                                하겠습니다.<br />- 공고일자: 2022년 월 일<br />- 시행일자: 2022년 월 일</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div id="c-checkbox-item_join-terms-email" class="c-checkbox-item">
+                                <div class="wrapper">
+                                    <input type="checkbox" class="chk" id="chk_join-terms-email" aria-hidden="true"
+                                           name="emailConsent" value="Y">
+                                    <label for="chk_join-terms-fourteen" role="checkbox" aria-label="메일 수신 동의"
+                                           aria-checked="false">
+                                        <span class="sub" aria-hidden="true">[선택] 메일수신 동의</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id="c-checkbox-item_join-terms-message" class="c-checkbox-item">
+                                <div class="wrapper">
+                                    <input type="checkbox" class="chk" id="chk_join-terms-message"
+                                           aria-hidden="true" name="messageConsent" value="Y">
+                                    <label for="chk_join-terms-fourteen" role="checkbox" aria-label="메세지 수신 동의"
+                                           aria-checked="false">
+                                        <span class="sub" aria-hidden="true">[선택] 메세지 수신 동의</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="error-tip">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-dark col-12">동의하고 가입하기</button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>

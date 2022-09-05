@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script th:src="@{/js/phoneListScript.js}"></script>
+    <script th:src="@{/js/pagination.js}"></script>
+    <script src="/js/phoneBoardLocationSelect.js"></script>
+    <title>판매품목리스트</title>
+</head>
+
+
+<body>
+<div class="wrap main" layout:fragment="content">
+    <section class="ItemList" style="position:relative;">
+        <div class="PageTitle container">
+            <p class="font-weight-bold text-center">핸드폰 판매리스트</p>
+        </div>
+
+        <div class="advertisement1">
+            <img src="./image/banner-01.png" alt="banner">
+        </div>
+        <div class="advertisement2"><img src="./image/banner-01.png" alt="banner"></div>
+
+
+        <div class="container table-responsive text-center" style="word-break: keep-all">
+            <div
+                    class="bg-light row mb-3 myPageTop border-bottom d-flex justify-content-between align-items-center">
+                <div class="table table table-hover m-0">
+                    <div class="bg-light bg-gradient text-white border-0">
+                        <div class="bg-secondary bg-gradient bg-opacity-50 border-0">
+                            <div class="text-white noticeText" style="text-align:left">
+                                <strong> 📢 이용가이드 안내입니다.</strong>
+                            </div>
+                        </div>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <form class="border-0">
+                                        <textarea class="bg-light bg-gradient w-100 h-20 border-0" readonly cols="100"
+                                                  rows="3">      이용가이드 안내입니다
+      이용가이드 안내입니다</textarea>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="phoneBanner" style="aspect-ratio: 100/10;">
+                <img src=" ./image/main3.PNG" style="margin-top:30px ;aspect-ratio: 160/20; " class="img-fluid"
+                     alt="배너자리입니다">
+            </div>
+
+            <form id="searchForm" method="get">
+                <input type="hidden" value="0" id="page" name="page">
+                <input type="hidden" value="" id="location" name="location">
+                <div class="container py-1 d-flex justify-content-end " style="padding-right:0;"
+                    >
+                    <div class="row">
+                        <div class="d-flex justify-content-start align-items-center ">
+                            <select class="form-select py-2" aria-label="Default select example"
+                                    name="searchType">
+                                <option th:selected="${#strings.equals(param.searchType,'제목')}" value="제목">제목</option>
+                                <option th:selected="${#strings.equals(param.searchType,'글쓴이')}" value="글쓴이">글쓴이
+                                </option>
+                            </select>
+                            <div class="btn-group list_search">
+                                <input class="border p-2" name="keyword" type="text" id="search"
+                                       placeholder="검색어를 입력해주세요" th:value="${param.keyword}">
+                                <button class="btn border"><i class="bi bi-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="container table-responsive text-center p-0" style="word-break: keep-all">
+                <div class="phonelist_region bg-light" style="background:gold; padding-left:0;">
+                    <ul class="d-flex justify-content-between" style="padding-left:0;">
+                        <!-- 선택했을때 변한 모습 -->
+                        <li class="phoneListregion border rounded-top btn col py-1" onclick="selectLocation('')" id="li_1">
+                            <a class=" text-secondary"  id="lo_1">전체</a>
+                        </li>
+                        <!-- 선택되지않은 모습 -->
+                        <li class="phoneListregion border rounded-top btn col py-1" onclick="selectLocation('서울')" id="li_2">
+                            <a class="text-secondary"  id="lo_2">서울</a>
+                        </li>
+                        <li class="phoneListregion border rounded-top btn col py-1" onclick="selectLocation('경기')" id="li_3" >
+                            <a class="text-secondary"  id="lo_3">경기</a>
+                        </li>
+                        <li class="phoneListregion border rounded-top btn col py-1" onclick="selectLocation('충청도')" id="li_4">
+                            <a class="text-secondary"  id="lo_4">충청도</a>
+                        </li>
+                        <li class="phoneListregion border rounded-top btn col py-1" onclick="selectLocation('강원도')" id="li_5">
+                            <a class="text-secondary"  id="lo_5">강원도</a>
+                        </li>
+                        <li class="phoneListregion border rounded-top btn col py-1" onclick="selectLocation('경상도')" id="li_6">
+                            <a class="text-secondary"  id="lo_6">경상도</a>
+                        </li>
+                        <li class="phoneListregion border rounded-top btn col py-1" onclick="selectLocation('전라도')" id="li_7">
+                            <a class="text-secondary"  id="lo_7">전라도</a>
+                        </li>
+                        <li class="phoneListregion border rounded-top btn col py-1" onclick="selectLocation('제주도')" id="li_8">
+                            <a class="text-secondary"  id="lo_8">제주도</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <table class="ListTable table table table-hover">
+                    <thead class="ListTableThead">
+                    <tr>
+                        <th class="col-2 ">글쓴이</th>
+                        <th class="col-4">제목</th>
+                        <th class="col-1">가격</th>
+                        <th class="col-1">판매완료</th>
+                        <th class="col-1">조회수</th>
+                        <th class="col-2">등록일</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="bg-danger bg-gradient bg-opacity-75">
+                        <td class="text-white">
+                            관리자
+                        </td>
+
+                        <td class="text-white noticeText">
+                            <strong> 📢 [필독] 공지사항입니다.</strong>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="text-white">
+                            22/07/11
+                        </td>
+                    </tr>
+                    <th:block th:each="list,index : ${phoneList}">
+                        <tr class="pt-3" >
+                            <td class="align-middle Profile text-secondary" data-bs-toggle="modal"
+                                th:attrappend="data-bs-target=' #exampleModal'+${index.index}">
+                                <p th:text="${list.memberEntity.nickName + '님'}">작성자(닉네임)</p>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td class="phonePhoto">
+                                            <img th:src="${list.filePath}+${list.saveFileNm}" class="gallery"
+                                                 height='50px'/>
+                                        </td>
+                                        <td><a class="align-middle px-3" th:text="${list.title}"
+                                               th:href="@{/phone/phoneView/(phoneId=${list.phoneId})}">제목</a></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="align-middle">
+                                <strong th:text="${list.price+ '원'}">가격</strong>
+                            </td>
+                            <td class="align-middle">
+                                <strong th:text="(${list.sellYn}=='Y')?'판매완료':'판매중'">판매중</strong>
+                            </td>
+                            <td class="align-middle">
+                                <strong th:text="${list.viewCount}">100</strong>
+                            </td>
+                            <td class="align-middle" th:text="${list.formattedModifiedDate}">
+                                등록일
+                            </td>
+                        </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" th:id="exampleModal+${index.index}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title align-middle" id="exampleModalLabel"><i
+                                                class="bi bi-person-fill pb-2"></i>
+                                            회원정보
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+
+                                    <!-- 회원정보 모달 -->
+                                    <div class="infoModal modal-body d-flex justify-content-center ">
+                                        <div class="infoTitle"
+                                             >
+                                            <ul class="infoModalLine" style="padding-left: 0px;">
+                                                <li>
+                                                    아이디
+                                                </li>
+                                                <li>
+                                              닉네임
+                                                </li>
+                                                <li >업체명</li>
+                                                <li style="padding-top:41px;">최종접속</li>
+                                            </ul>
+                                        </div>
+
+
+
+                                        <div class="infoo" >
+                                            <ul >
+                                                <li >
+                                                    <ul class="infooday d-flex justify-content-start align-items-center">
+                                                        <li class="infooPad" th:text="${list.memberEntity.username}">rla**</li>
+                                                        <br />
+                                                        <li class="infooFont" th:text="${'가입날짜: ' + list.memberEntity.formattedCreateDate}">가입</li>
+                                                    </ul>
+                                                </li>
+
+
+                                                        <li class="infooPad" th:text="${list.memberEntity.nickName}">닉네임</li>
+
+                                                    <div class="d-flex px-2 ">
+                                                        <li>
+                                                            <ul class="d-flex">
+                                                                <li class="infooPad" style="padding:0;" th:text="${list.memberEntity.businessName}">업체명</li>
+                                                            </ul>
+                                                        </li>
+                                                    </div>
+                                                <li class="infooText1 " style="height:35px;">업체명</li>
+                                                <li class="infooText text-danger ">※ 실명 가입된 회원입니다</li>
+                                                <li class="infooText text-danger ">※ 휴대폰 본인인증 가입된 회원입니다.</li>
+
+                                                <li style="background: #eeeeee">
+                                                    <ul class="d-flex align-items-center">
+                                                        <li class="infooPad" style="padding:0;" th:text="${list.memberEntity.formattedRecentAccessDate}">최종접속</li>
+                                                        <li class="infooFont"></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <span sec:authorize="hasAnyRole('ROLE_BUSINESS','ROLE_MANAGER', 'ROLE_USER')" class="nav-item">
+            <a href="/phone/phoneUpload" class="btn btn-dark btn-lg fs-6" tabindex="-1" role="button"
+               aria-disabled="true">+ 글쓰기</a></span>
+            </div>
+            <!--페이지네이션-->
+            <div class="pagination justify-content-center"
+                 th:with="start=${T(java.lang.Math).floor(phonePagingList.number/10)}*10+1,end=((${phonePagingList.totalPages} == 0)?1 : ((${phonePagingList.totalPages} > ${start}+9) ? ${start}+9 : ${phonePagingList.totalPages}))">
+                <!--이전-->
+                <a th:if="${hasPrev}" th:onclick="'pagination('+${previous}+')'" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                <a th:unless="${hasPrev}" role="button"
+                   class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                <!--페이지 숫자-->
+                <li th:each="pageNum : ${#numbers.sequence(start, end)}"
+                    th:class="(${pageNum} == (${phonePagingList?.number}+1)) ? 'pagination_button page-item active' : 'pagination_button page-item'">
+                    <a th:onclick="'pagination('+(${pageNum}-1)+')'" th:text="${pageNum}"
+                       class="page-link" role="button"><span class="sr-only"></span></a>
+                </li>
+                <!--이후-->
+                <a th:if="${hasNext}" th:onclick="'pagination('+${next}+')'" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                <a th:unless="${hasNext}" role="button"
+                   class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+
+</html>

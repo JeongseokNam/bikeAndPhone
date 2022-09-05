@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<body>
+<head>
+    <script th:src="@{/js/memberRemove.js}"></script>
+</head>
+
+<!--<div class="wrap main" layout:fragment="content" style="background:gold;">-->
+<!--    <form id="frm" class="col s12 l6 offset-l3" method="post" >-->
+<!--    <section>-->
+<!--        <div class="container">-->
+<!--            &lt;!&ndash; 회원탈퇴 &ndash;&gt;-->
+<!--            <div class="myPageTitle" style="display: flex; flex-direction: column;">-->
+<!--                <h4><i class="bi bi-person-x-fill"></i> 회원탈퇴</h4>-->
+<!--                <p style="font-size:16px;">그동안 저희 사이트를 이용해 주셔서 감사합니다.</p>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="myPageList col-lg-12">-->
+<!--                    <div>-->
+<!--                        <div class="d-flex flex-column" style="border-top:2px solid #232324">-->
+<!--                            <br />-->
+<!--                            <span style="margin-left:10px; font-size:13px;">비밀번호 확인 후 회원탈퇴 하실 수 있습니다.</span>-->
+<!--                            <span style="margin-left:10px; font-size:13px;">회원탈퇴 시 회원님의 정보는 전자상거래 등에서의 소비자-->
+<!--                            보호에-->
+<!--                            관한 법률에 의거-->
+<!--                            고객정보 보호정책에 따라 관리됩니다.</span>-->
+<!--                        </div>-->
+<!--                        <div class="container">-->
+<!--                            <div class="form-wrap">-->
+<!--                                <br />-->
+<!--                                <div class="col-sm-10">-->
+<!--                                    <input type="text" class="form-control" id="id" th:value="${memberEntity.username}" disabled>-->
+<!--                                </div>-->
+<!--                                <br />-->
+<!--                                <label for="password" class="col-sm-2 col-form-label">비밀번호</label>-->
+<!--                                <div class="col-sm-10">-->
+<!--                                    <input type="password" class="form-control" id="password" name="password">-->
+<!--                                    <input type="button" class="btnCheckLoginIdDup btn-primary mt-2" value="비밀번호 확인" id="Dup"-->
+<!--                                           name="Dup" onclick="PwCheck()">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <br />-->
+<!--                        <div class="row d-flex justify-content-center align-items-center">-->
+<!--                            <div class="d-grid gap-2 col-4 mx-auto">-->
+<!--                                <button class="btn btn-dark" style="padding: 10px; " type="submit">회원탈퇴</button>-->
+<!--                            </div>-->
+<!--                            <div class="d-grid gap-2 col-4 mx-auto">-->
+<!--                                <button class="btn btn-dark" onclick="location.href='Index.html'"-->
+<!--                                        style="padding: 10px; " type="submit">탈퇴취소</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <br />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--    </form>-->
+<!--</div>-->
+
+
+<div class="wrap main" layout:fragment="content">
+    <!-- 회원탈퇴 -->
+    <section>
+        <div class="container col-sm-12 col-md-12 col-lg-5 col-xl-3 d-flex justify-content-center ">
+            <form id="frm" method="POST"
+                  class="input-group d-flex flex-column justify-content-center">
+                <div class="sign d-flex flex-column justify-content-center">
+                    <div class="PageTitle">
+                        <p class="font-weight-bold text-center">회원탈퇴</p>
+                        <p class="fs-6 text-center">그동안 저희 사이트를 이용해 주셔서 감사합니다.</p>
+                    </div>
+
+                    <p class="fw-light text-center">회원탈퇴 시 회원님의 정보는 전자상거래 등에서의 소비자보호에 관한 법률에 의거 고객정보 보호정책에 따라 관리됩니다.</p>
+
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="id" th:value="${memberEntity.username}" disabled>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control" placeholder="비밀번호" required name="password"
+                               id="password">
+                        <label>비밀번호를 입력해주세요</label>
+                    </div>
+                    <input class="btn btn-dark btn-sm py-2 my-2" type="button" value="비밀번호 확인" id="Dup"
+                           name="Dup" onclick="PwCheck()">
+                    <p class="fw-light text-decoration-underline text-danger text-center" style="font-size:13px;">비밀번호 확인 후 회원탈퇴 하실 수 있습니다.</p>
+                </div>
+                <button class="btn btn-outline-dark btn-sm py-2 mb-2" type="submit">회원탈퇴</button>
+                <button class="btn btn-outline-dark btn-sm py-2" onclick="location.href='Index.html'" type="submit">
+                    탈퇴취소
+                </button>
+                <div class="row d-flex justify-content-center align-items-center">
+
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/addPost.js}"></script>
+    <script th:src="@{/js/addPostSelectBox.js}"></script>
+</head>
+<body>
+<section>
+    <div class="wrap main" layout:fragment="content">
+        <form class="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="fileDiv" id="fileDiv" th:value="board">
+            <div class="UploadPageWrap ">
+                <div class="container">
+                    <div class="form-group">
+                        <div class="PageTitle">
+                            <p class="font-weight-bold text-center">바이크판매등록</p>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="row col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-12 "
+                                             style="border:5px solid #ddd; border-radius: 10px; padding:10px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-sm-2 imgUpMain">
+                                                        <!--        220609 오후 6시 30분 이후 btn-primary 를 flow_box로 감쌌음. 그리고 addimg 스크립트 다 추가해주고.background-image 로 변경 해주고 밑에 2줄 주석 처리 하였음  -->
+                                                        <div class="flow_box">
+                                                            <div class="btn btn-danger imagePreviewMain"
+                                                                 id="fileView1">
+                                                            </div>
+                                                        </div>
+                                                        <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                            메인사진<input type="file" class="uploadFile img"
+                                                                         value="Upload Photo"
+                                                                         id="file1"
+                                                                         name="file1"
+                                                                         accept="image/*"
+                                                                         style="width: 0px;height: 0px;overflow: hidden;">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="text-center">메인에 표시할 사진을 업로드 해주세요</p>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView2">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file2"
+                                                                             name="file2"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>머플러</p>
+
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView3">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file3"
+                                                                             name="file3"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>시트</p>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView4">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file4"
+                                                                             name="file4"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>계기판</p>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView5">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file5"
+                                                                             name="file5"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>앞면</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6" style="
+                                            display: flex; flex-direction: column; justify-content: flex-end; ">
+                                        <div class="row">
+                                            <div class="imgtext"
+                                                 style="text-align: left; margin-left:20px; margin-bottom:10px;">
+                                                <p>1. 해당되는 곳에 맞춰 사진을 넣어주세요.</p>
+                                                <p>2. 메인사진은 업로드시 제일 처음에 보이는 사진입니다.</p>
+                                                <p>3. 해상도가 높은 사진을 올려주세요.</p>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView6">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file6"
+                                                                             name="file6"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>우측면</p>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView7">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file7"
+                                                                             name="file7"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>좌측면</p>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView8">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file8"
+                                                                             name="file8"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>후면</p>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView9">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file9"
+                                                                             name="file9"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>핸들</p>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView10">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file10"
+                                                                             name="file10"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>엔진</p>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div class="btn btn-Warning imagePreview" id="fileView11">
+                                                            </div>
+                                                            <label class="btn btn-secondary col-12 d-flex justify-content-center opacity-50">
+                                                                Upload<input type="file" class="uploadFile img"
+                                                                             value="Upload Photo"
+                                                                             id="file11"
+                                                                             name="file11"
+                                                                             accept="image/*"
+                                                                             style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>타이어</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                        <!-- 상세사항작성 시작 -->
+                        <div class="container" style="margin:0px 0;">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">판매제목</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active text-start">제목</td>
+                                            <td>
+                                                <input class="form-control" type="text" placeholder="제목을 적어주세요."
+                                                       aria-label="default input example" name="title" id="title">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="row text-start">
+                                <!-- 판매자정보 -->
+                                <div class="col-lg-12">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">판매자정보</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active">판매지역</td>
+                                            <td class="row">
+                                                <select class="form-select col" aria-label="Default select example"
+                                                        name="location" id="location">
+                                                    <option value="">시(도)선택</option>
+                                                    <th:block th:each="list:${locationList}">
+                                                        <option th:value="${list.locationName}" th:text="${list.locationName}"></option>
+                                                    </th:block>
+                                                </select>
+                                                <select class="form-select col" aria-label="Default select example"
+                                                        name="locationDetail" id="locationDetail">
+                                                    <option value="">시,구(군)선택</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                                <!-- 매물정보 -->
+                                <div class="col-lg-6">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">매물정보</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active">제조회사</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeBrand" id="bikeBrand">
+                                                    <option value="">제조사선택</option>
+                                                    <th:block th:each="list:${brandList}">
+                                                        <option th:value="${list.bikeBrand}" th:text="${list.bikeBrand}">야마하</option>
+                                                    </th:block>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">모델</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeModel" id="bikeModel">
+                                                    <option value="">모델</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">제조년도</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeYear" id="bikeYear">
+                                                    <option value="">제조년도선택</option>
+                                                    <option value="1995">1995</option>
+                                                    <option value="1996">1996</option>
+                                                    <option value="1997">1997</option>
+                                                    <option value="1998">1998</option>
+                                                    <option value="1999">1999</option>
+                                                    <option value="2000">2000</option>
+                                                    <option value="2001">2001</option>
+                                                    <option value="2002">2002</option>
+                                                    <option value="2003">2003</option>
+                                                    <option value="2004">2004</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">주행거리</td>
+                                            <td class="row">
+                                                <div class="col-md-8">
+                                                    <input class="form-control" name="driveKm" id="driveKm" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span class="input-group-text">Km</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="table-active">색상</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeColor" id="bikeColor">
+                                                    <option value="">색상</option>
+                                                    <option value="검정색">검정색</option>
+                                                    <option value="흰색">흰색</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">기어방식</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeGear" id="bikeGear">
+                                                    <option  value="자동">자동</option>
+                                                    <option value="수동">수동</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- 매물정보2 -->
+                                <div class="col-lg-6">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col"><br/></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active">배기량</td>
+                                            <td class="row">
+                                                <div class="col-md-8">
+                                                    <input class="form-control"
+                                                           name="bikeCc" id="bikeCc" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span class="input-group-text">CC</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">대차/교환</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           name="changeAgree" id="changeAgree1" value="Y">
+                                                    <label class="form-check-label">가능</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           name="changeAgree" id="changeAgree2" value="N">
+                                                    <label class="form-check-label">불가능</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">가격절충</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" name="negoAgree"
+                                                           id="negoAgree1"
+                                                           value="Y">
+                                                    <label class="form-check-label">가능</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" name="negoAgree"
+                                                           id="negoAgree2"
+                                                           value="N">
+                                                    <label class="form-check-label">불가능</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">A/S</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           name="afterServiceYn" id="afterServiceYn1"
+                                                           value="Y">
+                                                    <label class="form-check-label">가능</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           name="afterServiceYn" id="afterServiceYn2"
+                                                           value="N">
+                                                    <label class="form-check-label">불가능</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">튜닝유무</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" name="tuningYn"
+                                                           id="tuningYn1"
+                                                           value="Y">
+                                                    <label class="form-check-label">유</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" name="tuningYn"
+                                                           id="tuningYn2"
+                                                           value="N">
+                                                    <label class="form-check-label">무</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">사고유무</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           name="accidentYn" id="accidentYn1" value="Y">
+                                                    <label class="form-check-label">유</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input"
+                                                           name="accidentYn" id="accidentYn2" value="N">
+                                                    <label class="form-check-label">무</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="row" style="text-align: left;">
+                                    <!-- 판매가격 -->
+                                    <div class="col-lg-12">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">판매가격</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="table-active">판매가격</td>
+                                                <td class="row">
+                                                    <div class="addpostPrice input-group">
+                                                        <input class="form-control"
+                                                               aria-label="Amount (to the nearest dollar)"
+                                                               name="price" id="price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                        <span class="input-group-text">원</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="text-align: left;">
+                                    <!-- 옵션정보 -->
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">옵션정보</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="table-active">편의옵션</td>
+                                                <td >
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions1" value=" 열선">
+                                                        <label class="form-check-label">열선</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions1" value=" 파워put">
+                                                        <label class="form-check-label">파워put</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions1" value=" 가방류">
+                                                        <label class="form-check-label">가방류</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions1" value=" 오디오">
+                                                        <label class="form-check-label">오디오</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions1" value=" 경보기">
+                                                        <label class="form-check-label">경보기</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions1" value=" 안개등">
+                                                        <label class="form-check-label">안개등</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table-active">성능옵션</td>
+                                                <td>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions2" value=" 배기 튜닝">
+                                                        <label class="form-check-label">배기 튜닝</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions2" value=" 흡기 튜닝">
+                                                        <label class="form-check-label">흡기 튜닝</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions2" value=" 엔진 튜닝">
+                                                        <label class="form-check-label">엔진 튜닝</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions2" value=" 섀시 튜닝">
+                                                        <label class="form-check-label">새시 튜닝</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions2" value=" 브레이크 튜닝">
+                                                        <label class="form-check-label">브레이크 튜닝</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions2" value=" 서스펜션 튜닝">
+                                                        <label class="form-check-label">서스펜션 튜닝</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="table-active">외관옵션</td>
+                                                <td>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions3" value=" 크롬파츠">
+                                                        <label class="form-check-label">크롬파츠</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions3" value=" 카본파츠">
+                                                        <label class="form-check-label">카본파츠</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions3" value=" 커스텀도색">
+                                                        <label class="form-check-label">커스텀도색</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions3" value=" 보호가드">
+                                                        <label class="form-check-label">보호가드</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions3" value=" LED">
+                                                        <label class="form-check-label">LED</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="tuningOptions3" value=" 스크린/페어링">
+                                                        <label class="form-check-label">스크린/페어링</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="text-align: left;">
+                                    <!-- 바이크 서류 -->
+                                    <div class="col-lg-12">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">서류</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="table-active">서류</td>
+                                                <td>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="documents" value=" 사용신고 필증">
+                                                        <label class="form-check-label">사용신고 필증</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="documents" value=" 사용폐지 증명서">
+                                                        <label class="form-check-label">사용폐지 증명서</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="documents" value=" 제작증명서">
+                                                        <label class="form-check-label">제작증명서</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               name="documents" value=" 서류없음">
+                                                        <label class="form-check-label">서류없음</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- 설명 및 추가정보 -->
+                                <p class="detailtextarea text-start fw-bold mt-3">설명 및 추가정보</p>
+                                <div class="addposttext">
+                                    <textarea style="width:100%; min-height:100px;" class="mb-5 text-start autosize" name="content"
+                                              onkeydown="resize(this)" onkeyup="resize(this)">1. 선불폰인지 확인 해보시고 입금하셔야 합니다.
+2. 연락처와 연락가능한 시간을 작성해주세요.
+3. 바이크에 대한 자세한 설명을 작성해주세요.</textarea>
+                                </div>
+
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <button type="submit" class="btn btn-secondary" style="padding: 10px;" id="btn_submit">
+                                        바이크등록
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

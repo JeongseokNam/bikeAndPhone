@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script src="/js/pagination.js"></script>
+    <script src="/js/businessMemberForManager.js"></script>
+</head>
+
+<body>
+    <div class="managerPage container" layout:fragment="content">
+        <div class="managerPageTop" style=" height:700px;">
+            <!-- 네비게이션 구간 시작 -->
+            <div class="managerNav col-lg-2 col-sm-12  bg-light" style="background:pink;">
+                <p class="bg-dark text-white" style=" padding:13px; margin:0">관리자</p>
+                <nav id="sidebarMenu">
+                    <div class="position-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/manager/memberList">
+                                    <span data-feather="home"></span>
+                                    사용자목록
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown btn-group dropend">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                    aria-expanded="false">게시물목록</a>
+                                <ul class="managerdropMenu dropdown-menu">
+                                    <li><a class="dropdown-item" href="/manager/postList">바이크</a></li>
+                                    <li><a class="dropdown-item" href="#">핸드폰</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/manager/noticeList">
+                                    공지사항
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/manager/qnaList">
+                                    1:1문의
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/manager/businessMemberList">
+                                    사업자관리
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <!-- 사용자목록 관리 구간 시작 -->
+            <div style="width:100%">
+                <div class="managerTop d-flex flex-row bg-dark justify-content-between align-items-center">
+                    <p class="bg-dark text-white" style="padding:12px; margin:0"><i class="bi bi-person-circle"></i>
+                        사업자관리목록
+                    </p>
+                    <form id="searchForm">
+                        <input type="hidden" value="0" id="page" name="page">
+                        <input type="hidden" name="soleOrCorporate" id="soleOrCorporate">
+                        <div class="btn-group list_search rounded">
+                            <select class="form-select" name="searchType">
+                                <option th:selected="${#strings.equals(param.searchType, '상호명')}" value="상호명">상호명</option>
+                                <option th:selected="${#strings.equals(param.searchType, '대표자명')}" value="대표자명">대표자명</option>
+                                <option th:selected="${#strings.equals(param.searchType, '담당자명')}" value="담당자명">담당자명</option>
+                                <option th:selected="${#strings.equals(param.searchType, '사업자등록번호')}" value="사업자등록번호">사업자등록번호</option>
+                            </select>
+                            <input name="keyword" type="text" id="search" placeholder=" 검색어를 입력해주세요"
+                                th:value="${param.keyword}">
+                            <button class="btn btn-dark "><i class="bi bi-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-responsive " style="word-break: keep-all; height:93%;">
+                    <button type="button" class="btn btn-dark active my-2" id="allBusiness" onclick="businessSearch('')">전체</button>
+                    <button type="button" class="btn btn-secondary" aria-pressed="true" onclick="businessSearch('sole')">개인사업자</button>
+                    <button type="button" class="btn btn-secondary" onclick="businessSearch('corporate')">법인사업자</button>
+                    <table class="memberListTab table table table-hover" id="listTable">
+                        <thead class="ListTable">
+                            <tr>
+                                <th class="col-1 "><small>사업구분</small></th>
+                                <th class="col-2 "><small>상호명</small></th>
+                                <th class="col-1 "><small>대표자명</small></th>
+                                <th class="col-1"><small>가입여부</small></th>
+                                <th class="col-1 "><small>승인여부</small></th>
+                                <th class="col-1">
+                                    등록증사본
+                                </th>
+                                <th class="col-3">가입일</th>
+                                <th class="col-2">승인확인</th>
+                                <th class="col-3">내용확인</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-bottom" th:each="list:${totalList}">
+                                <td th:text="${list.getSoleOrCorporate()}=='sole'?'개인':'법인'">법인</td>
+                                <td th:text="${list.getBusinessName()}"></td>콩게임즈</td>
+                                <td th:text="${list.getCeoName()}">김강숙</td>
+                                <td th:text="${list.getRealName()}">가입신청</td>
+                                <td th:text="${list.getApprovalYn()}=='Y'?'승인완료':'미승인'">승인완료</td>
+                                <td>
+                                    <div class="joinImg">
+                                        <a href='#' th:onclick="'window.open(\''+@{${list.getFilePath()}+${list.getSaveFileNm()}}+'\', \'CLIENT_WINDOW\',\'resizable=yes scrollbars=yes width=auto height=auto\')'"/>
+                                        <img th:src="${list.getFilePath()}+${list.getSaveFileNm()}">
+                                    </div>
+                                </td>
+                                <td style="word-break: keep-all;" th:text="${list.getFormattedCreateDate()}">2022-07-30</td>
+                                <td>
+                                    <div class="d-flex">
+                                        <button th:unless="${list.getApprovalYn()}=='Y'" th:onclick="'joinApproval('+${list.getMemberId()}+',\'Y\')'"
+                                                class="btn btn-outline-primary mx-1" type="button">승인</button>
+                                        <button th:if="${list.getApprovalYn()}=='Y'" th:onclick="'joinApproval('+${list.getMemberId()}+',\'N\')'"
+                                                class="btn btn-outline-danger" type="button">취소</button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="btn-group dropstart">
+                                        <button type="button" class="btn btn-secondary dropdown-toggle"
+                                                data-bs-toggle="dropdown" aria-expanded="false">
+                                            가입내용확인
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                            <div class="m_dropdown_menu_flex d-flex">
+                                                <ul class="p-0">
+                                                    <li>
+                                                        <ul class="p-0">
+                                                            <li>상호: <strong th:text="${list.businessName}">콩게임즈</strong> </li>
+                                                            <li>대표자: <strong th:text="${list.ceoName}">김강숙</strong></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <ul class="p-0">
+                                                            <li>사업자등록번호: <strong th:text="${list.businessNum}">123-456-7890</strong></li>
+                                                            <li>사업장소재지: <strong th:text="${list.businessLocation}">경기도 수원시 장안구 연무동</strong></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                                <ul class="SubscriptionDe">
+                                                    <li>
+                                                        <ul class="d-flex p-0">
+                                                            <li>사업업태:<strong th:text="${list.businessCondition}"> 게임</strong></li>&ensp;&#47;&ensp;
+                                                            <li>사업종목: <strong th:text="${list.businessItem}"> 게임</strong></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>이메일: <strong th:text="${list.email}">rladmsql710@naver.com</strong></li>
+                                                    <li>법인사업자번호: <strong th:text="${list.corporateNum}">123-45-67890</strong></li>
+                                                </ul>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--페이지네이션-->
+                    <div class="pagination justify-content-center"
+                         th:with="start=${T(java.lang.Math).floor(businessMemberList.number/10)}*10+1,end=((${businessMemberList.totalPages} == 0)?1 : ((${businessMemberList.totalPages} > ${start}+9) ? ${start}+9 : ${businessMemberList.totalPages}))">
+                        <!--이전-->
+                        <a th:if="${hasPrev}" th:onclick="'pagination('+${previous}+')'" role="button"
+                           class="btn btn-lg bi bi-caret-left-square-fill"></a>
+                        <a th:unless="${hasPrev}" role="button"
+                           class="btn btn-lg bi bi-caret-left-square-fill disabled"></a>
+                        <!--페이지 숫자-->
+                        <li th:each="pageNum : ${#numbers.sequence(start, end)}"
+                            th:class="(${pageNum} == (${businessMemberList?.number}+1)) ? 'pagination_button page-item active' : 'pagination_button page-item'">
+                            <a th:onclick="'pagination('+(${pageNum}-1)+')'" th:text="${pageNum}" class="page-link"
+                               role="button"><span class="sr-only"></span></a>
+                        </li>
+                        <!--이후-->
+                        <a th:if="${hasNext}" th:onclick="'pagination('+${next}+')'" role="button"
+                           class="btn btn-lg bi bi-caret-right-square-fill"></a>
+                        <a th:unless="${hasNext}" role="button"
+                           class="btn btn-lg bi bi-caret-right-square-fill disabled"></a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

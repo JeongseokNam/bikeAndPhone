@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <script th:src="@{/js/addPost.js}"></script>
+    <script th:inline="javascript">
+        /*셀렉트값 부가정보*/
+        $(document).ready(function (){
+            /*바이크*/
+            if ($("#bikeBrand").val()!=''){
+                let bikeBrand = $("#bikeBrand").val();
+                $.ajax({
+                    url:"/board/findModel",
+                    type:"POST",
+                    data:{"bikeBrand":bikeBrand},
+                    dataType : 'json',
+                    success : function (data){
+                        let selectBox = $("#bikeModel");
+                        selectBox.empty();
+                        selectBox.append('<option value="">모델</option>');
+                        $.each(data,function (idx, val){
+                            var bikeModel = val.bikeModel
+                            /*<![CDATA[*/
+                            if ([[${boardInfo.bikeModel}]]==bikeModel){
+                                selectBox.append(addOptionSelected(bikeModel));
+                            }else{
+                                selectBox.append(addOption(bikeModel));
+                            }
+                            /*]]>*/
+                        })
+                    }
+                })
+            }
+            $("#bikeBrand").change(function (){
+                let bikeBrand = $("#bikeBrand").val();
+                $.ajax({
+                    url:"/board/findModel",
+                    type:"POST",
+                    data:{"bikeBrand":bikeBrand},
+                    dataType : 'json',
+                    success : function (data){
+                        let selectBox = $("#bikeModel");
+                        selectBox.empty();
+                        selectBox.append('<option value="">모델</option>');
+                        $.each(data,function (idx, val){
+                            var bikeModel = val.bikeModel
+                            selectBox.append(addOption(bikeModel));
+                        })
+                    }
+                })
+            })
+            /*지역*/
+            if ($("#location").val()!=''){
+                let location = $("#location").val();
+                $.ajax({
+                    url:"/board/findLocationDetail",
+                    type:"POST",
+                    data:{"location":location},
+                    dataType : 'json',
+                    success : function (data){
+                        let selectBox = $("#locationDetail");
+                        selectBox.empty();
+                        selectBox.append('<option value="">시,구(군) 선택</option>');
+                        $.each(data,function (idx, val){
+                            var locationDetail = val.locationDetailName
+                            /*<![CDATA[*/
+                            if ([[${boardInfo.locationDetail}]]==locationDetail){
+                                selectBox.append(addOptionSelected(locationDetail));
+                            }else{
+                                selectBox.append(addOption(locationDetail));
+                            }
+                            /*]]>*/
+                        })
+                    }
+                })
+            }
+            $("#location").change(function (){
+                let location = $("#location").val();
+                $.ajax({
+                    url:"/board/findLocationDetail",
+                    type:"POST",
+                    data:{"location":location},
+                    dataType : 'json',
+                    success : function (data){
+                        let selectBox = $("#locationDetail");
+                        selectBox.empty();
+                        selectBox.append('<option value="">시,구(군) 선택</option>');
+                        $.each(data,function (idx, val){
+                            var locationDetail = val.locationDetailName
+                            selectBox.append(addOption(locationDetail));
+                        })
+                    }
+                })
+            })
+        })
+        //selectBox option추가
+        function addOption(name){
+            return'<option value="'+name+'">'+name+'</option>'
+        }
+        function addOptionSelected(name){
+            return'<option selected value="'+name+'">'+name+'</option>'
+        }
+    </script>
+</head>
+<body>
+
+
+<section>
+    <div class="wrap main" layout:fragment="content">
+        <form class="container" method="post" onsubmit="fileUpdate('board')" enctype="multipart/form-data">
+            <input type="hidden" th:value="${boardInfo.boardId}" id="boardId">
+
+            <div class="UploadPageWrap ">
+                <div class="container">
+                    <div class="form-group">
+                        <div class="PageTitle">
+                            <p class="font-weight-bold text-center">🏍️바이크판매수정🏍️</p>
+                        </div>
+                        <!-- 이미지업로드 -->
+                        <div class="container">
+                            <div class="row">
+                                <div class="row col-lg-12">
+                                    <div class="col-lg-6">
+                                        <div class="col-lg-12"
+                                             style="border:5px solid #ddd; border-radius: 10px; padding:10px;">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-sm-2 imgUpMain">
+                                                        <div th:if="${file1}!=null"
+                                                             class="btn btn-primary imagePreviewMain" id="fileView1"
+                                                             th:style="'background-image:url(../'+${file1.filePath}+${file1.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                        <div th:unless="${file1}!=null"
+                                                             class="btn btn-primary imagePreviewMain"
+                                                             id="fileView1"></div>
+                                                        <label class="btn btn-primary">
+                                                            사진수정<input type="file" class="uploadFile img"
+                                                                       value="Upload Photo"
+                                                                       id="file1"
+                                                                       name="file1"
+                                                                       accept="image/*"
+                                                                       style="width: 0px;height: 0px;overflow: hidden;">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <p class="text-center">메인에 표시할 사진을 업로드 해주세요</p>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file2}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView2"
+                                                                 th:style="'background-image:url(../'+${file2.filePath}+${file2.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file2}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView2"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file2"
+                                                                           name="file2"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>머플러</p>
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn2"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file3}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView3"
+                                                                 th:style="'background-image:url(../'+${file3.filePath}+${file3.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file3}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView3"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file3"
+                                                                           name="file3"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>시트</p>
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn3"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file4}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView4"
+                                                                 th:style="'background-image:url(../'+${file4.filePath}+${file4.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file4}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView4"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file4"
+                                                                           name="file4"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>계기판</p>
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn4"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file5}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView5"
+                                                                 th:style="'background-image:url(../'+${file5.filePath}+${file5.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file5}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView5"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file5"
+                                                                           name="file5"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>앞면</p>
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn5"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6" style="
+                            display: flex; flex-direction: column; justify-content: flex-end; ">
+                                        <div class="row">
+                                            <div class="imgtext"
+                                                 style="text-align: left; margin-left:20px; margin-bottom:10px;">
+                                                <!--                                                <div class="d-grid col-11 d-flex justify-content-end">-->
+                                                <!--                                                    <button class="btn btn-dark" style="padding: 10px;"-->
+                                                <!--                                                            type="submit">판매글삭제-->
+                                                <!--                                                    </button>-->
+                                                <!--                                                </div>-->
+                                                <br/>
+                                                <p>1. 해당되는 곳에 맞춰 사진을 넣어주세요.</p>
+                                                <p>2. 메인사진은 업로드시 제일 처음에 보이는 사진입니다.</p>
+                                                <p>3. 해상도가 높은 사진을 올려주세요.</p>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file6}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView6"
+                                                                 th:style="'background-image:url(../'+${file6.filePath}+${file6.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file6}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView6"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file6"
+                                                                           name="file6"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>우측면</p>
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn6"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file7}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView7"
+                                                                 th:style="'background-image:url(../'+${file7.filePath}+${file7.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file7}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView7"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file7"
+                                                                           name="file7"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>좌측면</p>
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn7"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file8}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView8"
+                                                                 th:style="'background-image:url(../'+${file8.filePath}+${file8.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file8}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView8"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file8"
+                                                                           name="file8"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>후면</p>
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn8"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file9}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView9"
+                                                                 th:style="'background-image:url(../'+${file9.filePath}+${file9.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file9}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView9"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file9"
+                                                                           name="file9"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>핸들</p>
+                                                <button type="button" class="btn btn-outline-secondary" id="delFileBtn9"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file10}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView10"
+                                                                 th:style="'background-image:url(../'+${file10.filePath}+${file10.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file10}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView10"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file10"
+                                                                           name="file10"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>엔진</p>
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                        id="delFileBtn10"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-6 uploadImg">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 imgUp">
+                                                            <div th:if="${file11}!=null"
+                                                                 class="btn btn-primary imagePreview" id="fileView11"
+                                                                 th:style="'background-image:url(../'+${file11.filePath}+${file11.saveFileNm}+');'
+                                                                         +'background-size: contain;'
+                                                                         +'background-repeat: no-repeat'"></div>
+                                                            <div th:unless="${file11}!=null"
+                                                                 class="btn btn-primary imagePreview"
+                                                                 id="fileView11"></div>
+                                                            <label class="btn btn-primary">
+                                                                사진수정<input type="file" class="uploadFile img"
+                                                                           value="Upload Photo"
+                                                                           id="file11"
+                                                                           name="file11"
+                                                                           accept="image/*"
+                                                                           style="width: 0px;height: 0px;overflow: hidden;">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>타이어</p>
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                        id="delFileBtn11"
+                                                        th:onclick="'deleteFileOnServer(this.id,'+${boardInfo.boardId}+',\'board\')'">
+                                                    삭제
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div style="border: 1px solid black; margin:30px 0;"></div>
+                        </div>
+                        <!-- 이미지업로드 끝 -->
+
+
+                        <!-- 상세사항작성 시작 -->
+                        <div class="container" style="margin:0px 0;">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">🏍️판매제목</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active text-start">제목</td>
+                                            <td>
+                                                <input class="form-control" type="text" placeholder="제목을 적어주세요."
+                                                       aria-label="default input example" name="title" id="title"
+                                                       th:value="${boardInfo.title}">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div class="row text-start">
+                                <!-- 판매자정보 -->
+                                <div class="col-lg-12">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">🏍️판매자정보</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active">판매지역</td>
+                                            <td class="row">
+                                                <select class="form-select col" aria-label="Default select example"
+                                                        name="location" id="location">
+                                                    <option value="">시(도)선택</option>
+                                                    <th:block th:each="list:${locationList}">
+                                                        <option th:value="${list.locationName}" th:text="${list.locationName}"
+                                                                th:selected="${boardInfo.location}==${list.locationName}"></option>
+                                                    </th:block>
+                                                </select>
+                                                <select class="form-select col" aria-label="Default select example"
+                                                        name="locationDetail" id="locationDetail">
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">🏍️매물정보</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active">제조회사</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeBrand" id="bikeBrand">
+                                                    <th:block th:each="list:${brandList}">
+                                                        <option th:value="${list.bikeBrand}" th:text="${list.bikeBrand}"
+                                                                th:selected="${boardInfo.bikeBrand}==${list.bikeBrand}">야마하</option>
+                                                    </th:block>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">모델</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeModel" id="bikeModel">
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">제조년도</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeYear">
+                                                    <option th:selected="${boardInfo.bikeYear}=='1995'"
+                                                            value="1995">1995
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeYear}=='1996'"
+                                                            value="1996">1996
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeYear}=='1997'"
+                                                            value="1997">1997
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeYear}=='1998'"
+                                                            value="1998">1998
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeYear}=='1999'"
+                                                            value="1999">1999
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeYear}=='2000'"
+                                                            value="2000">2000
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeYear}=='2001'"
+                                                            value="2001">2001
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeYear}=='2002'"
+                                                            value="2002">2002
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeYear}=='2003'"
+                                                            value="2003">2003
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeYear}=='2004'"
+                                                            value="2004">2004
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">주행거리</td>
+                                            <td class="row">
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="driveKm"
+                                                           th:value="${boardInfo.driveKm}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span class="input-group-text">Km</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">색상</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeColor">
+                                                    <option th:selected="${boardInfo.bikeColor}=='빨간색'">빨간색
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeColor}=='파란색'">파란색
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeColor}=='노란색'">노란색
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">A/S</td>
+                                            <td>
+                                                <select class="form-select col" name="afterServiceYn">
+                                                    <option th:selected="${boardInfo.afterServiceYn}=='Y'"
+                                                            value="Y">가능
+                                                    </option>
+                                                    <option th:selected="${boardInfo.afterServiceYn}=='N'"
+                                                            value="N">불가능
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-6">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col"><br/></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active">배기량</td>
+                                            <td class="row">
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="bikeCc"
+                                                           th:value="${boardInfo.bikeCc}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span class="input-group-text">CC</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">대차/교환</td>
+                                            <td>
+                                                <select class="form-select col" name="changeAgree">
+                                                    <option th:selected="${boardInfo.afterServiceYn}=='Y'"
+                                                            value="Y">가능
+                                                    </option>
+                                                    <option th:selected="${boardInfo.afterServiceYn}=='N'"
+                                                            value="N">불가능
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">가격절충</td>
+                                            <td>
+                                                <select class="form-select col" name="negoAgree">
+                                                    <option th:selected="${boardInfo.negoAgree}=='Y'" value="Y">
+                                                        가능
+                                                    </option>
+                                                    <option th:selected="${boardInfo.negoAgree}=='N'" value="N">
+                                                        불가능
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">기어방식</td>
+                                            <td>
+                                                <select class="form-select col" name="bikeGear">
+                                                    <option th:selected="${boardInfo.bikeGear}=='자동'"
+                                                            value="자동">자동
+                                                    </option>
+                                                    <option th:selected="${boardInfo.bikeGear}=='수동'"
+                                                            value="수동">수동
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">튜닝유무</td>
+                                            <td>
+                                                <select class="form-select col" name="tuningYn">
+                                                    <option th:selected="${boardInfo.tuningYn}=='Y'" value="Y">
+                                                        유
+                                                    </option>
+                                                    <option th:selected="${boardInfo.tuningYn}=='N'" value="N">
+                                                        무
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">사고유무</td>
+                                            <td>
+                                                <select class="form-select col" name="accidentYn">
+                                                    <option th:selected="${boardInfo.tuningYn}=='Y'" value="Y">
+                                                        유
+                                                    </option>
+                                                    <option th:selected="${boardInfo.tuningYn}=='N'" value="N">
+                                                        무
+                                                    </option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- 판매가격 -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">🏍️판매가격</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="table-active">판매가격</td>
+                                                <td class="row">
+                                                    <div class="addpostPrice input-group">
+                                                        <input type="text" class="form-control" name="price"
+                                                               th:value="${boardInfo.price}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                        <span class="input-group-text">원</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">🏍️옵션정보</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active">편의옵션</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option"
+                                                           name="tuningOptions1" value=" 열선"
+                                                           th:checked="${option10 eq ' 열선'}">
+                                                    <label class="form-check-label">열선</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option"
+                                                           name="tuningOptions1" value=" 파워put"
+                                                           th:checked="${option11 eq ' 파워put'}">
+                                                    <label class="form-check-label">파워put</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option"
+                                                           name="tuningOptions1" value=" 가방류"
+                                                           th:checked="${option12 eq ' 가방류'}">
+                                                    <label class="form-check-label">가방류</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option"
+                                                           name="tuningOptions1" value=" 오디오"
+                                                           th:checked="${option13 eq ' 오디오'}">
+                                                    <label class="form-check-label">오디오</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option"
+                                                           name="tuningOptions1" value=" 경보기"
+                                                           th:checked="${option14 eq ' 경보기'}">
+                                                    <label class="form-check-label">경보기</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option"
+                                                           name="tuningOptions1" value=" 안개등"
+                                                           th:checked="${option15 eq ' 안개등'}">
+                                                    <label class="form-check-label">안개등</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">성능옵션</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option1"
+                                                           name="tuningOptions2" value=" 배기 튜닝"
+                                                           th:checked="${option20 eq ' 배기 튜닝'}">
+                                                    <label class="form-check-label">배기 튜닝</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option1"
+                                                           name="tuningOptions2" value=" 흡기 튜닝"
+                                                           th:checked="${option21 eq ' 흡기 튜닝'}">
+                                                    <label class="form-check-label">흡기 튜닝</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option1"
+                                                           name="tuningOptions2" value=" 엔진 튜닝"
+                                                           th:checked="${option22 eq ' 엔진 튜닝'}">
+                                                    <label class="form-check-label">엔진 튜닝</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option1"
+                                                           name="tuningOptions2" value=" 섀시 튜닝"
+                                                           th:checked="${option23 eq ' 섀시 튜닝'}">
+                                                    <label class="form-check-label">새시 튜닝</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option1"
+                                                           name="tuningOptions2" value=" 브레이크 튜닝"
+                                                           th:checked="${option24 eq ' 브레이크 튜닝'}">
+                                                    <label class="form-check-label">브레이크 튜닝</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option1"
+                                                           name="tuningOptions2" value=" 서스펜션 튜닝"
+                                                           th:checked="${option25 eq ' 서스펜션 튜닝'}">
+                                                    <label class="form-check-label">서스펜션 튜닝</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="table-active">외관옵션</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option2"
+                                                           name="tuningOptions3" value=" 크롬파츠"
+                                                           th:checked="${option30 eq ' 크롬파츠'}">
+                                                    <label class="form-check-label">크롬파츠</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option2"
+                                                           name="tuningOptions3" value=" 카본파츠"
+                                                           th:checked="${option31 eq ' 카본파츠'}">
+                                                    <label class="form-check-label">카본파츠</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option2"
+                                                           name="tuningOptions3" value=" 커스텀도색"
+                                                           th:checked="${option32 eq ' 커스텀도색'}">
+                                                    <label class="form-check-label">커스텀도색</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option2"
+                                                           name="tuningOptions3" value=" 보호가드"
+                                                           th:checked="${option33 eq ' 보호가드'}">
+                                                    <label class="form-check-label">보호가드</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option2"
+                                                           name="tuningOptions3" value=" LED"
+                                                           th:checked="${option34 eq ' LED'}">
+                                                    <label class="form-check-label">LED</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="option2"
+                                                           name="tuningOptions3" value=" 스크린/페어링"
+                                                           th:checked="${option35 eq ' 스크린/페어링'}">
+                                                    <label class="form-check-label">스크린/페어링</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">🏍️서류</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table-active">서류</td>
+                                            <td>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="document"
+                                                           name="documents" value=" 사용신고 필증"
+                                                           th:checked="${document0 eq ' 사용신고 필증'}">
+                                                    <label class="form-check-label">사용신고 필증</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="document"
+                                                           name="documents" value=" 사용폐지 증명서"
+                                                           th:checked="${document1 eq ' 사용폐지 증명서'}">
+                                                    <label class="form-check-label">사용폐지 증명서</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="document"
+                                                           name="documents" value=" 제작증명서"
+                                                           th:checked="${document2 eq ' 제작증명서'}">
+                                                    <label class="form-check-label">제작증명서</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input type="checkbox" class="form-check-input" id="document"
+                                                           name="documents" value=" 서류없음"
+                                                           th:checked="${document3 eq ' 서류없음'}">
+                                                    <label class="form-check-label">서류없음</label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- 설명 및 추가정보 -->
+                                <p class="detailtextarea text-start fw-bold mt-3">🏍️설명 및 추가정보</p>
+                                <div class="addposttext">
+                                    <textarea style="width:100%; min-height:100px;" class="mb-5 text-start autosize"
+                                              name="content" rows="12" th:text="${boardInfo.content}" onkeydown="resize(this)" onkeyup="resize(this)">{{content}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="d-grid gap-2 col-4 mx-auto">
+                                <button class="btn btn-dark" style="padding: 10px;" type="submit">수정완료</button>
+                            </div>
+                            <div class="d-grid gap-2 col-4 mx-auto">
+                                <a th:href="@{/board/view(boardId=${boardInfo.boardId})}" style="padding: 10px;" class="btn btn-dark" role="button">수정취소</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
