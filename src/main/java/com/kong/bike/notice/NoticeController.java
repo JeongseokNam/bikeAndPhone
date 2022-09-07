@@ -35,7 +35,7 @@ public class NoticeController {
     public String notice(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
         MemberEntity memberEntity = principalDetails.getMemberEntity();
         model.addAttribute("memberId", memberEntity);
-        return "/manager/notice";
+        return "manager/notice";
     }
 
     @PostMapping("/manager/addNotice") // 공지사항 등록버튼
@@ -59,14 +59,14 @@ public class NoticeController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", noticePagingList.hasNext());
         model.addAttribute("hasPrev", noticePagingList.hasPrevious());
-        return "/manager/noticeList";
+        return "manager/noticeList";
     }
 
     @GetMapping("/manager/noticeShow") // 관리자페이지 공지사항 수정페이지
     public String noticeShow (Long noticeId, Model model){
         NoticeEntity target = noticeService.findByNoticeId(noticeId);
         model.addAttribute("target", target);
-        return "/manager/noticeShow";
+        return "manager/noticeShow";
     }
 
     @PostMapping("/manager/modifyNotice") // 관리자페이지 공지사항 수정버튼

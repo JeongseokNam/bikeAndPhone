@@ -20,6 +20,6 @@ public class MainController {
             memberEntity=principalDetails.getMemberEntity();
             memberService.accessRecord(memberEntity.getMemberId());
         }
-        return "/index";
+        return "index";
     }
 }

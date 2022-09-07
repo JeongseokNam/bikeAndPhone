@@ -28,7 +28,7 @@ public class BusinessMemberController {
     private BusinessMemberService  businessMemberService;
     @GetMapping("/member/soleProprietorJoin")
     public String soleProprietorJoinFrom(){
-        return "/member/soleProprietorJoinForm";
+        return "member/soleProprietorJoinForm";
     }
     @PostMapping("/member/soleProprietorJoin")
     public String soleProprietorJoin(MemberEntity memberEntity, MultipartFile file) {
@@ -47,7 +47,7 @@ public class BusinessMemberController {
     }
     @GetMapping("/member/corporateJoin")
     public String corporateJoinFrom(){
-        return "/member/corporateJoinForm";
+        return "member/corporateJoinForm";
     }
     @PostMapping("/member/corporateJoin")
     public String corporateJoin(MemberEntity memberEntity, MultipartFile file) {

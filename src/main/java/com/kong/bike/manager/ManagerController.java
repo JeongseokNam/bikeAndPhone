@@ -170,7 +170,7 @@ public class ManagerController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", businessMemberList.hasNext());
         model.addAttribute("hasPrev", businessMemberList.hasPrevious());
-        return "/manager/businessMemberList";
+        return "manager/businessMemberList";
     }
     
     @GetMapping("/manager/phoneList") // 관리자페이지 -> 휴대폰 게시물목록 관리

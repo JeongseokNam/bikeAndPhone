@@ -115,7 +115,7 @@ public class PhoneController {
         model.addAttribute("tempMember", tempMember);
         model.addAttribute("phoneInfo", phoneInfo);
         model.addAttribute("memberInfo", memberInfo);
-        return "/phone/phoneView";
+        return "phone/phoneView";
     }
 
     @GetMapping("/phone/phoneUpload") // 휴대폰 글등록 페이지
@@ -144,7 +144,7 @@ public class PhoneController {
                 }
             }
         }
-        return "/phone/phoneShow";
+        return "phone/phoneShow";
     }
 
     @PostMapping("/phone/phoneShow") // 휴대폰 수정버튼

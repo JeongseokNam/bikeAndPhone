@@ -59,12 +59,12 @@ public class MemberController {
     /*로그인 관련*/
     @GetMapping("/member/login") //로그인폼
     public String loginForm() {
-        return "/member/loginForm";
+        return "member/loginForm";
     }
 
     @PostMapping("/loginError") //로그인 에러
     public String loginFail(HttpServletRequest request, String username, String errorMsg) {
-        return "/member/loginForm";
+        return "member/loginForm";
     }
 
     @GetMapping("/member/logout") // 로그아웃
@@ -79,11 +79,11 @@ public class MemberController {
 
     @GetMapping("/member/join")
     public String join() {
-        return "/member/joinMain";
+        return "member/joinMain";
     }
     @GetMapping("/member/joinNormal")
     public String normalJoinForm(){
-        return "/member/normalJoinForm";
+        return "member/normalJoinForm";
     }
     @PostMapping("/member/joinNormal") // 회원가입
     public String joinNormal(MemberEntity memberEntity) {
@@ -446,7 +446,7 @@ public class MemberController {
 
     @GetMapping("/member/joinSuccess")//회원가입 완료
     public String joinSuccess(){
-        return "/member/joinSuccess";
+        return "member/joinSuccess";
     }
 
 }

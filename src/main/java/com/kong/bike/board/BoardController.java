@@ -54,7 +54,7 @@ public class BoardController {
         List<LocationEntity> locationList = boardService.getLocationList();
         model.addAttribute("brandList",brandList);
         model.addAttribute("locationList",locationList);
-        return "/board/addPostForm";
+        return "board/addPostForm";
     }
 
     @PostMapping("/board/addPost") // 글 등록
@@ -127,7 +127,7 @@ public class BoardController {
         model.addAttribute("hasNext", boardList.hasNext());
         model.addAttribute("hasPrev", boardList.hasPrevious());
         model.addAttribute("boardList", boardList);
-        return "/board/list";
+        return "board/list";
     }
 
     @GetMapping("/board/view")//글 상세보기
@@ -155,7 +155,7 @@ public class BoardController {
         model.addAttribute("tempMember",tempMember);
         model.addAttribute("boardInfo",boardInfo);
         model.addAttribute("memberInfo",memberInfo);
-        return "/board/view";
+        return "board/view";
     }
 
     @GetMapping("/board/modify")
@@ -233,7 +233,7 @@ public class BoardController {
                 }
             }
         }
-        return "/board/modifiedForm";
+        return "board/modifiedForm";
     }
 
     @PostMapping ("/board/modify")

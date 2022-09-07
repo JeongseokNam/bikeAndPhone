@@ -45,7 +45,7 @@ public class QnaController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", qnaPagingList.hasNext());
         model.addAttribute("hasPrev", qnaPagingList.hasPrevious());
-        return "/qna/main";
+        return "qna/main";
     }
 
     @PostMapping("/qna/addQuestion")
@@ -86,7 +86,7 @@ public class QnaController {
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", qnaPagingList.hasNext());
         model.addAttribute("hasPrev", qnaPagingList.hasPrevious());
-        return "/manager/qnaList";
+        return "manager/qnaList";
     }
     @PostMapping("/qna/addAnswer")
     public String addAnswer(Long qnaId, String answerContent
